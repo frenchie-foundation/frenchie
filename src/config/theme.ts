@@ -11,6 +11,9 @@ const theme = extendTheme({
         maxWidth: '90ch'
       }
     }
+  },
+  colors: {
+    white: '#FFEFCF',
   }
 });
 

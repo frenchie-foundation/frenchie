@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function Footer(): React.ReactElement {
   return (
-    <Container mt={20}>
+    <Container mt={20} mb={20}>
       <Text>
         Disclaimer: The information provided shall not in any way constitute a
         recommendation as to whether you should invest in any product discussed.

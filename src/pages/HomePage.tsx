@@ -57,7 +57,7 @@ export default function HomePage(): React.ReactElement {
             </Text>
             <List textAlign="center">
               <ListItem>20% Dev team</ListItem>
-              <ListItem>25% Vitalik Buterin</ListItem>
+              <ListItem>25% Burning mechanism</ListItem>
               <ListItem>30% Marketing</ListItem>
             </List>
           </Box>

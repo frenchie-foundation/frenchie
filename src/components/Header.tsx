@@ -19,11 +19,7 @@ export default function Header(): React.ReactElement {
     <Container>
       <Flex pt={8} pb={8} justifyContent="space-between">
         <Stack spacing={2} direction="row">
-          <Button
-            colorScheme="red"
-            justifySelf="flex-start"
-            onClick={handlePancakeSwapLinkClick}
-          >
+          <Button colorScheme="red" onClick={handlePancakeSwapLinkClick}>
             Buy on PancakeSwap
           </Button>
           <IconButton

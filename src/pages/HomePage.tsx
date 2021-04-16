@@ -42,7 +42,7 @@ export default function HomePage(): React.ReactElement {
         <Text align="center" fontWeight="bold" fontSize={32}>
           TOKENMETRICS
         </Text>
-        <Flex direction="row" justifyContent="space-between" mt={10}>
+        <Box display={{ md: 'flex' }} mt={10}>
           <Box w="100%" textAlign="center">
             <Text fontWeight="bold" fontSize={24} mb={5}>
               Total Supply
@@ -51,7 +51,12 @@ export default function HomePage(): React.ReactElement {
               {(1_000_000_000_000).toLocaleString()}
             </Text>
           </Box>
-          <Box w="100%" textAlign="center" fontWeight="bold">
+          <Box
+            w="100%"
+            textAlign="center"
+            fontWeight="bold"
+            mt={{ base: 10, md: 0 }}
+          >
             <Text fontSize={24} mb={5}>
               Supporting
             </Text>
@@ -61,7 +66,12 @@ export default function HomePage(): React.ReactElement {
               <ListItem>30% Marketing</ListItem>
             </List>
           </Box>
-          <Box w="100%" textAlign="center" fontWeight="bold">
+          <Box
+            w="100%"
+            textAlign="center"
+            fontWeight="bold"
+            mt={{ base: 10, md: 0 }}
+          >
             <Text fontSize={24} mb={5}>
               Liquidity
             </Text>
@@ -69,7 +79,7 @@ export default function HomePage(): React.ReactElement {
               <ListItem>25% PancakeSwap</ListItem>
             </List>
           </Box>
-        </Flex>
+        </Box>
       </Box>
       <Box textAlign="center" mt={20}>
         <Button

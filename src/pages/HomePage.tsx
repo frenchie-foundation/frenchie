@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   Badge,
   Box,
@@ -13,8 +13,14 @@ import {
 import { Logo } from '../components/Logo';
 import { Button } from '@chakra-ui/button';
 import { FaTelegram } from 'react-icons/fa';
+import openInNewTab from '../helpers/openInNewTab';
+import constants from '../config/constants';
 
 export default function HomePage(): React.ReactElement {
+  const handleTelegramLinkClick = useCallback(() => {
+    openInNewTab(constants.telegramGroupLink);
+  }, []);
+
   return (
     <Container>
       <Box textAlign="center" fontSize="xl">
@@ -65,7 +71,11 @@ export default function HomePage(): React.ReactElement {
         </Flex>
       </Box>
       <Box textAlign="center" mt={20}>
-        <Button colorScheme="telegram" leftIcon={<FaTelegram />}>
+        <Button
+          colorScheme="telegram"
+          leftIcon={<FaTelegram />}
+          onClick={handleTelegramLinkClick}
+        >
           Telegram group
         </Button>
       </Box>

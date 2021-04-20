@@ -45,7 +45,7 @@ export default function HomePage(): React.ReactElement {
         <Box display={{ md: 'flex' }} mt={10}>
           <Box w="100%" textAlign="center">
             <Text fontWeight="bold" fontSize={24} mb={5}>
-              Total Supply
+              Initial Supply
             </Text>
             <Text fontWeight="bold" fontSize={18}>
               {(1_000_000_000_000).toLocaleString()}

@@ -2,9 +2,13 @@ import { Button, IconButton } from '@chakra-ui/button';
 import { Container, Flex, Stack } from '@chakra-ui/layout';
 import React, { useCallback } from 'react';
 import { FaTelegram } from 'react-icons/fa';
+
 import constants from '../config/constants';
 import openInNewTab from '../helpers/openInNewTab';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
+
+import BscLogo from '../assets/bscscan-logo-circle.svg';
+import { Image } from '@chakra-ui/image';
 
 export default function Header(): React.ReactElement {
   const handlePancakeSwapLinkClick = useCallback(() => {
@@ -13,6 +17,10 @@ export default function Header(): React.ReactElement {
 
   const handleTelegramLinkClick = useCallback(() => {
     openInNewTab(constants.telegramGroupLink);
+  }, []);
+
+  const handleBscScanLinkClick = useCallback(() => {
+    openInNewTab(constants.bscScanLink);
   }, []);
 
   return (
@@ -27,6 +35,12 @@ export default function Header(): React.ReactElement {
             aria-label="Telegram group"
             icon={<FaTelegram />}
             onClick={handleTelegramLinkClick}
+          />
+          <IconButton
+            colorScheme="teal"
+            aria-label="Telegram group"
+            icon={<Image src={BscLogo} height={4} />}
+            onClick={handleBscScanLinkClick}
           />
         </Stack>
         <ColorModeSwitcher justifySelf="flex-end" />

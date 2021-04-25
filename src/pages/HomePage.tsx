@@ -4,6 +4,7 @@ import {
   Box,
   Container,
   Flex,
+  HStack,
   List,
   ListItem,
   Stack,
@@ -12,13 +13,17 @@ import {
 } from '@chakra-ui/layout';
 import { Logo } from '../components/Logo';
 import { Button } from '@chakra-ui/button';
-import { FaTelegram } from 'react-icons/fa';
+import { FaNewspaper, FaTelegram } from 'react-icons/fa';
 import openInNewTab from '../helpers/openInNewTab';
 import constants from '../config/constants';
 
 export default function HomePage(): React.ReactElement {
   const handleTelegramLinkClick = useCallback(() => {
     openInNewTab(constants.telegramGroupLink);
+  }, []);
+
+  const handleWhitepaperLinkClick = useCallback(() => {
+    openInNewTab('/whitepaper.pdf');
   }, []);
 
   return (
@@ -81,7 +86,13 @@ export default function HomePage(): React.ReactElement {
           </Box>
         </Box>
       </Box>
-      <Box textAlign="center" mt={20}>
+      <HStack
+        display="flex"
+        justifyContent="center"
+        spacing={4}
+        textAlign="center"
+        mt={20}
+      >
         <Button
           colorScheme="telegram"
           leftIcon={<FaTelegram />}
@@ -89,7 +100,14 @@ export default function HomePage(): React.ReactElement {
         >
           Telegram group
         </Button>
-      </Box>
+        <Button
+          colorScheme="orange"
+          leftIcon={<FaNewspaper />}
+          onClick={handleWhitepaperLinkClick}
+        >
+          Our whitepaper
+        </Button>
+      </HStack>
     </Container>
   );
 }

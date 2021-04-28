@@ -1,4 +1,5 @@
 import { extendTheme } from '@chakra-ui/react';
+import constants from './constants';
 
 const theme = extendTheme({ 
   config: {
@@ -8,12 +9,20 @@ const theme = extendTheme({
   components: {
     Container: {
       baseStyle: {
-        maxWidth: '90ch'
+        maxWidth: '120ch'
+      }
+    },
+    Text: {
+      baseStyle: {
+        color: constants.colors.light
       }
     }
   },
   colors: {
     white: '#FFEFCF',
+  },
+  fonts: {
+    body: '\'Inter\', sans-serif'
   }
 });
 

@@ -1,20 +1,16 @@
 import React, { useCallback } from 'react';
-import {
-  Badge,
-  Box,
-  Container,
-  Flex,
-  List,
-  ListItem,
-  Stack,
-  Text,
-  VStack,
-} from '@chakra-ui/layout';
-import { Logo } from '../components/Logo';
+import { Box, Container, Flex, HStack, Text } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
 import { FaTelegram } from 'react-icons/fa';
+import { Image } from '@chakra-ui/image';
+
 import openInNewTab from '../helpers/openInNewTab';
 import constants from '../config/constants';
+import Title from '../components/Title';
+
+import coins from '../assets/images/coins-solid.svg';
+import layers from '../assets/images/layers-solid.svg';
+import network from '../assets/images/network-solid.svg';
 
 export default function HomePage(): React.ReactElement {
   const handleTelegramLinkClick = useCallback(() => {
@@ -23,64 +19,68 @@ export default function HomePage(): React.ReactElement {
 
   return (
     <Container>
-      <Box textAlign="center" fontSize="xl">
-        <VStack spacing={8}>
-          <Logo h="180px" pointerEvents="none" />
-          <Text fontSize={48} fontWeight="bold">
-            Frenchie Token
+      <Box mt={16} mb={16}>
+        <Title lineHeight="48px" isPageTitle>
+          More than a meme
+        </Title>
+        <Title isPageTitle color={constants.colors.red}>
+          An ecosystem
+        </Title>
+      </Box>
+      <HStack
+        spacing={8}
+        display={{ base: 'block', md: 'flex' }}
+        alignItems="start"
+      >
+        <Box w="100%">
+          <Flex justifyContent="center" mb={4}>
+            <Image src={coins} />
+          </Flex>
+          <Title mb={4} textAlign="center">
+            FREN token
+          </Title>
+          <Text>
+            <Text display="inline" color={constants.colors.red}>
+              FREN{' '}
+            </Text>
+            is a decentralized token running in the BSC network. Built using
+            BEP20 and Solidity, audited and secured by professionals.
           </Text>
-        </VStack>
-      </Box>
-      <Flex direction="row" justifyContent="center" mt={10}>
-        <Stack spacing={5} direction="row">
-          <Badge colorScheme="red">Meme token</Badge>
-          <Badge colorScheme="green">Community driven</Badge>
-          <Badge colorScheme="purple">Fun doggie</Badge>
-        </Stack>
-      </Flex>
-      <Box mt={10}>
-        <Text align="center" fontWeight="bold" fontSize={32}>
-          TOKENMETRICS
-        </Text>
-        <Box display={{ md: 'flex' }} mt={10}>
-          <Box w="100%" textAlign="center">
-            <Text fontWeight="bold" fontSize={24} mb={5}>
-              Initial Supply
-            </Text>
-            <Text fontWeight="bold" fontSize={18}>
-              {(1_000_000_000_000).toLocaleString()}
-            </Text>
-          </Box>
-          <Box
-            w="100%"
-            textAlign="center"
-            fontWeight="bold"
-            mt={{ base: 10, md: 0 }}
-          >
-            <Text fontSize={24} mb={5}>
-              Supporting
-            </Text>
-            <List textAlign="center">
-              <ListItem>20% Dev team</ListItem>
-              <ListItem>25% Burning mechanism</ListItem>
-              <ListItem>30% Marketing</ListItem>
-            </List>
-          </Box>
-          <Box
-            w="100%"
-            textAlign="center"
-            fontWeight="bold"
-            mt={{ base: 10, md: 0 }}
-          >
-            <Text fontSize={24} mb={5}>
-              Liquidity
-            </Text>
-            <List textAlign="center">
-              <ListItem>25% PancakeSwap</ListItem>
-            </List>
-          </Box>
         </Box>
-      </Box>
+        <Box w="100%">
+          <Flex justifyContent="center" mb={4}>
+            <Image src={layers} />
+          </Flex>
+          <Title mb={4} textAlign="center">
+            Farming rewards
+          </Title>
+          <Text>
+            We have a farming mechanism
+            <Text display="inline" color={constants.colors.red}>
+              {' '}
+              to reward users{' '}
+            </Text>
+            that provide liquidity, improving our ecosystem and helping the
+            community.
+          </Text>
+        </Box>
+        <Box w="100%">
+          <Flex justifyContent="center" mb={4}>
+            <Image src={network} />
+          </Flex>
+          <Title mb={4} textAlign="center">
+            Blockchain innovations
+          </Title>
+          <Text>
+            Frenchie
+            <Text display="inline" color={constants.colors.red}>
+              {' '}
+              won’t be just a meme token
+            </Text>
+            . We are working on mindblowing features to the community.
+          </Text>
+        </Box>
+      </HStack>
       <Box textAlign="center" mt={20}>
         <Button
           colorScheme="telegram"
@@ -90,6 +90,9 @@ export default function HomePage(): React.ReactElement {
           Telegram group
         </Button>
       </Box>
+      <Title mt={20} isSecondary>
+        Tokenmetrics
+      </Title>
     </Container>
   );
 }

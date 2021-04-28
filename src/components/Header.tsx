@@ -1,14 +1,7 @@
-import { Button, IconButton } from '@chakra-ui/button';
-import { Container, Flex, Stack, VStack } from '@chakra-ui/layout';
 import React, { useCallback, useState } from 'react';
-import { FaBars, FaTelegram } from 'react-icons/fa';
-
-import constants from '../config/constants';
-import openInNewTab from '../helpers/openInNewTab';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-
-import BscLogo from '../assets/bscscan-logo-circle.svg';
-import { Image } from '@chakra-ui/image';
+import { Button, IconButton } from '@chakra-ui/button';
+import { Container, Flex, Stack, Text, VStack } from '@chakra-ui/layout';
+import { FaBars } from 'react-icons/fa';
 import {
   Drawer,
   DrawerBody,
@@ -18,6 +11,10 @@ import {
   DrawerOverlay,
 } from '@chakra-ui/modal';
 import { useHistory } from 'react-router';
+
+import constants from '../config/constants';
+import { Logo } from './Logo';
+import WalletInfo from './WalletInfo';
 
 export default function Header(): React.ReactElement {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -38,18 +35,6 @@ export default function Header(): React.ReactElement {
     setDrawerOpen(false);
   }, []);
 
-  const handlePancakeSwapLinkClick = useCallback(() => {
-    openInNewTab(constants.pancakeSwapLink);
-  }, []);
-
-  const handleTelegramLinkClick = useCallback(() => {
-    openInNewTab(constants.telegramGroupLink);
-  }, []);
-
-  const handleBscScanLinkClick = useCallback(() => {
-    openInNewTab(constants.bscScanLink);
-  }, []);
-
   return (
     <Container>
       <Drawer placement="left" onClose={handleDrawerClose} isOpen={drawerOpen}>
@@ -61,41 +46,47 @@ export default function Header(): React.ReactElement {
           </DrawerHeader>
           <DrawerBody>
             <VStack spacing={4}>
-              <Button isFullWidth onClick={goTo('/')}>
-                Home page
+              <Button
+                isFullWidth
+                onClick={goTo('/')}
+                bg={constants.colors.light}
+                color={constants.colors.dark}
+              >
+                Home
               </Button>
-              <Button isFullWidth onClick={goTo('/staking')}>
-                Staking
+              <Button
+                isFullWidth
+                onClick={goTo('/farming')}
+                bg={constants.colors.light}
+                color={constants.colors.dark}
+              >
+                Farming
               </Button>
             </VStack>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
       <Flex pt={8} pb={8} justifyContent="space-between">
-        <Stack spacing={2} direction="row">
+        <Stack spacing={2} display="flex" direction="row" alignItems="center">
           <IconButton
-            backgroundColor="white"
+            variant="outline"
             aria-label="Menu"
-            icon={<FaBars color="black" />}
+            icon={
+              <FaBars
+                color={constants.colors.light}
+                width={24}
+                height={24}
+                size={24}
+              />
+            }
             onClick={handleDrawerOpen}
           />
-          <Button colorScheme="red" onClick={handlePancakeSwapLinkClick}>
-            Buy on PancakeSwap
-          </Button>
-          <IconButton
-            colorScheme="telegram"
-            aria-label="Telegram group"
-            icon={<FaTelegram />}
-            onClick={handleTelegramLinkClick}
-          />
-          <IconButton
-            colorScheme="teal"
-            aria-label="Telegram group"
-            icon={<Image src={BscLogo} height={4} />}
-            onClick={handleBscScanLinkClick}
-          />
+          <Logo height={9} />
+          <Text fontSize={24} color={constants.colors.light} fontWeight="bold">
+            Frenchie Network
+          </Text>
         </Stack>
-        <ColorModeSwitcher justifySelf="flex-end" />
+        <WalletInfo alignSelf="end" />
       </Flex>
     </Container>
   );

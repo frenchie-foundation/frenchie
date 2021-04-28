@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Box, Container, Flex, HStack, Text } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
-import { FaTelegram } from 'react-icons/fa';
+import { FaNewspaper, FaTelegram } from 'react-icons/fa';
 import { Image } from '@chakra-ui/image';
 
 import openInNewTab from '../helpers/openInNewTab';
@@ -15,6 +15,10 @@ import network from '../assets/images/network-solid.svg';
 export default function HomePage(): React.ReactElement {
   const handleTelegramLinkClick = useCallback(() => {
     openInNewTab(constants.telegramGroupLink);
+  }, []);
+
+  const handleWhitepaperLinkClick = useCallback(() => {
+    openInNewTab('/whitepaper.pdf');
   }, []);
 
   return (
@@ -81,18 +85,30 @@ export default function HomePage(): React.ReactElement {
           </Text>
         </Box>
       </HStack>
-      <Box textAlign="center" mt={20}>
-        <Button
-          colorScheme="telegram"
-          leftIcon={<FaTelegram />}
-          onClick={handleTelegramLinkClick}
-        >
-          Telegram group
-        </Button>
-      </Box>
-      <Title mt={20} isSecondary>
+      <Flex justifyContent="center">
+        <HStack mt={20}>
+          <Button
+            colorScheme="telegram"
+            leftIcon={<FaTelegram />}
+            onClick={handleTelegramLinkClick}
+          >
+            Telegram group
+          </Button>
+          <Button
+            colorScheme="orange"
+            leftIcon={<FaNewspaper />}
+            onClick={handleWhitepaperLinkClick}
+          >
+            Our whitepaper
+          </Button>
+        </HStack>
+      </Flex>
+      <Title mt={20} mb={4} isSecondary>
         Tokenmetrics
       </Title>
+      <Text>
+        <b>Initial supply:</b> 1 trillion
+      </Text>
     </Container>
   );
 }

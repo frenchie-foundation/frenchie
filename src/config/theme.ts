@@ -16,6 +16,11 @@ const theme = extendTheme({
       baseStyle: {
         color: constants.colors.light
       }
+    },
+    Link: {
+      baseStyle: {
+        color: constants.colors.light
+      }
     }
   },
   colors: {

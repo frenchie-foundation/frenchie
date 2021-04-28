@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Box, Container, Flex, HStack, Text } from '@chakra-ui/layout';
+import { Box, Container, Flex, HStack, Link, Text } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
 import { FaNewspaper, FaTelegram } from 'react-icons/fa';
 import { Image } from '@chakra-ui/image';
@@ -11,15 +11,31 @@ import Title from '../components/Title';
 import coins from '../assets/images/coins-solid.svg';
 import layers from '../assets/images/layers-solid.svg';
 import network from '../assets/images/network-solid.svg';
+import { useHistory } from 'react-router';
 
 export default function HomePage(): React.ReactElement {
+  const history = useHistory();
+
   const handleTelegramLinkClick = useCallback(() => {
     openInNewTab(constants.telegramGroupLink);
   }, []);
 
-  const handleWhitepaperLinkClick = useCallback(() => {
+  const handleWhitepaperLinkClick = useCallback((e?: any) => {
+    if (e) {
+      e.preventDefault();
+    }
     openInNewTab('/whitepaper.pdf');
   }, []);
+
+  const goTo = useCallback(
+    (path: string) => (e?: any) => {
+      if (e) {
+        e.preventDefault();
+      }
+      history.push(path);
+    },
+    [history]
+  );
 
   return (
     <Container>
@@ -103,11 +119,110 @@ export default function HomePage(): React.ReactElement {
           </Button>
         </HStack>
       </Flex>
+
       <Title mt={20} mb={4} isSecondary>
         Tokenmetrics
       </Title>
       <Text>
         <b>Initial supply:</b> 1 trillion
+      </Text>
+      <Text>
+        <b>Current supply:</b> 825 billions (82.5%)
+      </Text>
+      <Text>
+        <b>Total burned:</b> 175 billions (17.5%)
+      </Text>
+      <Text>
+        <b>Tokens to burn:</b> 75 billions (7.5%)
+      </Text>
+      <Text>
+        <b>Locked liquidity:</b> 250 billions (25%)
+      </Text>
+
+      <Title mt={6} mb={4} isSecondary>
+        Contract addresses
+      </Title>
+      <Text>
+        <b>FREN Token (BEP20):</b>{' '}
+        <Link href={constants.bscScanLink} target="_blank">
+          {constants.tokenAddress}
+        </Link>
+      </Text>
+
+      <Title mt={6} mb={4} isSecondary>
+        The token
+      </Title>
+      <Text>
+        FREN is a simple BEP20 token, secure and audited by professionals. Doing
+        it simple, it’s also automatically secure. That’s what we had in mind
+        when we deployed it.
+      </Text>
+      <Text>
+        In order to deliver more advanced features, we deploy other separate
+        contracts to deliver farming, governance, etc. This give us more
+        decentralization, security and confidence about our ecosystem.
+      </Text>
+      <Text>
+        By the way, every contract is 100% open source and public. To find the
+        source code,{' '}
+        <Link
+          href="https://github.com/FrenchieNetwork/contract"
+          target="_blank"
+          color={constants.colors.red}
+          fontWeight="bold"
+        >
+          click here
+        </Link>
+        .
+      </Text>
+
+      <Title mt={6} mb={4} isSecondary>
+        Rewards
+      </Title>
+      <Text>
+        In order to reward our holders, we have a rewarding system to liquidity
+        providers. If you are already a liquidity provider, you can stake your
+        LP tokens in our{' '}
+        <Link
+          fontWeight="bold"
+          color={constants.colors.red}
+          href="/farming"
+          onClick={goTo('/farming')}
+        >
+          farming page
+        </Link>{' '}
+        and earn rewards every day! Also, you can easilly become a liquidity
+        provider. It’s easy, you can access our{' '}
+        <Link
+          fontWeight="bold"
+          color={constants.colors.red}
+          href="https://app.1inch.io/#/56/dao/pools/0xe01245e737fcc14ba053ecfe6d10eda070b5a8f9/governance"
+          target="_blank"
+        >
+          1inch liquidity pool
+        </Link>{' '}
+        and will be able to deposity a certain amount of tokens (BNB+FREN) to
+        collaborate with our liquidity. You will receive back an amount of LP
+        tokens and will passively earn a certain quantity of FREN from the 1inch
+        swap fees.
+      </Text>
+
+      <Title mt={6} mb={4} isSecondary>
+        Whitepaper
+      </Title>
+      <Text>
+        If you want to know more about the development and purposes of the
+        Frenchie Network, you can{' '}
+        <Link
+          fontWeight="bold"
+          color={constants.colors.red}
+          href="/whitepaper.pdf"
+          target="_blank"
+          onClick={handleWhitepaperLinkClick}
+        >
+          access our whitepaper
+        </Link>
+        .
       </Text>
     </Container>
   );

@@ -23,6 +23,7 @@ module.exports = {
     'react-hooks',
   ],
   'rules': {
+    '@typescript-eslint/no-explicit-any': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'linebreak-style': [

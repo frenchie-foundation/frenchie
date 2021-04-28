@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useState } from 'react';
 import { Button, IconButton } from '@chakra-ui/button';
 import { Container, Flex, Stack, Text, VStack } from '@chakra-ui/layout';
@@ -21,10 +22,13 @@ export default function Header(): React.ReactElement {
   const history = useHistory();
 
   const goTo = useCallback(
-    (path: string) => () => {
+    (path: string) => (e?: any) => {
+      if (e) {
+        e.preventDefault();
+      }
       history.push(path);
     },
-    []
+    [history]
   );
 
   const handleDrawerOpen = useCallback(() => {

@@ -5,6 +5,15 @@ import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ethereum: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    __REDUX_DEVTOOLS_EXTENSION__: any;
+  }
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <ColorModeScript />

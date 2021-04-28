@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   'env': {
     'browser': true,
@@ -18,13 +19,13 @@ module.exports = {
   },
   'plugins': [
     'react',
-    '@typescript-eslint'
+    '@typescript-eslint',
+    'react-hooks',
   ],
   'rules': {
-    'indent': [
-      'error',
-      2
-    ],
+    '@typescript-eslint/no-explicit-any': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
     'linebreak-style': [
       'error',
       'unix'

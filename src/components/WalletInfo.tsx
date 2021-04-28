@@ -34,26 +34,25 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
   }, [frenToken, address]);
 
   return (
-    <Box {...props}>
-      <HStack spacing={4}>
-        {isWeb3Enabled && frenBalance !== -1 && (
-          <Text fontWeight="bold">
-            $ {Number(web3.utils.fromWei(String(frenBalance))).toLocaleString()}
-          </Text>
-        )}
-        <Button
-          bg="white"
-          color={constants.colors.dark}
-          leftIcon={<FaWallet color={constants.colors.dark} />}
-          onClick={handleConnect}
-          isLoading={loading}
-        >
-          {isWeb3Enabled
-            ? `${address?.substr(0, 4)}...${address?.substr(-4, 4)}`
-            : 'Connect'}
-        </Button>
-      </HStack>
-    </Box>
+    <HStack spacing={4} {...props}>
+      {isWeb3Enabled && frenBalance !== -1 && (
+        <Text fontWeight="bold">
+          $ {Number(web3.utils.fromWei(String(frenBalance))).toLocaleString()}
+        </Text>
+      )}
+      <Button
+        bg="white"
+        color={constants.colors.dark}
+        leftIcon={<FaWallet color={constants.colors.dark} />}
+        onClick={handleConnect}
+        isLoading={loading}
+        display={{ base: isWeb3Enabled ? 'none' : 'block', md: 'block' }}
+      >
+        {isWeb3Enabled
+          ? `${address?.substr(0, 4)}...${address?.substr(-4, 4)}`
+          : 'Connect'}
+      </Button>
+    </HStack>
   );
 };
 

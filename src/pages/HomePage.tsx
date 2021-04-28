@@ -47,12 +47,8 @@ export default function HomePage(): React.ReactElement {
           An ecosystem
         </Title>
       </Box>
-      <HStack
-        spacing={8}
-        display={{ base: 'block', md: 'flex' }}
-        alignItems="start"
-      >
-        <Box w="100%">
+      <Box display={{ base: 'block', md: 'flex' }} alignItems="start">
+        <Box p={4} w="100%">
           <Flex justifyContent="center" mb={4}>
             <Image src={coins} />
           </Flex>
@@ -67,7 +63,7 @@ export default function HomePage(): React.ReactElement {
             BEP20 and Solidity, audited and secured by professionals.
           </Text>
         </Box>
-        <Box w="100%">
+        <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
           <Flex justifyContent="center" mb={4}>
             <Image src={layers} />
           </Flex>
@@ -84,7 +80,7 @@ export default function HomePage(): React.ReactElement {
             community.
           </Text>
         </Box>
-        <Box w="100%">
+        <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
           <Flex justifyContent="center" mb={4}>
             <Image src={network} />
           </Flex>
@@ -100,7 +96,7 @@ export default function HomePage(): React.ReactElement {
             . We are working on mindblowing features to the community.
           </Text>
         </Box>
-      </HStack>
+      </Box>
       <Flex justifyContent="center">
         <HStack mt={20}>
           <Button

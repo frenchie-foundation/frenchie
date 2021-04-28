@@ -21,7 +21,10 @@ const Title: React.FC<ITitle> = ({
       color="white"
       {...(isPageTitle
         ? {
-            fontSize: '72px',
+            fontSize: {
+              base: '48px',
+              md: '72px',
+            },
           }
         : isSecondary
         ? {

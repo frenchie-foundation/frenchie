@@ -86,11 +86,16 @@ export default function Header(): React.ReactElement {
             onClick={handleDrawerOpen}
           />
           <Logo height={9} />
-          <Text fontSize={24} color={constants.colors.light} fontWeight="bold">
+          <Text
+            fontSize={24}
+            display={{ base: 'none', md: 'block' }}
+            color={constants.colors.light}
+            fontWeight="bold"
+          >
             Frenchie Network
           </Text>
         </Stack>
-        <WalletInfo alignSelf="end" />
+        <WalletInfo />
       </Flex>
     </Container>
   );

@@ -41,7 +41,7 @@ export default function Footer(): React.ReactElement {
           Frenchie Network
         </Text>
       </Stack>
-      <HStack
+      <Box
         display={{ base: 'block', md: 'flex' }}
         justifyContent="space-between"
         alignItems="start"
@@ -61,7 +61,7 @@ export default function Footer(): React.ReactElement {
             </ListItem>
           </List>
         </Box>
-        <Box w="100%">
+        <Box w="100%" mt={{ base: 6, md: 0 }}>
           <Title mb={4}>Useful links</Title>
           <List>
             <ListItem>
@@ -81,7 +81,7 @@ export default function Footer(): React.ReactElement {
             </ListItem>
           </List>
         </Box>
-        <Box w="100%">
+        <Box w="100%" mt={{ base: 6, md: 0 }}>
           <Title mb={4}>The team</Title>
           <List>
             <ListItem>
@@ -91,7 +91,7 @@ export default function Footer(): React.ReactElement {
             </ListItem>
           </List>
         </Box>
-        <Box w="100%">
+        <Box w="100%" mt={{ base: 6, md: 0 }}>
           <Title mb={4}>Partners</Title>
           <List>
             <ListItem>
@@ -106,7 +106,7 @@ export default function Footer(): React.ReactElement {
             </ListItem>
           </List>
         </Box>
-      </HStack>
+      </Box>
       <Text mt={10} textAlign="center">
         Made with ❤️ by{' '}
         <Link href="https://spiry.ro" target="_blank">

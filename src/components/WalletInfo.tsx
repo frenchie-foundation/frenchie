@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from '@chakra-ui/button';
-import { Box, HStack, Text } from '@chakra-ui/layout';
+import { HStack, Text } from '@chakra-ui/layout';
 import { ChakraProps } from '@chakra-ui/system';
 import { FaWallet } from 'react-icons/fa';
 import constants from '../config/constants';

@@ -1,5 +1,15 @@
 import React, { useCallback } from 'react';
-import { Box, Container, Link, Text, Flex, HStack, List, ListItem, ListIcon } from '@chakra-ui/layout';
+import {
+  Box,
+  Container,
+  Link,
+  Text,
+  Flex,
+  HStack,
+  List,
+  ListItem,
+  ListIcon,
+} from '@chakra-ui/layout';
 import Title from '../components/Title';
 import constants from '../config/constants';
 import Farm from '../components/Farm';
@@ -9,9 +19,10 @@ import { FaTint, FaCheckCircle } from 'react-icons/fa';
 import openInNewTab from '../helpers/openInNewTab';
 
 export default function FarmingPage(): React.ReactElement {
-  const handleliquidityLinkClick = useCallback(() => {
+  const handleLiquidityLinkClick = useCallback(() => {
     openInNewTab(constants.addLiquidityLink);
   }, []);
+
   return (
     <Container>
       <Box mt={16} mb={10}>
@@ -39,7 +50,7 @@ export default function FarmingPage(): React.ReactElement {
         >
           1inch liquidity pool
         </Link>{' '}
-        and will be able to deposity a certain amount of tokens (BNB+FREN) to
+        and will be able to deposit a certain amount of tokens (BNB+FREN) to
         collaborate with our liquidity. You will receive back an amount of LP
         tokens and will passively earn a certain quantity of FREN from the 1inch
         swap fees. Still needing help?{' '}
@@ -52,33 +63,33 @@ export default function FarmingPage(): React.ReactElement {
           Watch this tutorial
         </Link>
         <HStack mt={20}>
-        <List spacing={3}>
-  <ListItem>
-    <ListIcon as={FaCheckCircle} color="green.500" />
-    Create Liquidity Tokens on 1inch
-  </ListItem>
-  <ListItem>
-    <ListIcon as={FaCheckCircle} color="green.500" />
-    Deposit 1INCH FREN-BNB LP on Frenchie Farm 
-  </ListItem>
-  <ListItem>
-    <ListIcon as={FaCheckCircle} color="green.500" />
-    Earn 5000 FREN at 3 seconds splitted among the number of farmers in our Frenchie Farm contract. 
-  </ListItem>
-
-</List>
-</HStack>
+          <List spacing={3}>
+            <ListItem>
+              <ListIcon as={FaCheckCircle} color="green.500" />
+              Create Liquidity Tokens on 1inch
+            </ListItem>
+            <ListItem>
+              <ListIcon as={FaCheckCircle} color="green.500" />
+              Deposit 1INCH FREN-BNB LP on Frenchie Farm
+            </ListItem>
+            <ListItem>
+              <ListIcon as={FaCheckCircle} color="green.500" />
+              Every 3 seconds 5000 FREN is divided between the number of farmers
+              in our Frenchie Farm contract
+            </ListItem>
+          </List>
+        </HStack>
         <Flex justifyContent="center">
-        <HStack mt={20}>
-        <Button
-            colorScheme="purple"
-            leftIcon={<FaTint />}
-            onClick={handleliquidityLinkClick}
-          >
-            Create Liquidity Tokens on 1inch
-          </Button>
+          <HStack mt={10}>
+            <Button
+              colorScheme="purple"
+              leftIcon={<FaTint />}
+              onClick={handleLiquidityLinkClick}
+            >
+              Create Liquidity Tokens on 1inch
+            </Button>
           </HStack>
-          </Flex>
+        </Flex>
       </Text>
       <Farm mt={10} />
     </Container>

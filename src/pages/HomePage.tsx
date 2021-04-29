@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Box, Container, Flex, HStack, Link, Text } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
-import { FaNewspaper, FaTelegram, FaExchangeAlt} from 'react-icons/fa';
+import { FaNewspaper, FaTelegram, FaExchangeAlt } from 'react-icons/fa';
 import { Image } from '@chakra-ui/image';
 
 import openInNewTab from '../helpers/openInNewTab';
@@ -159,9 +159,9 @@ export default function HomePage(): React.ReactElement {
         The token
       </Title>
       <Text>
-        FREN is a simple BEP-20 token, secure and audited by professionals. Doing
-        it simple, it’s also automatically secure. That’s what we had in mind
-        when we deployed it.
+        FREN is a simple BEP-20 token, secure and audited by professionals.
+        Doing it simple, it’s also automatically secure. That’s what we had in
+        mind when we deployed it.
       </Text>
       <Text>
         In order to deliver more advanced features, we deploy other separate
@@ -207,7 +207,7 @@ export default function HomePage(): React.ReactElement {
         >
           1inch liquidity pool
         </Link>{' '}
-        and will be able to deposity a certain amount of tokens (BNB+FREN) to
+        and will be able to deposit a certain amount of tokens (BNB+FREN) to
         collaborate with our liquidity. You will receive back an amount of LP
         tokens and will passively earn a certain quantity of FREN from the 1inch
         swap fees.

@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { WalletProvider } from './store/wallet';
 import { ContractsProvider } from './store/contracts';
+import FarmingPage from './pages/FarmingPage';
 
 export const App: React.FC = () => (
   <ChakraProvider theme={theme}>
@@ -17,6 +18,7 @@ export const App: React.FC = () => (
           <Header />
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route exact path="/farming" component={FarmingPage} />
           </Switch>
           <Footer />
         </BrowserRouter>

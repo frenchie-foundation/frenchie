@@ -46,7 +46,7 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
         leftIcon={<FaWallet color={constants.colors.dark} />}
         onClick={handleConnect}
         isLoading={loading}
-        display={{ base: isWeb3Enabled ? 'none' : 'block', md: 'block' }}
+        display={{ base: isWeb3Enabled ? 'none' : 'flex', md: 'flex' }}
       >
         {isWeb3Enabled
           ? `${address?.substr(0, 4)}...${address?.substr(-4, 4)}`

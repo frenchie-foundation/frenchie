@@ -41,7 +41,7 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
     try {
       if (!isWeb3Enabled) {
         if (window.ethereum) {
-          await window.ethereum.enable();
+          await window.ethereum.request({ method: 'eth_requestAccounts' });
           setWeb3(new Web3(window.ethereum));
         } else {
           throw new Error(

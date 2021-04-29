@@ -3,6 +3,7 @@ import { Contract } from 'web3-eth-contract';
 
 import FrenchieContract from '../assets/contracts/Frenchie.json';
 import FarmContract from '../assets/contracts/Farm.json';
+import OneInchLPABI from '../assets/contracts/1InchLP.json';
 
 import { AbiItem } from '../types';
 import { useWallet } from './wallet';
@@ -11,6 +12,8 @@ import constants from '../config/constants';
 interface IContractsContext {
   frenToken?: Contract;
   farmContract?: Contract;
+  oneInch?: Contract;
+  loadContract: (abi: unknown, address: string) => Contract | undefined;
 }
 
 interface IContractsProvider {
@@ -51,11 +54,20 @@ export const ContractsProvider: React.FC<IContractsProvider> = ({
     return undefined;
   }, [isWeb3Enabled, loadContract]);
 
+  const oneInch = useMemo(() => {
+    if (isWeb3Enabled) {
+      return loadContract(OneInchLPABI, constants.oneInchLPAddress);
+    }
+    return undefined;
+  }, [isWeb3Enabled, loadContract]);
+
   return (
     <ContractsContext.Provider
       value={{
         frenToken,
         farmContract,
+        oneInch,
+        loadContract,
       }}
     >
       {children}

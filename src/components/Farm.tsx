@@ -93,7 +93,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const fetchEverything = useCallback(async () => {
     try {
       setLoading(true);
-      if (isWeb3Enabled && oneInch && address && farmContract) {
+      if (web3.utils && isWeb3Enabled && oneInch && address && farmContract) {
         const _allowance = await oneInch.methods
           .allowance(address, constants.farmAddress)
           .call();
@@ -108,12 +108,12 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
         setFarmingAmount(_farmingAmount);
 
         const _rewards = await farmContract.methods.userInfo(0, address).call();
-        setRewards(_rewards.rewardDebt);
+        setRewards(Number(web3.utils.fromWei(_rewards.rewardDebt)));
       }
     } finally {
       setLoading(false);
     }
-  }, [address, farmContract, isWeb3Enabled, oneInch]);
+  }, [address, farmContract, isWeb3Enabled, oneInch, web3.utils]);
 
   useEffect(() => {
     fetchEverything();
@@ -212,7 +212,6 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       setWithdrawing(true);
 
       if (farmContract) {
-        console.log(weiAmountToWithdraw);
         const success = await farmContract.methods
           .withdraw(0, weiAmountToWithdraw)
           .send({

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Box, Container, Flex, HStack, Link, Text } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
-import { FaNewspaper, FaTelegram } from 'react-icons/fa';
+import { FaNewspaper, FaTelegram, FaExchangeAlt} from 'react-icons/fa';
 import { Image } from '@chakra-ui/image';
 
 import openInNewTab from '../helpers/openInNewTab';
@@ -18,6 +18,9 @@ export default function HomePage(): React.ReactElement {
 
   const handleTelegramLinkClick = useCallback(() => {
     openInNewTab(constants.telegramGroupLink);
+  }, []);
+  const handle1inchLinkClick = useCallback(() => {
+    openInNewTab(constants.oneInchSwapLink);
   }, []);
 
   const handleWhitepaperLinkClick = useCallback((e?: any) => {
@@ -113,6 +116,13 @@ export default function HomePage(): React.ReactElement {
           >
             Our whitepaper
           </Button>
+          <Button
+            colorScheme="green"
+            leftIcon={<FaExchangeAlt />}
+            onClick={handle1inchLinkClick}
+          >
+            Buy on 1Inch
+          </Button>
         </HStack>
       </Flex>
 
@@ -123,13 +133,13 @@ export default function HomePage(): React.ReactElement {
         <b>Initial supply:</b> 1 trillion
       </Text>
       <Text>
-        <b>Current supply:</b> 825 billions (82.5%)
+        <b>Current supply:</b> 800 billions (80%)
       </Text>
       <Text>
-        <b>Total burned:</b> 175 billions (17.5%)
+        <b>Total burned:</b> 200 billions (20%)
       </Text>
       <Text>
-        <b>Tokens to burn:</b> 75 billions (7.5%)
+        <b>Tokens to burn:</b> 50 billions (5%)
       </Text>
       <Text>
         <b>Locked liquidity:</b> 250 billions (25%)
@@ -149,7 +159,7 @@ export default function HomePage(): React.ReactElement {
         The token
       </Title>
       <Text>
-        FREN is a simple BEP20 token, secure and audited by professionals. Doing
+        FREN is a simple BEP-20 token, secure and audited by professionals. Doing
         it simple, it’s also automatically secure. That’s what we had in mind
         when we deployed it.
       </Text>

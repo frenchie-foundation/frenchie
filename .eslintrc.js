@@ -1,4 +1,5 @@
 // eslint-disable-next-line no-undef
+/*eslint linebreak-style: ["error", "windows"]*/
 module.exports = {
   'env': {
     'browser': true,

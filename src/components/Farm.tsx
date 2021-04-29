@@ -58,6 +58,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const [farming, setFarming] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const [withdrawAmount, setWithdrawAmount] = useState(0);
   const [withdrawSlider, setWithdrawSlider] = useState(0);
   const [farmSlider, setFarmSlider] = useState(0);
   const [farmingAmount, setFarmingAmount] = useState(0);
@@ -74,24 +75,20 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
 
   useEffect(() => {
     if (web3.utils) {
-      const amount =
-        Number(web3.utils.fromWei(String(balance))) * (farmSlider / 100);
-      if (amount !== amountToFarm && amount !== Infinity) {
-        setAmountToFarm(amount);
-      }
+      setAmountToFarm(
+        Number(web3.utils.fromWei(String(balance))) * (farmSlider / 100)
+      );
     }
-  }, [amountToFarm, balance, farmSlider, web3.utils]);
+  }, [balance, farmSlider, web3.utils]);
 
-  const withdrawAmount = useMemo(() => {
-    return Math.floor(farmingAmount * (withdrawSlider / 100));
-  }, [farmingAmount, withdrawSlider]);
-
-  const humanReadableWithdrawAmount = useMemo(() => {
+  useEffect(() => {
     if (web3.utils) {
-      return web3.utils.fromWei(String(withdrawAmount));
+      setWithdrawAmount(
+        Number(web3.utils.fromWei(String(farmingAmount))) *
+          (withdrawSlider / 100)
+      );
     }
-    return '0';
-  }, [web3.utils, withdrawAmount]);
+  }, [withdrawSlider, farmingAmount, web3.utils]);
 
   const fetchEverything = useCallback(async () => {
     try {
@@ -128,6 +125,13 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
     }
     return '0';
   }, [amountToFarm, web3.utils]);
+
+  const weiAmountToWithdraw = useMemo(() => {
+    if (web3.utils && !isNaN(withdrawAmount)) {
+      return web3.utils.toWei(String(withdrawAmount));
+    }
+    return '0';
+  }, [withdrawAmount, web3.utils]);
 
   const farmButtonText = useMemo(() => {
     if (allowance >= Number(weiAmountToFarm)) {
@@ -208,8 +212,9 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       setWithdrawing(true);
 
       if (farmContract) {
+        console.log(weiAmountToWithdraw);
         const success = await farmContract.methods
-          .withdraw(0, farmingAmount)
+          .withdraw(0, weiAmountToWithdraw)
           .send({
             from: address,
           });
@@ -236,7 +241,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       fetchEverything();
       setWithdrawing(false);
     }
-  }, [address, farmContract, farmingAmount, fetchEverything, toast]);
+  }, [address, farmContract, fetchEverything, toast, weiAmountToWithdraw]);
 
   const handleClaimRewards = useCallback(async () => {
     try {
@@ -325,7 +330,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
         <FormControl id="farmingAmount" mb={2} mt={4}>
           <FormLabel>Amount to withdraw</FormLabel>
           <NumberInput
-            value={humanReadableWithdrawAmount}
+            value={withdrawAmount}
             min={0}
             max={Number(farmingAmount)}
           >

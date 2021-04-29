@@ -1,10 +1,17 @@
-import React from 'react';
-import { Box, Container, Link, Text } from '@chakra-ui/layout';
+import React, { useCallback } from 'react';
+import { Box, Container, Link, Text, Flex, HStack } from '@chakra-ui/layout';
 import Title from '../components/Title';
 import constants from '../config/constants';
 import Farm from '../components/Farm';
+import { Button } from '@chakra-ui/button';
+import { FaTint } from 'react-icons/fa';
+
+import openInNewTab from '../helpers/openInNewTab';
 
 export default function FarmingPage(): React.ReactElement {
+  const handleliquidityLinkClick = useCallback(() => {
+    openInNewTab(constants.addLiquidityLink);
+  }, []);
   return (
     <Container>
       <Box mt={16} mb={10}>
@@ -44,7 +51,18 @@ export default function FarmingPage(): React.ReactElement {
         >
           Watch this tutorial
         </Link>
-        .
+        
+        <Flex justifyContent="center">
+        <HStack mt={20}>
+        <Button
+            colorScheme="purple"
+            leftIcon={<FaTint />}
+            onClick={handleliquidityLinkClick}
+          >
+            Create Liquidity Tokens
+          </Button>
+          </HStack>
+          </Flex>
       </Text>
       <Farm mt={10} />
     </Container>

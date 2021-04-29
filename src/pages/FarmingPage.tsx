@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
-import { Box, Container, Link, Text, Flex, HStack } from '@chakra-ui/layout';
+import { Box, Container, Link, Text, Flex, HStack, List, ListItem, ListIcon } from '@chakra-ui/layout';
 import Title from '../components/Title';
 import constants from '../config/constants';
 import Farm from '../components/Farm';
 import { Button } from '@chakra-ui/button';
-import { FaTint } from 'react-icons/fa';
+import { FaTint, FaCheckCircle } from 'react-icons/fa';
 
 import openInNewTab from '../helpers/openInNewTab';
 
@@ -51,7 +51,23 @@ export default function FarmingPage(): React.ReactElement {
         >
           Watch this tutorial
         </Link>
-        
+        <HStack mt={20}>
+        <List spacing={3}>
+  <ListItem>
+    <ListIcon as={FaCheckCircle} color="green.500" />
+    Create Liquidity Tokens on 1inch
+  </ListItem>
+  <ListItem>
+    <ListIcon as={FaCheckCircle} color="green.500" />
+    Deposit 1INCH FREN-BNB LP on Frenchie Farm 
+  </ListItem>
+  <ListItem>
+    <ListIcon as={FaCheckCircle} color="green.500" />
+    Earn 5000 FREN at 3 seconds splitted among the number of farmers in our Frenchie Farm contract. 
+  </ListItem>
+
+</List>
+</HStack>
         <Flex justifyContent="center">
         <HStack mt={20}>
         <Button
@@ -59,7 +75,7 @@ export default function FarmingPage(): React.ReactElement {
             leftIcon={<FaTint />}
             onClick={handleliquidityLinkClick}
           >
-            Create Liquidity Tokens
+            Create Liquidity Tokens on 1inch
           </Button>
           </HStack>
           </Flex>

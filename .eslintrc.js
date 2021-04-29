@@ -29,7 +29,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'linebreak-style': [
       'error',
-      'unix',
+      'unix'
     ],
     'quotes': [
       'error',

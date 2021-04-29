@@ -59,6 +59,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const [loading, setLoading] = useState(true);
 
   const [withdrawSlider, setWithdrawSlider] = useState(0);
+  const [farmSlider, setFarmSlider] = useState(0);
   const [farmingAmount, setFarmingAmount] = useState(0);
   const [allowance, setAllowance] = useState(0);
   const [rewards, setRewards] = useState(0);
@@ -70,6 +71,16 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
     }
     return '0';
   }, [balance, web3.utils]);
+
+  useEffect(() => {
+    if (web3.utils) {
+      const amount =
+        Number(web3.utils.fromWei(String(balance))) * (farmSlider / 100);
+      if (amount !== amountToFarm && amount !== Infinity) {
+        setAmountToFarm(amount);
+      }
+    }
+  }, [amountToFarm, balance, farmSlider, web3.utils]);
 
   const withdrawAmount = useMemo(() => {
     return Math.floor(farmingAmount * (withdrawSlider / 100));
@@ -290,6 +301,19 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
             You have {displayBalance} FREN-LP
           </FormHelperText>
         </FormControl>
+        <Box p={3}>
+          <Slider
+            value={farmSlider}
+            onChange={setFarmSlider}
+            step={25}
+            colorScheme="teal"
+          >
+            <SliderTrack bg="teal.100">
+              <SliderFilledTrack bg="cyan" />
+            </SliderTrack>
+            <SliderThumb boxSize={6} color="teal" bg="teal" />
+          </Slider>
+        </Box>
         <Button
           isLoading={farming}
           disabled={amountToFarm === 0}
@@ -302,7 +326,6 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           <FormLabel>Amount to withdraw</FormLabel>
           <NumberInput
             value={humanReadableWithdrawAmount}
-            onChange={() => null}
             min={0}
             max={Number(farmingAmount)}
           >
@@ -312,7 +335,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
         <Box p={3}>
           <Slider
             value={withdrawSlider}
-            onChange={(v) => setWithdrawSlider(v)}
+            onChange={setWithdrawSlider}
             step={25}
             colorScheme="red"
           >

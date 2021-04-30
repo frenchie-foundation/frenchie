@@ -26,6 +26,7 @@ import {
   SliderThumb,
   SliderTrack,
 } from '@chakra-ui/slider';
+import { toEther, toWei } from '../helpers/units';
 
 interface IWhiteBox extends ChakraProps {
   children?: React.ReactNode;
@@ -51,44 +52,44 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
 
   const toast = useToast();
 
-  const [amountToFarm, setAmountToFarm] = useState(0);
-
   const [claimingRewards, setClaimingRewards] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
   const [farming, setFarming] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const [withdrawAmount, setWithdrawAmount] = useState(0);
   const [withdrawSlider, setWithdrawSlider] = useState(0);
   const [farmSlider, setFarmSlider] = useState(0);
-  const [farmingAmount, setFarmingAmount] = useState(0);
   const [allowance, setAllowance] = useState(0);
-  const [rewards, setRewards] = useState(0);
-  const [balance, setBalance] = useState(0);
+
+  const [withdrawAmount, setWithdrawAmount] = useState('0');
+  const [amountToFarm, setAmountToFarm] = useState('0');
+  const [farmingAmount, setFarmingAmount] = useState('0');
+  const [rewards, setRewards] = useState('0');
+  const [balance, setBalance] = useState('0');
 
   const displayBalance = useMemo(() => {
-    if (web3.utils) {
-      return Number(web3.utils.fromWei(String(balance))).toFixed(2);
-    }
-    return '0';
-  }, [balance, web3.utils]);
+    return toEther(balance);
+  }, [balance]);
+
+  const displayFarming = useMemo(() => {
+    return toEther(farmingAmount);
+  }, [farmingAmount]);
 
   useEffect(() => {
+    const _balance = toEther(balance);
     if (web3.utils) {
-      setAmountToFarm(
-        Number(web3.utils.fromWei(String(balance))) * (farmSlider / 100)
-      );
+      setAmountToFarm(web3.utils.toWei(String(_balance * (farmSlider / 100))));
     }
   }, [balance, farmSlider, web3.utils]);
 
   useEffect(() => {
+    const _farmingAmount = toEther(farmingAmount);
     if (web3.utils) {
       setWithdrawAmount(
-        Number(web3.utils.fromWei(String(farmingAmount))) *
-          (withdrawSlider / 100)
+        web3.utils.toWei(String(_farmingAmount * (withdrawSlider / 100)))
       );
     }
-  }, [withdrawSlider, farmingAmount, web3.utils]);
+  }, [withdrawSlider, web3.utils, farmingAmount]);
 
   const fetchEverything = useCallback(async () => {
     try {
@@ -107,8 +108,8 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           .call();
         setFarmingAmount(_farmingAmount);
 
-        const _rewards = await farmContract.methods.userInfo(0, address).call();
-        setRewards(Number(web3.utils.fromWei(_rewards.rewardDebt)));
+        const _rewards = await farmContract.methods.pending(0, address).call();
+        setRewards(web3.utils.fromWei(_rewards));
       }
     } finally {
       setLoading(false);
@@ -119,36 +120,24 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
     fetchEverything();
   }, [fetchEverything]);
 
-  const weiAmountToFarm = useMemo(() => {
-    if (web3.utils && !isNaN(amountToFarm)) {
-      return web3.utils.toWei(String(amountToFarm));
-    }
-    return '0';
-  }, [amountToFarm, web3.utils]);
-
-  const weiAmountToWithdraw = useMemo(() => {
-    if (web3.utils && !isNaN(withdrawAmount)) {
-      return web3.utils.toWei(String(withdrawAmount));
-    }
-    return '0';
-  }, [withdrawAmount, web3.utils]);
-
   const farmButtonText = useMemo(() => {
-    if (allowance >= Number(weiAmountToFarm)) {
+    if (allowance >= Number(amountToFarm)) {
       return 'Deposit';
     }
     return 'Approve FREN-LP';
-  }, [allowance, weiAmountToFarm]);
+  }, [allowance, amountToFarm]);
 
   const handleFarm = useCallback(async () => {
     try {
       setFarming(true);
 
+      const amount = amountToFarm > balance ? balance : amountToFarm;
+
       // Approve
-      if (!(allowance >= Number(weiAmountToFarm))) {
+      if (!(allowance >= Number(amount))) {
         if (oneInch) {
           const approved = await oneInch.methods
-            .approve(constants.farmAddress, weiAmountToFarm)
+            .approve(constants.farmAddress, '9'.repeat(64))
             .send({
               from: address,
             });
@@ -169,11 +158,9 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
 
       // Farm
       if (farmContract) {
-        const success = await farmContract.methods
-          .deposit(0, weiAmountToFarm)
-          .send({
-            from: address,
-          });
+        const success = await farmContract.methods.deposit(0, amount).send({
+          from: address,
+        });
 
         if (success) {
           toast({
@@ -198,25 +185,27 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       setFarming(false);
     }
   }, [
-    address,
     allowance,
+    amountToFarm,
     farmContract,
-    fetchEverything,
     oneInch,
+    address,
     toast,
-    weiAmountToFarm,
+    balance,
+    fetchEverything,
   ]);
 
   const handleWithdraw = useCallback(async () => {
     try {
       setWithdrawing(true);
 
+      const amount =
+        withdrawAmount > farmingAmount ? farmingAmount : withdrawAmount;
+
       if (farmContract) {
-        const success = await farmContract.methods
-          .withdraw(0, weiAmountToWithdraw)
-          .send({
-            from: address,
-          });
+        const success = await farmContract.methods.withdraw(0, amount).send({
+          from: address,
+        });
 
         if (success) {
           toast({
@@ -240,7 +229,14 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       fetchEverything();
       setWithdrawing(false);
     }
-  }, [address, farmContract, fetchEverything, toast, weiAmountToWithdraw]);
+  }, [
+    address,
+    farmContract,
+    farmingAmount,
+    fetchEverything,
+    toast,
+    withdrawAmount,
+  ]);
 
   const handleClaimRewards = useCallback(async () => {
     try {
@@ -290,8 +286,8 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
         <FormControl id="amountToFarm" mb={2}>
           <FormLabel>Amount to farm</FormLabel>
           <NumberInput
-            value={amountToFarm || 0}
-            onChange={(_, v) => setAmountToFarm(v)}
+            value={toEther(amountToFarm)}
+            onChange={(_, v) => setAmountToFarm(toWei(v))}
             min={0}
             max={Number(balance)}
           >
@@ -320,7 +316,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
         </Box>
         <Button
           isLoading={farming}
-          disabled={amountToFarm === 0}
+          disabled={!amountToFarm || amountToFarm === '0'}
           colorScheme="teal"
           onClick={handleFarm}
         >
@@ -329,12 +325,20 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
         <FormControl id="farmingAmount" mb={2} mt={4}>
           <FormLabel>Amount to withdraw</FormLabel>
           <NumberInput
-            value={withdrawAmount}
+            value={toEther(withdrawAmount)}
+            onChange={(_, v) => setWithdrawAmount(toWei(v))}
             min={0}
-            max={Number(farmingAmount)}
+            max={toEther(withdrawAmount)}
           >
             <NumberInputField bg={constants.colors.dark} color="white" />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
           </NumberInput>
+          <FormHelperText color={constants.colors.dark}>
+            You are using {displayFarming} FREN-LP to farm FREN
+          </FormHelperText>
         </FormControl>
         <Box p={3}>
           <Slider
@@ -351,7 +355,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
         </Box>
         <Button
           isLoading={withdrawing}
-          disabled={withdrawAmount === 0}
+          disabled={!withdrawAmount || withdrawAmount === '0'}
           colorScheme="red"
           onClick={handleWithdraw}
         >
@@ -361,7 +365,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       <WhiteBox w="100%">
         {loading && <Progress size="xs" isIndeterminate />}
         <Title color={constants.colors.dark}>Rewards</Title>
-        <FormControl id="farmingAmount" mb={2} mt={2}>
+        <FormControl id="rewardsAmount" mb={2} mt={2}>
           <FormLabel>FREN rewards</FormLabel>
           <NumberInput value={rewards} onChange={() => null}>
             <NumberInputField bg={constants.colors.dark} color="white" />

@@ -27,6 +27,7 @@ import {
   SliderTrack,
 } from '@chakra-ui/slider';
 import { toEther, toWei } from '../helpers/units';
+import axios from 'axios';
 
 interface IWhiteBox extends ChakraProps {
   children?: React.ReactNode;
@@ -52,6 +53,8 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
 
   const toast = useToast();
 
+  const [frenPrice, setFrenPrice] = useState(0);
+
   const [claimingRewards, setClaimingRewards] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
   const [farming, setFarming] = useState(false);
@@ -67,6 +70,10 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const [rewards, setRewards] = useState('0');
   const [balance, setBalance] = useState('0');
 
+  const usdRewardsPrice = useMemo(() => {
+    return (Number(rewards) * frenPrice).toLocaleString();
+  }, [rewards, frenPrice]);
+
   const displayBalance = useMemo(() => {
     return toEther(balance);
   }, [balance]);
@@ -76,18 +83,20 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   }, [farmingAmount]);
 
   useEffect(() => {
-    const _balance = toEther(balance);
     if (web3.utils) {
-      setAmountToFarm(web3.utils.toWei(String(_balance * (farmSlider / 100))));
+      const { toBN } = web3.utils;
+      const _farmSlider = toBN(farmSlider);
+      const amount = toBN(balance).mul(_farmSlider).div(toBN(100));
+      setAmountToFarm(amount.toString());
     }
   }, [balance, farmSlider, web3.utils]);
 
   useEffect(() => {
-    const _farmingAmount = toEther(farmingAmount);
     if (web3.utils) {
-      setWithdrawAmount(
-        web3.utils.toWei(String(_farmingAmount * (withdrawSlider / 100)))
-      );
+      const { toBN } = web3.utils;
+      const _withdrawSlider = toBN(withdrawSlider);
+      const amount = toBN(farmingAmount).mul(_withdrawSlider).div(toBN(100));
+      setWithdrawAmount(amount.toString());
     }
   }, [withdrawSlider, web3.utils, farmingAmount]);
 
@@ -98,21 +107,27 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
     try {
       setLoading(true);
       if (web3.utils && isWeb3Enabled && oneInch && address && farmContract) {
-        const _allowance = await oneInch.methods
-          .allowance(address, constants.farmAddress)
-          .call();
+        const [
+          _allowance,
+          _balance,
+          _farmingAmount,
+          _rewards,
+          { data },
+        ] = await Promise.all([
+          oneInch.methods.allowance(address, constants.farmAddress).call(),
+          oneInch.methods.balanceOf(address).call(),
+          farmContract.methods.deposited(0, address).call(),
+          farmContract.methods.pending(0, address).call(),
+          axios.get(
+            'https://api.1inch.exchange/v3.0/56/quote?toTokenAddress=0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d&fromTokenAddress=0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af&amount=10000000000000000'
+          ),
+        ]);
+
         setAllowance(_allowance);
-
-        const _balance = await oneInch.methods.balanceOf(address).call();
         setBalance(_balance);
-
-        const _farmingAmount = await farmContract.methods
-          .deposited(0, address)
-          .call();
         setFarmingAmount(_farmingAmount);
-
-        const _rewards = await farmContract.methods.pending(0, address).call();
         setRewards(web3.utils.fromWei(_rewards));
+        setFrenPrice(data.toTokenAmount / data.fromTokenAmount);
       }
     } finally {
       setLoading(false);
@@ -122,6 +137,24 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   useEffect(() => {
     fetchEverything();
   }, [fetchEverything]);
+
+  useEffect(() => {
+    if (web3.utils && isWeb3Enabled && address && farmContract) {
+      let timeout: NodeJS.Timeout;
+
+      const updateRewards = async () => {
+        const _rewards = await farmContract.methods.pending(0, address).call();
+        setRewards(web3.utils.fromWei(_rewards));
+        timeout = setTimeout(updateRewards, 10000);
+      };
+
+      updateRewards();
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [address, farmContract, isWeb3Enabled, web3.utils]);
 
   const farmButtonText = useMemo(() => {
     if (allowance >= Number(amountToFarm)) {
@@ -373,6 +406,9 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           <NumberInput value={rewards} onChange={() => null}>
             <NumberInputField bg={constants.colors.dark} color="white" />
           </NumberInput>
+          <FormHelperText color={constants.colors.dark}>
+            = {usdRewardsPrice} USD
+          </FormHelperText>
         </FormControl>
         <Button
           isLoading={claimingRewards}

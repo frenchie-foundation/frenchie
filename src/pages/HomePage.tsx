@@ -19,6 +19,7 @@ export default function HomePage(): React.ReactElement {
   const handleTelegramLinkClick = useCallback(() => {
     openInNewTab(constants.telegramGroupLink);
   }, []);
+
   const handle1inchLinkClick = useCallback(() => {
     openInNewTab(constants.oneInchSwapLink);
   }, []);

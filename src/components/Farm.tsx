@@ -92,6 +92,9 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   }, [withdrawSlider, web3.utils, farmingAmount]);
 
   const fetchEverything = useCallback(async () => {
+    setFarmSlider(0);
+    setWithdrawSlider(0);
+
     try {
       setLoading(true);
       if (web3.utils && isWeb3Enabled && oneInch && address && farmContract) {

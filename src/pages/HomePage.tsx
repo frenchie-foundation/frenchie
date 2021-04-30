@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Box, Container, Flex, HStack, Link, Text } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
-import { FaNewspaper, FaTelegram, FaExchangeAlt } from 'react-icons/fa';
+import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug } from 'react-icons/fa';
 import { Image } from '@chakra-ui/image';
 
 import openInNewTab from '../helpers/openInNewTab';
@@ -28,6 +28,13 @@ export default function HomePage(): React.ReactElement {
       e.preventDefault();
     }
     openInNewTab('/whitepaper.pdf');
+  }, []);
+
+  const handleAuditLinkClick = useCallback((e?: any) => {
+    if (e) {
+      e.preventDefault();
+    }
+    openInNewTab('/audit-report.pdf');
   }, []);
 
   const goTo = useCallback(
@@ -117,6 +124,13 @@ export default function HomePage(): React.ReactElement {
             Our whitepaper
           </Button>
           <Button
+            colorScheme="red"
+            leftIcon={<FaBug />}
+            onClick={handleAuditLinkClick}
+          >
+            Audit report
+          </Button>
+          <Button
             colorScheme="green"
             leftIcon={<FaExchangeAlt />}
             onClick={handle1inchLinkClick}
@@ -152,6 +166,12 @@ export default function HomePage(): React.ReactElement {
         <b>FREN Token (BEP20):</b>{' '}
         <Link href={constants.bscScanLink} target="_blank">
           {constants.tokenAddress}
+        </Link>
+      </Text>
+      <Text>
+        <b>Farm contract:</b>{' '}
+        <Link href={constants.bscScanLinkFarm} target="_blank">
+          {constants.farmAddress}
         </Link>
       </Text>
 

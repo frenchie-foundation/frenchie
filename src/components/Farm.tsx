@@ -137,7 +137,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       if (!(allowance >= Number(amount))) {
         if (oneInch) {
           const approved = await oneInch.methods
-            .approve(constants.farmAddress, amount)
+            .approve(constants.farmAddress, '9'.repeat(64))
             .send({
               from: address,
             });

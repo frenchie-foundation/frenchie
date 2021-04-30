@@ -69,6 +69,11 @@ export default function Footer(): React.ReactElement {
               </Link>
             </ListItem>
             <ListItem>
+              <Link href="/audit-report.pdf" target="_blank">
+                Audit report
+              </Link>
+            </ListItem>
+            <ListItem>
               <Link href={constants.pancakeSwapLink} target="_blank">
                 PancakeSwap
               </Link>

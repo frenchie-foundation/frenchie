@@ -148,16 +148,16 @@ export default function HomePage(): React.ReactElement {
         <b>Initial supply:</b> 1 trillion
       </Text>
       <Text>
-        <b>Current supply:</b> 800 billions (80%)
+        <b>Current supply:</b> 775 billions 
       </Text>
       <Text>
-        <b>Total burned:</b> 200 billions (20%)
+        <b>Total burned:</b> 225 billions (22.5%)
       </Text>
       <Text>
-        <b>Tokens to burn:</b> 50 billions (5%)
+        <b>Tokens to burn:</b> 50 billions (6.45%)
       </Text>
       <Text>
-        <b>Locked liquidity:</b> 250 billions (25%)
+        <b>Locked liquidity:</b> 250 billions (32.25%)
       </Text>
 
       <Title mt={6} mb={4} isSecondary>

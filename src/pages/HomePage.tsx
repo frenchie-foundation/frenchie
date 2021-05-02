@@ -28,7 +28,7 @@ export default function HomePage(): React.ReactElement {
     if (e) {
       e.preventDefault();
     }
-    openInNewTab('/whitepaper.pdf');
+    openInNewTab('/frenchie-whitepaper.pdf');
   }, []);
 
   const handleAuditLinkClick = useCallback((e?: any) => {

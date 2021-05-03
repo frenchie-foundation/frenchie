@@ -9,9 +9,9 @@ import openInNewTab from '../helpers/openInNewTab';
 import constants from '../config/constants';
 import Title from '../components/Title';
 
-import coins from '../assets/images/coins-solid.svg';
-import layers from '../assets/images/layers-solid.svg';
-import network from '../assets/images/network-solid.svg';
+import frenchiefarm from '../assets/images/frenchie-farm.png';
+import frenchie from '../assets/images/logo.svg';
+import frenchieblockchain from '../assets/images/frenchie-blockchain.png';
 import { useHistory } from 'react-router';
 
 export default function HomePage(): React.ReactElement {
@@ -62,10 +62,12 @@ export default function HomePage(): React.ReactElement {
       <Box display={{ base: 'block', md: 'flex' }} alignItems="start">
         <Box p={4} w="100%">
           <Flex justifyContent="center" mb={4}>
-            <Image src={coins} />
+            <Image 
+            src={frenchie}
+            boxSize="50px" />
           </Flex>
           <Title mb={4} textAlign="center">
-            FREN token
+            Frenchie Token
           </Title>
           <Text>
             <Text display="inline" color={constants.colors.red}>
@@ -77,10 +79,12 @@ export default function HomePage(): React.ReactElement {
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
           <Flex justifyContent="center" mb={4}>
-            <Image src={layers} />
+          <Image 
+            src={frenchiefarm}
+            boxSize="50px" />
           </Flex>
           <Title mb={4} textAlign="center">
-            Farming rewards
+            Farming Rewards
           </Title>
           <Text>
             We have a farming mechanism
@@ -94,10 +98,13 @@ export default function HomePage(): React.ReactElement {
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
           <Flex justifyContent="center" mb={4}>
-            <Image src={network} />
+            <Image 
+            src={frenchieblockchain} 
+            boxSize="50px"
+            />
           </Flex>
           <Title mb={4} textAlign="center">
-            Blockchain innovations
+            Blockchain Innovations
           </Title>
           <Text>
             Frenchie
@@ -146,7 +153,7 @@ export default function HomePage(): React.ReactElement {
 
         <Image
         objectFit="cover"
-        boxSize="150px"
+        boxSize="100px"
         src="https://poocoin.app/images/logo/poocoin512.png"
         alt="Poocoin Chart"
         onClick={handleTelegramLinkClick}/>

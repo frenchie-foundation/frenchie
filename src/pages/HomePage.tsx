@@ -25,6 +25,12 @@ export default function HomePage(): React.ReactElement {
     openInNewTab(constants.oneInchSwapLink);
   }, []);
 
+  const handlepoocoinLinkClick = useCallback(() => {
+    openInNewTab(constants.poocoinGroupLink);
+  }, []);
+  const handlecoingeckoLinkClick = useCallback(() => {
+    openInNewTab(constants.coingeckoGroupLink);
+  }, []);
   const handleWhitepaperLinkClick = useCallback((e?: any) => {
     if (e) {
       e.preventDefault();
@@ -156,9 +162,18 @@ export default function HomePage(): React.ReactElement {
         boxSize="100px"
         src="https://poocoin.app/images/logo/poocoin512.png"
         alt="Poocoin Chart"
-        onClick={handleTelegramLinkClick}/>
+        onClick={handlepoocoinLinkClick}/>
                 <Heading as="h3" size="lg">
           Poocoin Chart
+        </Heading>
+        <Image
+        objectFit="cover"
+        boxSize="100px"
+        src="https://i.imgur.com/bjJF07B.png"
+        alt="CoinGecko"
+        onClick={handlecoingeckoLinkClick}/>
+                <Heading as="h3" size="lg">
+          CoinGecko
         </Heading>
         </HStack>
       </Flex>

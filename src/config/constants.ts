@@ -8,6 +8,7 @@ const constants = {
   pancakeSwapLink: 'https://v1exchange.pancakeswap.finance/#/swap?outputCurrency=0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af',
   oneInchSwapLink: 'https://app.1inch.io/#/56/swap/BNB/FREN',
   addLiquidityLink: 'https://app.1inch.io/#/56/dao/pools?action=stake&token0=0x0000000000000000000000000000000000000000&token1=0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af',
+  telegramGroupLink: 'https://poocoin.app/tokens/0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af',
   colors: {
     light: '#FFEFCF',
     dark: '#1A202C',

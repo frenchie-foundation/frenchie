@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { Box, Container, Flex, HStack, Link, Text } from '@chakra-ui/layout';
+import { Heading } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/button';
 import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug } from 'react-icons/fa';
 import { Image } from '@chakra-ui/image';
@@ -138,6 +139,20 @@ export default function HomePage(): React.ReactElement {
           >
             Buy on 1Inch
           </Button>
+        </HStack>
+      </Flex>
+      <Flex justifyContent="center">
+        <HStack mt={20}>
+
+        <Image
+        objectFit="cover"
+        boxSize="150px"
+        src="https://poocoin.app/images/logo/poocoin512.png"
+        alt="Poocoin Chart"
+        onClick={handleTelegramLinkClick}/>
+                <Heading as="h3" size="lg">
+          Poocoin Chart
+        </Heading>
         </HStack>
       </Flex>
 

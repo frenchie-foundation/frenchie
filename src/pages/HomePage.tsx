@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { Box, Container, Flex, HStack, Link, Text } from '@chakra-ui/layout';
+import { Heading } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/button';
 import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug } from 'react-icons/fa';
 import { Image } from '@chakra-ui/image';
@@ -8,9 +9,9 @@ import openInNewTab from '../helpers/openInNewTab';
 import constants from '../config/constants';
 import Title from '../components/Title';
 
-import coins from '../assets/images/coins-solid.svg';
-import layers from '../assets/images/layers-solid.svg';
-import network from '../assets/images/network-solid.svg';
+import frenchiefarm from '../assets/images/frenchie-farm.png';
+import frenchie from '../assets/images/logo.svg';
+import frenchieblockchain from '../assets/images/frenchie-blockchain.png';
 import { useHistory } from 'react-router';
 
 export default function HomePage(): React.ReactElement {
@@ -24,11 +25,17 @@ export default function HomePage(): React.ReactElement {
     openInNewTab(constants.oneInchSwapLink);
   }, []);
 
+  const handlepoocoinLinkClick = useCallback(() => {
+    openInNewTab(constants.poocoinGroupLink);
+  }, []);
+  const handlecoingeckoLinkClick = useCallback(() => {
+    openInNewTab(constants.coingeckoGroupLink);
+  }, []);
   const handleWhitepaperLinkClick = useCallback((e?: any) => {
     if (e) {
       e.preventDefault();
     }
-    openInNewTab('/whitepaper.pdf');
+    openInNewTab('/frenchie-whitepaper.pdf');
   }, []);
 
   const handleAuditLinkClick = useCallback((e?: any) => {
@@ -61,10 +68,12 @@ export default function HomePage(): React.ReactElement {
       <Box display={{ base: 'block', md: 'flex' }} alignItems="start">
         <Box p={4} w="100%">
           <Flex justifyContent="center" mb={4}>
-            <Image src={coins} />
+            <Image 
+            src={frenchie}
+            boxSize="50px" />
           </Flex>
           <Title mb={4} textAlign="center">
-            FREN token
+            Frenchie Token
           </Title>
           <Text>
             <Text display="inline" color={constants.colors.red}>
@@ -76,10 +85,12 @@ export default function HomePage(): React.ReactElement {
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
           <Flex justifyContent="center" mb={4}>
-            <Image src={layers} />
+          <Image 
+            src={frenchiefarm}
+            boxSize="50px" />
           </Flex>
           <Title mb={4} textAlign="center">
-            Farming rewards
+            Farming Rewards
           </Title>
           <Text>
             We have a farming mechanism
@@ -93,10 +104,13 @@ export default function HomePage(): React.ReactElement {
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
           <Flex justifyContent="center" mb={4}>
-            <Image src={network} />
+            <Image 
+            src={frenchieblockchain} 
+            boxSize="50px"
+            />
           </Flex>
           <Title mb={4} textAlign="center">
-            Blockchain innovations
+            Blockchain Innovations
           </Title>
           <Text>
             Frenchie
@@ -140,6 +154,29 @@ export default function HomePage(): React.ReactElement {
           </Button>
         </HStack>
       </Flex>
+      <Flex justifyContent="center">
+        <HStack mt={20}>
+
+        <Image
+        objectFit="cover"
+        boxSize="100px"
+        src="https://poocoin.app/images/logo/poocoin512.png"
+        alt="Poocoin Chart"
+        onClick={handlepoocoinLinkClick}/>
+                <Heading as="h3" size="lg">
+          Poocoin Chart
+        </Heading>
+        <Image
+        objectFit="cover"
+        boxSize="100px"
+        src="https://i.imgur.com/bjJF07B.png"
+        alt="CoinGecko"
+        onClick={handlecoingeckoLinkClick}/>
+                <Heading as="h3" size="lg">
+          CoinGecko
+        </Heading>
+        </HStack>
+      </Flex>
 
       <Title mt={20} mb={4} isSecondary>
         Tokenmetrics
@@ -148,16 +185,16 @@ export default function HomePage(): React.ReactElement {
         <b>Initial supply:</b> 1 trillion
       </Text>
       <Text>
-        <b>Current supply:</b> 800 billions (80%)
+        <b>Current supply:</b> 775 billions 
       </Text>
       <Text>
-        <b>Total burned:</b> 200 billions (20%)
+        <b>Total burned:</b> 225 billions (22.5%)
       </Text>
       <Text>
-        <b>Tokens to burn:</b> 50 billions (5%)
+        <b>Tokens to burn:</b> 50 billions (6.45%)
       </Text>
       <Text>
-        <b>Locked liquidity:</b> 250 billions (25%)
+        <b>Locked liquidity:</b> 250 billions (32.25%)
       </Text>
 
       <Title mt={6} mb={4} isSecondary>

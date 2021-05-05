@@ -6,6 +6,7 @@ import { FaWallet } from 'react-icons/fa';
 import constants from '../config/constants';
 import { useContracts } from '../store/contracts';
 import { useWallet } from '../store/wallet';
+import { Logo } from './Logo';
 
 type IWalletInfo = ChakraProps;
 
@@ -37,7 +38,7 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
     <HStack spacing={4} {...props}>
       {isWeb3Enabled && frenBalance !== -1 && (
         <Text fontWeight="bold">
-          $ {Number(web3.utils.fromWei(String(frenBalance))).toLocaleString()}
+          <Logo height={7} /> $FREN {Number(web3.utils.fromWei(String(frenBalance))).toLocaleString()}
         </Text>
       )}
       <Button

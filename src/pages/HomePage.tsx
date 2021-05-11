@@ -57,10 +57,10 @@ export default function HomePage(): React.ReactElement {
     <Container>
       <Box mt={16} mb={16}>
         <Title lineHeight="48px" isPageTitle>
-          More than a meme
+          More Than A MEME
         </Title>
         <Title isPageTitle color={constants.colors.red}>
-          An ecosystem
+          An Ecosystem
         </Title>
       </Box>
       <Box display={{ base: 'block', md: 'flex' }} alignItems="start">
@@ -69,7 +69,7 @@ export default function HomePage(): React.ReactElement {
             <Image src={frenchie} boxSize="50px" />
           </Flex>
           <Title mb={4} textAlign="center">
-            Frenchie Token
+            Frenchie Network
           </Title>
           <Text>
             <Text display="inline" color={constants.colors.red}>
@@ -191,29 +191,32 @@ export default function HomePage(): React.ReactElement {
         <b>Initial supply:</b> 1 trillion
       </Text>
       <Text>
-        <b>Current supply:</b> 775 billions
+        <b>Current supply:</b> 750 billions
       </Text>
       <Text>
-        <b>Total burned:</b> 225 billions (22.5%)
+        <b>Total burned:</b> 250 billions (33.33%)
       </Text>
       <Text>
-        <b>Tokens to burn:</b> 50 billions (6.45%)
+        <b>Tokens to burn:</b> 0 billions (0%)
       </Text>
       <Text>
-        <b>Locked liquidity:</b> 250 billions (32.25%)
+        <b>Locked liquidity:</b> 250 billions (33.33%)
+      </Text>
+      <Text>
+        <b>Locked Vested Funds:</b> 345 billions 
       </Text>
 
       <Title mt={6} mb={4} isSecondary>
         Contract addresses
       </Title>
       <Text>
-        <b>FREN Token (BEP20):</b>{' '}
+        <b>FREN Contract Address (BEP20):</b>{' '}
         <Link href={constants.bscScanLink} target="_blank">
           {constants.tokenAddress}
         </Link>
       </Text>
       <Text>
-        <b>Farm contract:</b>{' '}
+        <b>Fren Farm contract:</b>{' '}
         <Link href={constants.bscScanLinkFarm} target="_blank">
           {constants.farmAddress}
         </Link>

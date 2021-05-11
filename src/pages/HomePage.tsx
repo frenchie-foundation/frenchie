@@ -25,12 +25,6 @@ export default function HomePage(): React.ReactElement {
     openInNewTab(constants.oneInchSwapLink);
   }, []);
 
-  const handlepoocoinLinkClick = useCallback(() => {
-    openInNewTab(constants.poocoinGroupLink);
-  }, []);
-  const handlecoingeckoLinkClick = useCallback(() => {
-    openInNewTab(constants.coingeckoGroupLink);
-  }, []);
   const handleWhitepaperLinkClick = useCallback((e?: any) => {
     if (e) {
       e.preventDefault();
@@ -68,9 +62,7 @@ export default function HomePage(): React.ReactElement {
       <Box display={{ base: 'block', md: 'flex' }} alignItems="start">
         <Box p={4} w="100%">
           <Flex justifyContent="center" mb={4}>
-            <Image 
-            src={frenchie}
-            boxSize="50px" />
+            <Image src={frenchie} boxSize="50px" />
           </Flex>
           <Title mb={4} textAlign="center">
             Frenchie Token
@@ -85,9 +77,7 @@ export default function HomePage(): React.ReactElement {
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
           <Flex justifyContent="center" mb={4}>
-          <Image 
-            src={frenchiefarm}
-            boxSize="50px" />
+            <Image src={frenchiefarm} boxSize="50px" />
           </Flex>
           <Title mb={4} textAlign="center">
             Farming Rewards
@@ -104,10 +94,7 @@ export default function HomePage(): React.ReactElement {
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
           <Flex justifyContent="center" mb={4}>
-            <Image 
-            src={frenchieblockchain} 
-            boxSize="50px"
-            />
+            <Image src={frenchieblockchain} boxSize="50px" />
           </Flex>
           <Title mb={4} textAlign="center">
             Blockchain Innovations
@@ -155,26 +142,41 @@ export default function HomePage(): React.ReactElement {
         </HStack>
       </Flex>
       <Flex justifyContent="center">
-        <HStack mt={20}>
-
-        <Image
-        objectFit="cover"
-        boxSize="100px"
-        src="https://poocoin.app/images/logo/poocoin512.png"
-        alt="Poocoin Chart"
-        onClick={handlepoocoinLinkClick}/>
-                <Heading as="h3" size="lg">
-          Poocoin Chart
-        </Heading>
-        <Image
-        objectFit="cover"
-        boxSize="100px"
-        src="https://i.imgur.com/bjJF07B.png"
-        alt="CoinGecko"
-        onClick={handlecoingeckoLinkClick}/>
-                <Heading as="h3" size="lg">
-          CoinGecko
-        </Heading>
+        <HStack mt={20} spacing={10}>
+          <a
+            href={constants.poocoinGroupLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <HStack spacing={4}>
+              <Image
+                objectFit="cover"
+                boxSize="100px"
+                src="https://poocoin.app/images/logo/poocoin512.png"
+                alt="Poocoin Chart"
+              />
+              <Heading as="h3" size="lg">
+                Poocoin Chart
+              </Heading>
+            </HStack>
+          </a>
+          <a
+            href={constants.coingeckoGroupLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <HStack spacing={4}>
+              <Image
+                objectFit="cover"
+                boxSize="100px"
+                src="https://i.imgur.com/bjJF07B.png"
+                alt="CoinGecko"
+              />
+              <Heading as="h3" size="lg">
+                CoinGecko
+              </Heading>
+            </HStack>
+          </a>
         </HStack>
       </Flex>
 
@@ -185,7 +187,7 @@ export default function HomePage(): React.ReactElement {
         <b>Initial supply:</b> 1 trillion
       </Text>
       <Text>
-        <b>Current supply:</b> 775 billions 
+        <b>Current supply:</b> 775 billions
       </Text>
       <Text>
         <b>Total burned:</b> 225 billions (22.5%)

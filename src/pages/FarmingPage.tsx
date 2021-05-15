@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -19,6 +19,10 @@ import { FaTint, FaCheckCircle } from 'react-icons/fa';
 import openInNewTab from '../helpers/openInNewTab';
 
 export default function FarmingPage(): React.ReactElement {
+  useEffect(() => {
+    document.title = 'Farm - Frenchie Network';
+  }, []);
+
   const handleLiquidityLinkClick = useCallback(() => {
     openInNewTab(constants.addLiquidityLink);
   }, []);

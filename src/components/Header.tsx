@@ -23,6 +23,7 @@ export default function Header(): React.ReactElement {
 
   const goTo = useCallback(
     (path: string) => (e?: any) => {
+      setDrawerOpen(false);
       if (e) {
         e.preventDefault();
       }
@@ -64,7 +65,15 @@ export default function Header(): React.ReactElement {
                 bg={constants.colors.light}
                 color={constants.colors.dark}
               >
-                Farming
+                Farm
+              </Button>
+              <Button
+                isFullWidth
+                onClick={goTo('/swap')}
+                bg={constants.colors.light}
+                color={constants.colors.dark}
+              >
+                Swap
               </Button>
             </VStack>
           </DrawerBody>

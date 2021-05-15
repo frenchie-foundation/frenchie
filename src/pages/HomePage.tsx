@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Box, Container, Flex, HStack, Link, Text } from '@chakra-ui/layout';
 import { Heading } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/button';
@@ -15,6 +15,10 @@ import frenchieblockchain from '../assets/images/frenchie-blockchain.png';
 import { useHistory } from 'react-router';
 
 export default function HomePage(): React.ReactElement {
+  useEffect(() => {
+    document.title = 'Frenchie Network';
+  }, []);
+
   const history = useHistory();
 
   const handleTelegramLinkClick = useCallback(() => {

@@ -17,6 +17,8 @@ import { useWallet } from '../store/wallet';
 import Title from './Title';
 import WhiteBox from './WhiteBox';
 import { Image } from '@chakra-ui/image';
+import axios from 'axios';
+import { useToast } from '@chakra-ui/toast';
 
 interface IToken {
   symbol: string;
@@ -61,36 +63,65 @@ const CoinLabel: React.FC<ICoinLabel> = ({ token }: ICoinLabel) => {
 
 const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isWeb3Enabled, address } = useWallet();
+  const { isWeb3Enabled, address, web3 } = useWallet();
   const { oneInchRouter, erc20 } = useContracts();
+  const toast = useToast();
 
   const [srcToken, setSrcToken] = useState(tokens[1]);
   const [dstToken, setDstToken] = useState(tokens[0]);
   const [srcBalance, setSrcBalance] = useState(new BigNumber(0));
   const [dstBalance, setDstBalance] = useState(new BigNumber(0));
-  const [srcAllowance, setSrcAllowance] = useState<BigNumber>();
-  const [dstAllowance, setDstAllowance] = useState<BigNumber>();
-  const [price, setPrice] = useState<BigNumber>();
-  const [slippage, setSlippage] = useState(0.6);
+  const [srcAllowance, setSrcAllowance] = useState<BigNumber>(new BigNumber(0));
+  const [fromAmount, setFromAmount] = useState(0);
+  const [toAmount, setToAmount] = useState(0);
+  const [slippage, setSlippage] = useState(1);
+  const [swapping, setSwapping] = useState(false);
+
+  const fromAmountWei = useMemo(() => {
+    return new BigNumber(fromAmount).multipliedBy(new BigNumber(1e18));
+  }, [fromAmount]);
+
+  const toAmountWei = useMemo(() => {
+    return new BigNumber(toAmount).multipliedBy(new BigNumber(1e-18));
+  }, [toAmount]);
+
+  const displaySrcBalance = useMemo(() => {
+    return srcBalance.multipliedBy(new BigNumber(1e-18)).toFixed(4);
+  }, [srcBalance]);
+
+  const displayDstBalance = useMemo(() => {
+    return dstBalance.multipliedBy(new BigNumber(1e-18)).toFixed(4);
+  }, [dstBalance]);
+
+  const swapButtonText = useMemo(() => {
+    if (
+      fromAmountWei.isGreaterThan(srcAllowance) ||
+      srcAllowance.isEqualTo(0)
+    ) {
+      return `Approve ${srcToken.symbol}`;
+    }
+    return 'Swap';
+  }, [fromAmountWei, srcAllowance, srcToken.symbol]);
 
   useEffect(() => {
-    if (!address || !isWeb3Enabled) {
-      return;
-    }
     (async () => {
-      const x = await erc20(srcToken.address)
-        ?.methods.balanceOf(address)
-        .call();
-      setSrcBalance(x);
+      const { data } = await axios.get(
+        'https://api.1inch.exchange/v3.0/56/quote',
+        {
+          params: {
+            fromTokenAddress: srcToken.address,
+            toTokenAddress: dstToken.address,
+            amount: fromAmountWei.toString(),
+          },
+        }
+      );
+      setToAmount(
+        new BigNumber(data.toTokenAmount)
+          .multipliedBy(new BigNumber(1e-18))
+          .toNumber()
+      );
     })();
-
-    (async () => {
-      const x = await erc20(dstToken.address)
-        ?.methods.balanceOf(address)
-        .call();
-      setDstBalance(x);
-    })();
-  }, [srcToken, dstToken, erc20, address, isWeb3Enabled]);
+  }, [dstToken.address, fromAmount, fromAmountWei, srcToken.address]);
 
   useEffect(() => {
     if (!address || !isWeb3Enabled) {
@@ -98,38 +129,103 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
     }
     (async () => {
       if (srcToken.address === constants.bnbAddress) {
-        return new BigNumber(Number.POSITIVE_INFINITY);
+        const x = await web3.eth.getBalance(address);
+        setSrcBalance(new BigNumber(x));
+        return;
+      }
+      const x = await erc20(srcToken.address)
+        ?.methods.balanceOf(address)
+        .call();
+      setSrcBalance(new BigNumber(x));
+    })();
+
+    (async () => {
+      if (dstToken.address === constants.bnbAddress) {
+        const x = await web3.eth.getBalance(address);
+        setDstBalance(new BigNumber(x));
+        return;
+      }
+      const x = await erc20(dstToken.address)
+        ?.methods.balanceOf(address)
+        .call();
+      setDstBalance(new BigNumber(x));
+    })();
+  }, [srcToken, dstToken, erc20, address, isWeb3Enabled, web3.eth]);
+
+  useEffect(() => {
+    if (!address || !isWeb3Enabled || !srcToken.address) {
+      return;
+    }
+    (async () => {
+      if (srcToken.address === constants.bnbAddress) {
+        setSrcAllowance(new BigNumber('9'.repeat(64)));
+        return;
       }
       const allowance = await erc20(srcToken.address)
         ?.methods.allowance(address, constants.oneInchRouterAddress)
         .call();
-      setSrcAllowance(allowance);
+      setSrcAllowance(new BigNumber(allowance));
     })();
   }, [address, erc20, isWeb3Enabled, srcToken]);
 
-  useEffect(() => {
-    if (!address || !isWeb3Enabled) {
-      return;
-    }
-    (async () => {
-      const allowance = await erc20(dstToken.address)
-        ?.methods.allowance(address, constants.oneInchRouterAddress)
-        .call();
-      setDstAllowance(allowance);
-    })();
-  }, [address, dstToken, erc20, isWeb3Enabled, srcToken]);
-
   const handleTokensSwitch = useCallback(() => {
-    const [x, y] = [srcToken, dstToken];
+    const [x, y, f, t] = [srcToken, dstToken, fromAmount, toAmount];
     setSrcToken(y);
     setDstToken(x);
-  }, [dstToken, srcToken]);
+    setFromAmount(t);
+    setToAmount(f);
+  }, [dstToken, fromAmount, srcToken, toAmount]);
 
   const handleSwap = useCallback(async () => {
-    if (!isWeb3Enabled) {
+    if (!isWeb3Enabled || !oneInchRouter) {
       return;
     }
-  }, [isWeb3Enabled]);
+
+    setSwapping(true);
+
+    try {
+      if (!fromAmountWei.isGreaterThan(srcAllowance)) {
+        console.log(srcAllowance.toString());
+        const approved = await erc20(srcToken.address)
+          ?.methods.approve(constants.oneInchRouterAddress, '9'.repeat(64))
+          .send({
+            from: address,
+          });
+        setSrcAllowance(new BigNumber('9'.repeat(64)));
+
+        if (approved) {
+          toast({
+            status: 'success',
+            description: 'Amount successfully approved. Now you can swap!',
+            title: 'Success',
+            position: 'top',
+            duration: 5000,
+          });
+        }
+
+        return;
+      }
+    } catch (error) {
+      toast({
+        status: 'error',
+        description: error.message,
+        title: 'Error',
+        position: 'top',
+        duration: 5000,
+      });
+    } finally {
+      setSwapping(false);
+    }
+  }, [
+    address,
+    erc20,
+    fromAmountWei,
+    isWeb3Enabled,
+    oneInchRouter,
+    srcAllowance,
+    srcToken.address,
+    toast,
+  ]);
 
   return (
     <>
@@ -165,9 +261,19 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
           <FormControl position="relative" id="amountFrom" mb={2}>
             <FormLabel>From</FormLabel>
             <Text position="absolute" right={0} top={0} color="black">
-              Balance: {srcBalance?.toString()}
+              Balance: {displaySrcBalance}
             </Text>
-            <NumberInput size="lg" position="relative">
+            <NumberInput
+              size="lg"
+              position="relative"
+              value={fromAmount}
+              onChange={(_, v) => setFromAmount(v || 0)}
+              onKeyDown={(e) => {
+                if (e.key === '.') {
+                  setFromAmount(fromAmount + 0.1);
+                }
+              }}
+            >
               <NumberInputField
                 placeholder="0.0"
                 bg={constants.colors.dark}
@@ -203,9 +309,14 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
           <FormControl position="relative" id="amountTo" mb={2}>
             <FormLabel>To</FormLabel>
             <Text position="absolute" right={0} top={0} color="black">
-              Balance: {dstBalance?.toString()}
+              Balance: {displayDstBalance}
             </Text>
-            <NumberInput size="lg" position="relative">
+            <NumberInput
+              size="lg"
+              position="relative"
+              value={toAmount}
+              onChange={() => null}
+            >
               <NumberInputField
                 placeholder="0.0"
                 bg={constants.colors.dark}
@@ -231,7 +342,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
           mt={4}
           colorScheme="teal"
         >
-          Swap
+          {swapButtonText}
         </Button>
       </WhiteBox>
     </>

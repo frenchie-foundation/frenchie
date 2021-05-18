@@ -284,7 +284,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
       const gasPrice = 500000;
       const minAmount = toAmount
         .minus(toAmount.multipliedBy(new BigNumber(slippage / 100)))
-        .integerValue();
+        .toFixed(0);
 
       if (srcToken.symbol === 'BNB') {
         await pancakeRouter.methods

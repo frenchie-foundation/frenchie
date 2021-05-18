@@ -189,7 +189,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
       return;
     }
     const amounts = await pancakeRouter?.methods
-      .getAmountsOut(fromAmountWei, path)
+      .getAmountsOut(fromAmountWei.toFixed(0), path)
       .call();
     setToAmount(new BigNumber(amounts[path.length - 1]));
   }, [fromAmountWei, pancakeRouter, path]);

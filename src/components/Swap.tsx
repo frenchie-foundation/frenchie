@@ -185,7 +185,11 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
   }, [isApproved, srcToken.symbol]);
 
   const updateRates = useCallback(async () => {
+    console.log(pancakeRouter);
+    console.log(fromAmountWei);
+    console.log(fromAmountWei.toString());
     if (!pancakeRouter || !fromAmountWei.isGreaterThan(0)) {
+      console.log('returning');
       return;
     }
     const amounts = await pancakeRouter?.methods
@@ -386,7 +390,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
                 />
               </NumberInput>
             </FormControl>
-            <FormControl id="slippage" mb={2}>
+            <FormControl id="deadline" mb={2}>
               <FormLabel fontWeight="bold">
                 Transaction deadline (minutes)
               </FormLabel>

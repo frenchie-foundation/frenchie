@@ -24,6 +24,7 @@ import WhiteBox from './WhiteBox';
 import { Image } from '@chakra-ui/image';
 import { useToast } from '@chakra-ui/toast';
 import { Input } from '@chakra-ui/input';
+import BN from 'bn.js';
 
 interface IToken {
   symbol: string;
@@ -56,6 +57,8 @@ interface ICoinLabel {
   token: IToken;
   hideChevron?: boolean;
 }
+
+BigNumber.config({ EXPONENTIAL_AT: 99 });
 
 const CoinLabel: React.FC<ICoinLabel> = ({
   token,
@@ -284,21 +287,26 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
       const gasPrice = 500000;
       const minAmount = toAmount
         .minus(toAmount.multipliedBy(new BigNumber(slippage / 100)))
-        .toFixed(0);
+        .toString();
 
       if (srcToken.symbol === 'BNB') {
         await pancakeRouter.methods
-          .swapETHForExactTokens(toAmount, path, address, Date.now() + deadline)
+          .swapETHForExactTokens(
+            new BN(toAmount.toString()),
+            path,
+            address,
+            Date.now() + deadline
+          )
           .send({
             from: address,
-            value: fromAmountWei,
+            value: new BN(fromAmountWei.toString()),
             gas: gasPrice,
           });
       } else if (dstToken.symbol === 'BNB') {
         await pancakeRouter.methods
           .swapExactTokensForETH(
             fromAmountWei,
-            minAmount,
+            new BN(minAmount),
             path,
             address,
             Date.now() + deadline
@@ -311,7 +319,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
         await pancakeRouter.methods
           .swapExactTokensForTokens(
             fromAmountWei,
-            minAmount,
+            new BN(minAmount),
             path,
             address,
             Date.now() + deadline

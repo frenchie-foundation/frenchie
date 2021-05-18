@@ -102,7 +102,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
   const [srcAllowance, setSrcAllowance] = useState<BigNumber>(new BigNumber(0));
   const [fromAmount, setFromAmount] = useState('0');
   const [toAmount, setToAmount] = useState<BigNumber>(new BigNumber(0));
-  const [slippage, setSlippage] = useState(0.8);
+  const [slippage, setSlippage] = useState(7);
   const [deadline, setDeadline] = useState(1200000);
   const [swapping, setSwapping] = useState(false);
   const [rateOrder, setRateOrder] = useState(['src', 'dst']);
@@ -260,6 +260,8 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
       return;
     }
 
+    await updateRates();
+
     setSwapping(true);
 
     try {
@@ -287,7 +289,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
       const gasPrice = 500000;
       const minAmount = toAmount
         .minus(toAmount.multipliedBy(new BigNumber(slippage / 100)))
-        .toString();
+        .toFixed(0);
 
       if (srcToken.symbol === 'BNB') {
         await pancakeRouter.methods
@@ -305,7 +307,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
       } else if (dstToken.symbol === 'BNB') {
         await pancakeRouter.methods
           .swapExactTokensForETH(
-            fromAmountWei,
+            fromAmountWei.toString(),
             new BN(minAmount),
             path,
             address,
@@ -318,7 +320,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
       } else {
         await pancakeRouter.methods
           .swapExactTokensForTokens(
-            fromAmountWei,
+            fromAmountWei.toString(),
             new BN(minAmount),
             path,
             address,
@@ -363,6 +365,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
     srcToken.symbol,
     toAmount,
     toast,
+    updateRates,
   ]);
 
   return (

@@ -519,7 +519,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
           </ModalBody>
         </ModalContent>
       </Modal>
-      <VStack spacing={4}>
+      <VStack maxWidth="100%" spacing={4}>
         <WhiteBox maxWidth="100%" width="600px" {...props}>
           <Flex alignItems="center" justifyContent="space-between">
             <Title mb={0} color={constants.colors.dark}>

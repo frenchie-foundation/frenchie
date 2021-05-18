@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import { Button, IconButton } from '@chakra-ui/button';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { useDisclosure } from '@chakra-ui/hooks';
-import { Box, Flex, HStack, Text } from '@chakra-ui/layout';
+import { Box, Flex, HStack, Text, VStack } from '@chakra-ui/layout';
 import { Modal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/modal';
 import { NumberInput, NumberInputField } from '@chakra-ui/number-input';
 import { ChakraProps } from '@chakra-ui/system';
@@ -107,6 +107,8 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
   const [swapping, setSwapping] = useState(false);
   const [rateOrder, setRateOrder] = useState(['src', 'dst']);
   const [tokenSelect, setTokenSelect] = useState<'src' | 'dst'>('src');
+  const [rate, setRate] = useState(new BigNumber(0));
+  const [priceImpact, setPriceImpact] = useState(new BigNumber(0));
 
   const handleChangeRateOrder = useCallback(() => {
     const [x, y] = rateOrder;
@@ -166,6 +168,25 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
     return new BigNumber(fromAmount).multipliedBy(new BigNumber(1e18));
   }, [fromAmount]);
 
+  const displaySrcUsdtPrice = useMemo(() => {
+    try {
+      if (fromAmountWei.isGreaterThan(0)) {
+        return `$${fromAmountWei
+          .multipliedBy(rate.multipliedBy(new BigNumber(1e-18)))
+          .multipliedBy(new BigNumber(1e-18))
+          .toNumber()
+          .toLocaleString()}`;
+      }
+    } catch {
+      //
+    }
+    return `$${(0).toLocaleString()}`;
+  }, [fromAmountWei, rate]);
+
+  const priceImpactDisplay = useMemo(() => {
+    return `${priceImpact.toFixed(2)}%`;
+  }, [priceImpact]);
+
   const displaySrcBalance = useMemo(() => {
     return srcBalance.multipliedBy(new BigNumber(1e-18)).toFixed(4);
   }, [srcBalance]);
@@ -194,8 +215,50 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
     const amounts = await pancakeRouter?.methods
       .getAmountsOut(fromAmountWei.toFixed(0), path)
       .call();
-    setToAmount(new BigNumber(amounts[path.length - 1]));
-  }, [fromAmountWei, pancakeRouter, path]);
+    const _toAmount = new BigNumber(amounts[path.length - 1]);
+    setToAmount(_toAmount);
+
+    const pricePath =
+      srcToken.symbol === 'BNB'
+        ? [srcToken.address, constants.usdtAddress]
+        : [srcToken.address, constants.bnbAddress, constants.usdtAddress];
+
+    const prices = await pancakeRouter?.methods
+      .getAmountsOut(new BigNumber(1e18).toFixed(0), pricePath)
+      .call();
+
+    const _srcRate = new BigNumber(prices[pricePath.length - 1]);
+
+    setRate(_srcRate);
+
+    const priceDstPath =
+      dstToken.symbol === 'BNB'
+        ? [dstToken.address, constants.usdtAddress]
+        : [dstToken.address, constants.bnbAddress, constants.usdtAddress];
+
+    const pricesDst = await pancakeRouter?.methods
+      .getAmountsOut(new BigNumber(1e18).toFixed(0), priceDstPath)
+      .call();
+
+    const _dstRate = new BigNumber(pricesDst[priceDstPath.length - 1]);
+
+    const exactQuote = _srcRate.multipliedBy(fromAmountWei);
+    const outputAmount = _dstRate.multipliedBy(_toAmount);
+
+    const impact = exactQuote
+      .minus(outputAmount)
+      .div(exactQuote)
+      .multipliedBy(100);
+    setPriceImpact(impact);
+  }, [
+    dstToken.address,
+    dstToken.symbol,
+    fromAmountWei,
+    pancakeRouter,
+    path,
+    srcToken.address,
+    srcToken.symbol,
+  ]);
 
   useEffect(() => {
     updateRates();
@@ -255,6 +318,16 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
     setToAmount(new BigNumber(Number(f) * 10 ** 18));
   }, [dstToken, fromAmount, srcToken, toAmount]);
 
+  const minAmount = useMemo(() => {
+    return toAmount
+      .minus(toAmount.multipliedBy(new BigNumber(slippage / 100)))
+      .toFixed(0);
+  }, [slippage, toAmount]);
+
+  const minAmountDisplay = useMemo(() => {
+    return new BigNumber(minAmount).multipliedBy(1e-18).toFixed(0);
+  }, [minAmount]);
+
   const handleSwap = useCallback(async () => {
     if (!isWeb3Enabled || !pancakeRouter) {
       return;
@@ -287,9 +360,6 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
       }
 
       const gasPrice = 500000;
-      const minAmount = toAmount
-        .minus(toAmount.multipliedBy(new BigNumber(slippage / 100)))
-        .toFixed(0);
 
       if (srcToken.symbol === 'BNB') {
         await pancakeRouter.methods
@@ -358,9 +428,9 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
     fromAmountWei,
     isApproved,
     isWeb3Enabled,
+    minAmount,
     pancakeRouter,
     path,
-    slippage,
     srcToken.address,
     srcToken.symbol,
     toAmount,
@@ -449,159 +519,218 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
           </ModalBody>
         </ModalContent>
       </Modal>
-      <WhiteBox maxWidth="100%" width="600px" {...props}>
-        <Flex alignItems="center" justifyContent="space-between">
-          <Title mb={0} color={constants.colors.dark}>
-            Swap
-          </Title>
-          <Box>
-            <IconButton
-              aria-label="refresh"
-              icon={<FaSyncAlt />}
-              onClick={updateRates}
-            />
-            <IconButton
-              aria-label="settings"
-              icon={<FaCog />}
-              onClick={onSettingsOpen}
-            />
-          </Box>
-        </Flex>
-        <Box
-          mt={4}
-          mb={4}
-          borderWidth="1px"
-          borderColor="gray.400"
-          p={4}
-          borderRadius="lg"
-        >
-          <FormControl position="relative" id="amountFrom" mb={2}>
-            <FormLabel fontWeight="bold">From</FormLabel>
-            <Text
-              cursor="pointer"
-              onClick={() =>
-                setFromAmount(
-                  srcBalance.multipliedBy(new BigNumber(1e-18)).toString()
-                )
-              }
-              position="absolute"
-              right={0}
-              top={0}
-              color="black"
-            >
-              Balance: {displaySrcBalance}
-            </Text>
-            <Box position="relative">
-              <Input
-                background={constants.colors.dark}
-                color={constants.colors.light}
-                placeholder="0.0"
-                type="text"
-                size="lg"
-                value={fromAmount}
-                onChange={(e) => {
-                  if (!/^\d*\.?\d*$/.test(e.target.value)) {
-                    return;
-                  }
-                  if (e.target.value.replace(/[^.]/g, '').length > 1) {
-                    return;
-                  }
-                  setFromAmount(e.target.value);
-                }}
-                step={0.0001}
-                min={0}
-              />
-              <Button
-                position="absolute"
-                right="1"
-                top="1"
-                colorScheme="gray"
-                color="white"
-                zIndex={999}
-                onClick={handleTokenButton('src')}
-              >
-                <CoinLabel token={srcToken} />
-              </Button>
-            </Box>
-          </FormControl>
-        </Box>
-        <Flex justifyContent="center">
-          <IconButton
-            aria-label="switch"
-            onClick={handleTokensSwitch}
-            icon={<FaExchangeAlt style={{ transform: 'rotate(90deg)' }} />}
-          />
-        </Flex>
-        <Box
-          mt={4}
-          borderWidth="1px"
-          borderColor="gray.400"
-          p={4}
-          borderRadius="lg"
-        >
-          <FormControl position="relative" id="amountTo" mb={2}>
-            <FormLabel fontWeight="bold">To</FormLabel>
-            <Text position="absolute" right={0} top={0} color="black">
-              Balance: {displayDstBalance}
-            </Text>
-            <NumberInput
-              size="lg"
-              position="relative"
-              value={toAmount
-                .multipliedBy(new BigNumber(1e-18))
-                .toNumber()
-                .toFixed(4)}
-              onChange={() => null}
-            >
-              <NumberInputField
-                placeholder="0.0"
-                bg={constants.colors.dark}
-                color="white"
-              />
-              <Button
-                position="absolute"
-                right="1"
-                top="1"
-                colorScheme="gray"
-                color="white"
-                zIndex={999}
-                onClick={handleTokenButton('dst')}
-              >
-                <CoinLabel token={dstToken} />
-              </Button>
-            </NumberInput>
-          </FormControl>
-        </Box>
-        {toAmount.isGreaterThan(0) && (
-          <Flex mt={4} justifyContent="space-between" alignItems="center">
-            <Text fontWeight="bold" color={constants.colors.dark}>
-              Price:
-            </Text>
-            <Text fontWeight="bold" color={constants.colors.dark}>
-              {priceDisplay}{' '}
+      <VStack spacing={4}>
+        <WhiteBox maxWidth="100%" width="600px" {...props}>
+          <Flex alignItems="center" justifyContent="space-between">
+            <Title mb={0} color={constants.colors.dark}>
+              Swap
+            </Title>
+            <Box>
               <IconButton
-                background={constants.colors.dark}
-                aria-label="Invert rate"
-                size="sm"
-                ml={2}
-                icon={<FaExchangeAlt color={constants.colors.light} />}
-                onClick={handleChangeRateOrder}
+                aria-label="refresh"
+                icon={<FaSyncAlt />}
+                onClick={updateRates}
               />
-            </Text>
+              <IconButton
+                aria-label="settings"
+                icon={<FaCog />}
+                onClick={onSettingsOpen}
+              />
+            </Box>
           </Flex>
+          <Box
+            mt={4}
+            mb={4}
+            borderWidth="1px"
+            borderColor="gray.400"
+            p={4}
+            borderRadius="lg"
+          >
+            <FormControl position="relative" id="amountFrom" mb={2}>
+              <FormLabel fontWeight="bold">From</FormLabel>
+              <Text
+                cursor="pointer"
+                onClick={() => {
+                  let amount = srcBalance;
+                  if (srcToken.symbol === 'BNB') {
+                    amount = srcBalance.minus(0.0075e18);
+                    if (!amount.isGreaterThan(0)) {
+                      amount = new BigNumber(0);
+                    }
+                  }
+                  setFromAmount(
+                    amount.multipliedBy(new BigNumber(1e-18)).toFixed(4, 1)
+                  );
+                }}
+                position="absolute"
+                right={0}
+                top={0}
+                color="black"
+              >
+                Balance: {displaySrcBalance}
+              </Text>
+              <Box position="relative">
+                <Input
+                  background={constants.colors.dark}
+                  color={constants.colors.light}
+                  placeholder="0.0"
+                  type="text"
+                  size="lg"
+                  value={fromAmount}
+                  onChange={(e) => {
+                    if (!/^\d*\.?\d*$/.test(e.target.value)) {
+                      return;
+                    }
+                    if (e.target.value.replace(/[^.]/g, '').length > 1) {
+                      return;
+                    }
+                    setFromAmount(e.target.value);
+                  }}
+                  step={0.0001}
+                  min={0}
+                />
+                <Button
+                  position="absolute"
+                  right="1"
+                  top="1"
+                  colorScheme="gray"
+                  color="white"
+                  zIndex={999}
+                  onClick={handleTokenButton('src')}
+                >
+                  <CoinLabel token={srcToken} />
+                </Button>
+              </Box>
+            </FormControl>
+            ≈ {displaySrcUsdtPrice}
+          </Box>
+          <Flex justifyContent="center">
+            <IconButton
+              aria-label="switch"
+              onClick={handleTokensSwitch}
+              icon={<FaExchangeAlt style={{ transform: 'rotate(90deg)' }} />}
+            />
+          </Flex>
+          <Box
+            mt={4}
+            borderWidth="1px"
+            borderColor="gray.400"
+            p={4}
+            borderRadius="lg"
+          >
+            <FormControl position="relative" id="amountTo" mb={2}>
+              <FormLabel fontWeight="bold">To</FormLabel>
+              <Text position="absolute" right={0} top={0} color="black">
+                Balance: {displayDstBalance}
+              </Text>
+              <NumberInput
+                size="lg"
+                position="relative"
+                value={toAmount
+                  .multipliedBy(new BigNumber(1e-18))
+                  .toNumber()
+                  .toFixed(4)}
+                onChange={() => null}
+              >
+                <NumberInputField
+                  placeholder="0.0"
+                  bg={constants.colors.dark}
+                  color="white"
+                />
+                <Button
+                  position="absolute"
+                  right="1"
+                  top="1"
+                  colorScheme="gray"
+                  color="white"
+                  zIndex={999}
+                  onClick={handleTokenButton('dst')}
+                >
+                  <CoinLabel token={dstToken} />
+                </Button>
+              </NumberInput>
+            </FormControl>
+          </Box>
+          {!disabled && (
+            <>
+              <Flex mt={4} justifyContent="space-between" alignItems="center">
+                <Text fontWeight="bold" color={constants.colors.dark}>
+                  Price:
+                </Text>
+                <Text
+                  display="flex"
+                  alignItems="center"
+                  fontWeight="bold"
+                  color={constants.colors.dark}
+                >
+                  {priceDisplay}
+                  <IconButton
+                    aria-label="Invert rate"
+                    size="sm"
+                    ml={2}
+                    icon={<FaExchangeAlt color={constants.colors.dark} />}
+                    onClick={handleChangeRateOrder}
+                  />
+                </Text>
+              </Flex>
+              <Flex justifyContent="space-between" alignItems="center">
+                <Text fontWeight="bold" color={constants.colors.dark}>
+                  Slippage tolerance:
+                </Text>
+                <Text
+                  display="flex"
+                  alignItems="center"
+                  fontWeight="bold"
+                  color={constants.colors.dark}
+                >
+                  {slippage}%
+                </Text>
+              </Flex>
+            </>
+          )}
+          <Button
+            onClick={handleSwap}
+            isFullWidth
+            size="lg"
+            mt={4}
+            colorScheme="teal"
+            isLoading={swapping}
+            isDisabled={disabled}
+          >
+            {swapButtonText}
+          </Button>
+        </WhiteBox>
+        {!disabled && (
+          <WhiteBox maxWidth="100%" width="600px">
+            <Flex justifyContent="space-between" alignItems="center">
+              <Text fontWeight="bold" color={constants.colors.dark}>
+                Minimum received:
+              </Text>
+              <Text
+                display="flex"
+                alignItems="center"
+                fontWeight="bold"
+                color={constants.colors.dark}
+              >
+                {minAmountDisplay} {dstToken.symbol}
+              </Text>
+            </Flex>
+            <Flex justifyContent="space-between" alignItems="center">
+              <Text fontWeight="bold" color={constants.colors.dark}>
+                Price impact:
+              </Text>
+              <Text
+                display="flex"
+                alignItems="center"
+                fontWeight="bold"
+                color={constants.colors.dark}
+              >
+                {priceImpactDisplay}
+              </Text>
+            </Flex>
+          </WhiteBox>
         )}
-        <Button
-          onClick={handleSwap}
-          isFullWidth
-          size="lg"
-          mt={4}
-          colorScheme="teal"
-          isLoading={swapping}
-          isDisabled={disabled}
-        >
-          {swapButtonText}
-        </Button>
-      </WhiteBox>
+      </VStack>
     </>
   );
 };

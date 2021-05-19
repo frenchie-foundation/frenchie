@@ -28,24 +28,7 @@ import {
 } from '@chakra-ui/slider';
 import { toEther, toWei } from '../helpers/units';
 import axios from 'axios';
-
-interface IWhiteBox extends ChakraProps {
-  children?: React.ReactNode;
-}
-
-const WhiteBox: React.FC<IWhiteBox> = ({ children, ...props }: IWhiteBox) => {
-  return (
-    <Box
-      bg="white"
-      color={constants.colors.dark}
-      p={15}
-      borderRadius={5}
-      {...props}
-    >
-      {children}
-    </Box>
-  );
-};
+import WhiteBox from './WhiteBox';
 
 const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const { isWeb3Enabled, address, web3 } = useWallet();
@@ -107,21 +90,16 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
     try {
       setLoading(true);
       if (web3.utils && isWeb3Enabled && oneInch && address && farmContract) {
-        const [
-          _allowance,
-          _balance,
-          _farmingAmount,
-          _rewards,
-          { data },
-        ] = await Promise.all([
-          oneInch.methods.allowance(address, constants.farmAddress).call(),
-          oneInch.methods.balanceOf(address).call(),
-          farmContract.methods.deposited(0, address).call(),
-          farmContract.methods.pending(0, address).call(),
-          axios.get(
-            'https://api.1inch.exchange/v3.0/56/quote?toTokenAddress=0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d&fromTokenAddress=0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af&amount=10000000000000000'
-          ),
-        ]);
+        const [_allowance, _balance, _farmingAmount, _rewards, { data }] =
+          await Promise.all([
+            oneInch.methods.allowance(address, constants.farmAddress).call(),
+            oneInch.methods.balanceOf(address).call(),
+            farmContract.methods.deposited(0, address).call(),
+            farmContract.methods.pending(0, address).call(),
+            axios.get(
+              'https://api.1inch.exchange/v3.0/56/quote?toTokenAddress=0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d&fromTokenAddress=0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af&amount=10000000000000000'
+            ),
+          ]);
 
         setAllowance(_allowance);
         setBalance(_balance);

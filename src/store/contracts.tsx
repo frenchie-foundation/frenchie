@@ -1,9 +1,12 @@
 import React, { createContext, useCallback, useContext, useMemo } from 'react';
 import { Contract } from 'web3-eth-contract';
+import erc20abi from 'erc-20-abi';
 
 import FrenchieContract from '../assets/contracts/Frenchie.json';
 import FarmContract from '../assets/contracts/Farm.json';
 import OneInchLPABI from '../assets/contracts/1InchLP.json';
+import PancakeRouterABI from '../assets/contracts/PancakeRouter.json';
+import PancakeFactoryABI from '../assets/contracts/PancakeFactory.json';
 
 import { AbiItem } from '../types';
 import { useWallet } from './wallet';
@@ -13,6 +16,9 @@ interface IContractsContext {
   frenToken?: Contract;
   farmContract?: Contract;
   oneInch?: Contract;
+  pancakeRouter?: Contract;
+  pancakeFactory?: Contract;
+  erc20: (address: string) => Contract | undefined;
   loadContract: (abi: unknown, address: string) => Contract | undefined;
 }
 
@@ -61,6 +67,29 @@ export const ContractsProvider: React.FC<IContractsProvider> = ({
     return undefined;
   }, [isWeb3Enabled, loadContract]);
 
+  const pancakeRouter = useMemo(() => {
+    if (isWeb3Enabled) {
+      return loadContract(PancakeRouterABI, constants.pancakeRouterAddress);
+    }
+    return undefined;
+  }, [isWeb3Enabled, loadContract]);
+
+  const pancakeFactory = useMemo(() => {
+    if (isWeb3Enabled) {
+      return loadContract(PancakeFactoryABI, constants.pancakeFactoryAddress);
+    }
+    return undefined;
+  }, [isWeb3Enabled, loadContract]);
+
+  const erc20 = useMemo(() => {
+    return (address: string) => {
+      if (isWeb3Enabled) {
+        return loadContract(erc20abi, address);
+      }
+      return undefined;
+    };
+  }, [isWeb3Enabled, loadContract]);
+
   return (
     <ContractsContext.Provider
       value={{
@@ -68,6 +97,9 @@ export const ContractsProvider: React.FC<IContractsProvider> = ({
         farmContract,
         oneInch,
         loadContract,
+        pancakeRouter,
+        pancakeFactory,
+        erc20,
       }}
     >
       {children}

@@ -60,6 +60,9 @@ interface ICoinLabel {
 
 BigNumber.config({ EXPONENTIAL_AT: 99 });
 
+const SLIPPAGE_ITEM = '@FrenchieSwap/slippage';
+const DEADLINE_ITEM = '@FrenchieSwap/deadline';
+
 const CoinLabel: React.FC<ICoinLabel> = ({
   token,
   hideChevron,
@@ -102,13 +105,26 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
   const [srcAllowance, setSrcAllowance] = useState<BigNumber>(new BigNumber(0));
   const [fromAmount, setFromAmount] = useState('0');
   const [toAmount, setToAmount] = useState<BigNumber>(new BigNumber(0));
-  const [slippage, setSlippage] = useState(7);
-  const [deadline, setDeadline] = useState(1200000);
+  const [slippage, setSlippage] = useState(
+    Number(localStorage.getItem(SLIPPAGE_ITEM)) || 7
+  );
+  const [deadline, setDeadline] = useState(
+    Number(localStorage.getItem(DEADLINE_ITEM)) || 1200000
+  );
   const [swapping, setSwapping] = useState(false);
   const [rateOrder, setRateOrder] = useState(['src', 'dst']);
   const [tokenSelect, setTokenSelect] = useState<'src' | 'dst'>('src');
   const [rate, setRate] = useState(new BigNumber(0));
+  const [rateDst, setRateDst] = useState(new BigNumber(0));
   const [priceImpact, setPriceImpact] = useState(new BigNumber(0));
+
+  useEffect(() => {
+    localStorage.setItem(SLIPPAGE_ITEM, slippage.toString());
+  }, [slippage]);
+
+  useEffect(() => {
+    localStorage.setItem(DEADLINE_ITEM, deadline.toString());
+  }, [deadline]);
 
   const handleChangeRateOrder = useCallback(() => {
     const [x, y] = rateOrder;
@@ -183,6 +199,21 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
     return `$${(0).toLocaleString()}`;
   }, [fromAmountWei, rate]);
 
+  const displayDstUsdtPrice = useMemo(() => {
+    try {
+      if (toAmount.isGreaterThan(0)) {
+        return `$${toAmount
+          .multipliedBy(rateDst.multipliedBy(new BigNumber(1e-18)))
+          .multipliedBy(new BigNumber(1e-18))
+          .toNumber()
+          .toLocaleString()}`;
+      }
+    } catch {
+      //
+    }
+    return `$${(0).toLocaleString()}`;
+  }, [toAmount, rateDst]);
+
   const priceImpactDisplay = useMemo(() => {
     return `${priceImpact.toFixed(2)}%`;
   }, [priceImpact]);
@@ -241,6 +272,8 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
       .call();
 
     const _dstRate = new BigNumber(pricesDst[priceDstPath.length - 1]);
+
+    setRateDst(_dstRate);
 
     const exactQuote = _srcRate.multipliedBy(fromAmountWei);
     const outputAmount = _dstRate.multipliedBy(_toAmount);
@@ -325,7 +358,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
   }, [slippage, toAmount]);
 
   const minAmountDisplay = useMemo(() => {
-    return new BigNumber(minAmount).multipliedBy(1e-18).toFixed(0);
+    return new BigNumber(minAmount).multipliedBy(1e-18).toFixed(4);
   }, [minAmount]);
 
   const handleSwap = useCallback(async () => {
@@ -359,7 +392,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
         return;
       }
 
-      const gasPrice = 500000;
+      const gasPrice = 250000;
 
       if (srcToken.symbol === 'BNB') {
         await pancakeRouter.methods
@@ -437,6 +470,17 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
     toast,
     updateRates,
   ]);
+
+  const handleSetMaxSrc = useCallback(() => {
+    let amount = srcBalance;
+    if (srcToken.symbol === 'BNB') {
+      amount = srcBalance.minus(0.0075e18);
+      if (!amount.isGreaterThan(0)) {
+        amount = new BigNumber(0);
+      }
+    }
+    setFromAmount(amount.multipliedBy(new BigNumber(1e-18)).toFixed(4, 1));
+  }, [srcBalance, srcToken.symbol]);
 
   return (
     <>
@@ -550,18 +594,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
               <FormLabel fontWeight="bold">From</FormLabel>
               <Text
                 cursor="pointer"
-                onClick={() => {
-                  let amount = srcBalance;
-                  if (srcToken.symbol === 'BNB') {
-                    amount = srcBalance.minus(0.0075e18);
-                    if (!amount.isGreaterThan(0)) {
-                      amount = new BigNumber(0);
-                    }
-                  }
-                  setFromAmount(
-                    amount.multipliedBy(new BigNumber(1e-18)).toFixed(4, 1)
-                  );
-                }}
+                onClick={handleSetMaxSrc}
                 position="absolute"
                 right={0}
                 top={0}
@@ -589,17 +622,24 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
                   step={0.0001}
                   min={0}
                 />
-                <Button
-                  position="absolute"
-                  right="1"
-                  top="1"
-                  colorScheme="gray"
-                  color="white"
-                  zIndex={999}
-                  onClick={handleTokenButton('src')}
-                >
-                  <CoinLabel token={srcToken} />
-                </Button>
+                <Box position="absolute" right="1" top="1" zIndex={999}>
+                  <Button
+                    mr={1}
+                    variant="ghost"
+                    colorScheme="gray"
+                    color="white"
+                    onClick={handleSetMaxSrc}
+                  >
+                    MAX
+                  </Button>
+                  <Button
+                    colorScheme="gray"
+                    color="white"
+                    onClick={handleTokenButton('src')}
+                  >
+                    <CoinLabel token={srcToken} />
+                  </Button>
+                </Box>
               </Box>
             </FormControl>
             ≈ {displaySrcUsdtPrice}
@@ -650,6 +690,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
                 </Button>
               </NumberInput>
             </FormControl>
+            ≈ {displayDstUsdtPrice}
           </Box>
           {!disabled && (
             <>

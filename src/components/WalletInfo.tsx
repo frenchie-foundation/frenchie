@@ -7,13 +7,13 @@ import constants from '../config/constants';
 import { useContracts } from '../store/contracts';
 import { useWallet } from '../store/wallet';
 import { Logo } from './Logo';
-import axios from 'axios';
+import BigNumber from 'bignumber.js';
 
 type IWalletInfo = ChakraProps;
 
 const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
   const { web3, isWeb3Enabled, enableWeb3, address } = useWallet();
-  const { frenToken } = useContracts();
+  const { frenToken, pancakeRouter } = useContracts();
 
   const [loading, setLoading] = useState(false);
   const [frenBalance, setFrenBalance] = useState(-1);
@@ -21,12 +21,21 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(
-        'https://api.1inch.exchange/v3.0/56/quote?toTokenAddress=0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d&fromTokenAddress=0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af&amount=10000000000000000'
-      );
-      setUsdPrice(data.toTokenAmount / data.fromTokenAmount);
+      if (pancakeRouter) {
+        const amounts = await pancakeRouter.methods
+          .getAmountsOut(new BigNumber(1e18).toString(), [
+            constants.tokenAddress,
+            constants.bnbAddress,
+            constants.usdtAddress,
+          ])
+          .call();
+
+        const [, , usdtPrice] = amounts;
+
+        setUsdPrice(new BigNumber(usdtPrice).multipliedBy(1e-18).toNumber());
+      }
     })();
-  }, []);
+  }, [pancakeRouter]);
 
   const frenBalanceUsd = useMemo(() => {
     if (usdPrice !== -1 && frenBalance !== -1 && web3.utils) {

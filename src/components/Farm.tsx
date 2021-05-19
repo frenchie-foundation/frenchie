@@ -29,10 +29,11 @@ import {
 import { toEther, toWei } from '../helpers/units';
 import axios from 'axios';
 import WhiteBox from './WhiteBox';
+import BigNumber from 'bignumber.js';
 
 const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const { isWeb3Enabled, address, web3 } = useWallet();
-  const { farmContract, oneInch } = useContracts();
+  const { farmContract, oneInch, pancakeRouter } = useContracts();
 
   const toast = useToast();
 
@@ -64,6 +65,24 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const displayFarming = useMemo(() => {
     return toEther(farmingAmount);
   }, [farmingAmount]);
+
+  useEffect(() => {
+    (async () => {
+      if (pancakeRouter) {
+        const amounts = await pancakeRouter.methods
+          .getAmountsOut(new BigNumber(1e18).toString(), [
+            constants.tokenAddress,
+            constants.bnbAddress,
+            constants.usdtAddress,
+          ])
+          .call();
+
+        const [, , usdtPrice] = amounts;
+
+        setFrenPrice(new BigNumber(usdtPrice).multipliedBy(1e-18).toNumber());
+      }
+    })();
+  }, [pancakeRouter]);
 
   useEffect(() => {
     if (web3.utils) {

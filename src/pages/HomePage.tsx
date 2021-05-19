@@ -113,40 +113,44 @@ export default function HomePage(): React.ReactElement {
           </Text>
         </Box>
       </Box>
+      <HStack justifyContent="center" spacing={2} mt={10} mb={4}>
+        <Button
+          colorScheme="telegram"
+          leftIcon={<FaTelegram />}
+          onClick={handleTelegramLinkClick}
+        >
+          Telegram group
+        </Button>
+        <Button
+          colorScheme="orange"
+          leftIcon={<FaNewspaper />}
+          onClick={handleWhitepaperLinkClick}
+        >
+          Our whitepaper
+        </Button>
+      </HStack>
+      <HStack justifyContent="center" spacing={2}>
+        <Button
+          colorScheme="red"
+          leftIcon={<FaBug />}
+          onClick={handleAuditLinkClick}
+        >
+          Audit report
+        </Button>
+        <Button
+          colorScheme="green"
+          leftIcon={<FaExchangeAlt />}
+          onClick={handle1inchLinkClick}
+        >
+          Buy on 1Inch
+        </Button>
+      </HStack>
       <Flex justifyContent="center">
-        <HStack mt={20}>
-          <Button
-            colorScheme="telegram"
-            leftIcon={<FaTelegram />}
-            onClick={handleTelegramLinkClick}
-          >
-            Telegram group
-          </Button>
-          <Button
-            colorScheme="orange"
-            leftIcon={<FaNewspaper />}
-            onClick={handleWhitepaperLinkClick}
-          >
-            Our whitepaper
-          </Button>
-          <Button
-            colorScheme="red"
-            leftIcon={<FaBug />}
-            onClick={handleAuditLinkClick}
-          >
-            Audit report
-          </Button>
-          <Button
-            colorScheme="green"
-            leftIcon={<FaExchangeAlt />}
-            onClick={handle1inchLinkClick}
-          >
-            Buy on 1Inch
-          </Button>
-        </HStack>
-      </Flex>
-      <Flex justifyContent="center">
-        <HStack mt={20} spacing={10}>
+        <HStack
+          mt={20}
+          spacing={10}
+          flexDirection={{ base: 'column', md: 'row' }}
+        >
           <a
             href={constants.poocoinGroupLink}
             target="_blank"
@@ -203,7 +207,7 @@ export default function HomePage(): React.ReactElement {
         <b>Locked liquidity:</b> 250 billions (33.33%)
       </Text>
       <Text>
-        <b>Locked Vested Funds:</b> 345 billions 
+        <b>Locked Vested Funds:</b> 345 billions
       </Text>
 
       <Title mt={6} mb={4} isSecondary>

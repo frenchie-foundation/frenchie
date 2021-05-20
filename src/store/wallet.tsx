@@ -20,6 +20,8 @@ interface IWalletProvider {
   children: React.ReactNode;
 }
 
+const WALLET_CONNECTED_ITEM = '@Frenchie/walletConnected';
+
 const WalletContext = createContext<IWalletContext>({} as IWalletContext);
 
 export const WalletProvider: React.FC<IWalletProvider> = ({
@@ -43,6 +45,7 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
         if (window.ethereum) {
           await window.ethereum.request({ method: 'eth_requestAccounts' });
           setWeb3(new Web3(window.ethereum));
+          localStorage.setItem(WALLET_CONNECTED_ITEM, 'true');
         } else {
           throw new Error(
             'Could not find an injected web3. Is your wallet connected?'
@@ -70,7 +73,9 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
   }, [isWeb3Enabled, web3.eth]);
 
   useEffect(() => {
-    enableWeb3();
+    if (localStorage.getItem(WALLET_CONNECTED_ITEM) === 'true') {
+      enableWeb3();
+    }
   }, [enableWeb3]);
 
   return (

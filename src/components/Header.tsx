@@ -15,14 +15,7 @@ import { useHistory } from 'react-router';
 import {
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuIcon,
-  MenuCommand,
-  MenuDivider,
+
 } from '@chakra-ui/react';
 import constants from '../config/constants';
 import { Logo } from './Logo';

@@ -12,7 +12,18 @@ import {
   DrawerOverlay,
 } from '@chakra-ui/modal';
 import { useHistory } from 'react-router';
-
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuIcon,
+  MenuCommand,
+  MenuDivider,
+} from '@chakra-ui/react';
 import constants from '../config/constants';
 import { Logo } from './Logo';
 import WalletInfo from './WalletInfo';
@@ -104,6 +115,17 @@ export default function Header(): React.ReactElement {
             Frenchie Network
           </Text>
         </Stack>
+           <Menu>
+            <MenuButton onClick={goTo('/')} as={Button}  color={constants.colors.dark} bg={constants.colors.light}>
+              Home
+             </MenuButton>
+             <MenuButton onClick={goTo('/farming')} as={Button}  color={constants.colors.dark} bg={constants.colors.light}>
+              Farming
+             </MenuButton>
+             <MenuButton onClick={goTo('/swap')} as={Button}  color={constants.colors.dark} bg={constants.colors.light} >
+              FrenchieSwap
+             </MenuButton>
+           </Menu>
         <WalletInfo />
       </Flex>
     </Container>

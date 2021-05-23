@@ -60,7 +60,10 @@ export default function HomePage(): React.ReactElement {
           More Than A MEME
         </Title>
         <Title isPageTitle color={constants.colors.red}>
-          An Ecosystem
+          A Fully Fledged
+        </Title>
+        <Title isPageTitle color={constants.colors.green}>
+          Eco-Friendly Blockchain
         </Title>
       </Box>
       <Box display={{ base: 'block', md: 'flex' }} alignItems="start">
@@ -76,7 +79,7 @@ export default function HomePage(): React.ReactElement {
               FREN{' '}
             </Text>
             is a decentralized token running in the BSC network. Built using
-            BEP20 and Solidity, audited and secured by professionals.
+            BEP20 and Solidity, audited and secured by professionals. It will be migrated to Main Net by Q1-2022
           </Text>
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
@@ -109,7 +112,7 @@ export default function HomePage(): React.ReactElement {
               {' '}
               won’t be just a meme token
             </Text>
-            . We are working on mindblowing features to the community.
+            . We are working on mindblowing blockchain technology for our community.
           </Text>
         </Box>
       </Box>
@@ -151,20 +154,20 @@ export default function HomePage(): React.ReactElement {
           spacing={10}
           flexDirection={{ base: 'column', md: 'row' }}
         >
-          <a
-            href={constants.poocoinGroupLink}
+                    <a
+            href={constants.coinmarketcapGroupLink}
             target="_blank"
             rel="noopener noreferrer"
           >
             <HStack spacing={4}>
               <Image
                 objectFit="cover"
-                boxSize="100px"
-                src="https://poocoin.app/images/logo/poocoin512.png"
-                alt="Poocoin Chart"
+                boxSize="50px"
+                src="https://i2.wp.com/blog.coinmarketcap.com/wp-content/uploads/2019/06/wp-favicon.png"
+                alt="CMC"
               />
               <Heading as="h3" size="lg">
-                Poocoin Chart
+                CoinMarketCap
               </Heading>
             </HStack>
           </a>
@@ -176,12 +179,29 @@ export default function HomePage(): React.ReactElement {
             <HStack spacing={4}>
               <Image
                 objectFit="cover"
-                boxSize="100px"
+                boxSize="50px"
                 src="https://i.imgur.com/bjJF07B.png"
                 alt="CoinGecko"
               />
               <Heading as="h3" size="lg">
                 CoinGecko
+              </Heading>
+            </HStack>
+          </a>
+          <a
+            href={constants.poocoinGroupLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <HStack spacing={4}>
+              <Image
+                objectFit="cover"
+                boxSize="50px"
+                src="https://poocoin.app/images/logo/poocoin512.png"
+                alt="Poocoin Chart"
+              />
+              <Heading as="h3" size="lg">
+                Poocoin Chart
               </Heading>
             </HStack>
           </a>

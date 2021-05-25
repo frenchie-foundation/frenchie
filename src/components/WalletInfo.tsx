@@ -12,10 +12,10 @@ import BigNumber from 'bignumber.js';
 type IWalletInfo = ChakraProps;
 
 const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
-  const { web3, isWeb3Enabled, enableWeb3, address } = useWallet();
+  const { web3, isWeb3Enabled, handleOpenWalletConnection, address } =
+    useWallet();
   const { frenToken, pancakeRouter } = useContracts();
 
-  const [loading, setLoading] = useState(false);
   const [frenBalance, setFrenBalance] = useState(-1);
   const [usdPrice, setUsdPrice] = useState(-1);
 
@@ -46,11 +46,9 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
 
   const handleConnect = useCallback(async () => {
     if (!isWeb3Enabled) {
-      setLoading(true);
-      await enableWeb3();
-      setLoading(false);
+      handleOpenWalletConnection();
     }
-  }, [enableWeb3, isWeb3Enabled]);
+  }, [handleOpenWalletConnection, isWeb3Enabled]);
 
   useEffect(() => {
     (async () => {
@@ -75,7 +73,6 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
         color={constants.colors.dark}
         leftIcon={<FaWallet color={constants.colors.dark} />}
         onClick={handleConnect}
-        isLoading={loading}
         display={{ base: isWeb3Enabled ? 'none' : 'flex', md: 'flex' }}
       >
         {isWeb3Enabled

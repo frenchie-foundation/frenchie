@@ -1,3 +1,8 @@
+import { Button, IconButton } from '@chakra-ui/button';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { Image } from '@chakra-ui/image';
+import { Flex, HStack, Text } from '@chakra-ui/layout';
+import { Modal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/modal';
 import { useToast } from '@chakra-ui/toast';
 import React, {
   createContext,
@@ -7,20 +12,48 @@ import React, {
   useMemo,
   useEffect,
 } from 'react';
+import { FaTimes } from 'react-icons/fa';
 import Web3 from 'web3';
+
+import Title from '../components/Title';
+
+import metamaskLogo from '../assets/images/metamask.svg';
+import bscWalletLogo from '../assets/images/injected-binance.svg';
 
 interface IWalletContext {
   isWeb3Enabled: boolean;
   web3: Web3;
-  enableWeb3: () => Promise<void>;
+  enableWeb3: (providerAPI: string) => Promise<void>;
   address?: string;
+  handleOpenWalletConnection: () => void;
 }
 
 interface IWalletProvider {
   children: React.ReactNode;
 }
 
+const WALLET_CONNECTED_ITEM = '@Frenchie/walletProviderConnected';
+
 const WalletContext = createContext<IWalletContext>({} as IWalletContext);
+
+interface IWalletProviderLabel {
+  walletProvider: {
+    name: string;
+  };
+  image: React.ReactElement;
+}
+
+const WalletProviderLabel: React.FC<IWalletProviderLabel> = ({
+  walletProvider,
+  image,
+}: IWalletProviderLabel) => {
+  return (
+    <HStack spacing={2}>
+      {image}
+      <Text>{walletProvider.name}</Text>
+    </HStack>
+  );
+};
 
 export const WalletProvider: React.FC<IWalletProvider> = ({
   children,
@@ -28,7 +61,17 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
   const [web3, setWeb3] = useState<Web3>({} as Web3);
   const [address, setAddress] = useState<string>();
 
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure();
+
   const toast = useToast();
+
+  const handleOpenWalletConnection = useCallback(() => {
+    onModalOpen();
+  }, [onModalOpen]);
 
   const isWeb3Enabled = useMemo(() => {
     if (web3.eth) {
@@ -37,28 +80,33 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
     return false;
   }, [web3]);
 
-  const enableWeb3 = useCallback(async () => {
-    try {
-      if (!isWeb3Enabled) {
-        if (window.ethereum) {
-          await window.ethereum.request({ method: 'eth_requestAccounts' });
-          setWeb3(new Web3(window.ethereum));
-        } else {
-          throw new Error(
-            'Could not find an injected web3. Is your wallet connected?'
-          );
+  const enableWeb3 = useCallback(
+    async (providerAPI: string) => {
+      try {
+        if (!isWeb3Enabled) {
+          if (window[providerAPI]) {
+            await window[providerAPI].request({
+              method: 'eth_requestAccounts',
+            });
+            setWeb3(new Web3(window[providerAPI]));
+            localStorage.setItem(WALLET_CONNECTED_ITEM, providerAPI);
+            onModalClose();
+          } else {
+            throw new Error('Could not find the selected provider.');
+          }
         }
+      } catch (error) {
+        toast({
+          status: 'error',
+          description: error.message,
+          title: 'Error',
+          position: 'top',
+          duration: 5000,
+        });
       }
-    } catch (error) {
-      toast({
-        status: 'error',
-        description: error.message,
-        title: 'Error',
-        position: 'top',
-        duration: 5000,
-      });
-    }
-  }, [isWeb3Enabled, toast]);
+    },
+    [isWeb3Enabled, onModalClose, toast]
+  );
 
   useEffect(() => {
     (async () => {
@@ -70,7 +118,12 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
   }, [isWeb3Enabled, web3.eth]);
 
   useEffect(() => {
-    enableWeb3();
+    const walletProvider = localStorage.getItem(WALLET_CONNECTED_ITEM);
+    if (walletProvider) {
+      setTimeout(() => {
+        enableWeb3(walletProvider);
+      }, 1000);
+    }
   }, [enableWeb3]);
 
   return (
@@ -80,8 +133,57 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
         web3,
         enableWeb3,
         address,
+        handleOpenWalletConnection,
       }}
     >
+      <Modal isCentered isOpen={isModalOpen} onClose={onModalClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <Flex p={4} justifyContent="space-between" alignItems="center">
+            <Title>Select a wallet provider</Title>
+            <IconButton
+              aria-label="close"
+              icon={<FaTimes />}
+              onClick={onModalClose}
+            />
+          </Flex>
+          <ModalBody p={4}>
+            <Button
+              justifyContent="flex-start"
+              isFullWidth
+              mb={2}
+              onClick={() => enableWeb3('ethereum')}
+              height={16}
+            >
+              <WalletProviderLabel
+                walletProvider={{ name: 'MetaMask' }}
+                image={
+                  <Image src={metamaskLogo} height={10} alt="MetaMask logo" />
+                }
+              />
+            </Button>
+            <Button
+              justifyContent="flex-start"
+              isFullWidth
+              onClick={() => enableWeb3('BinanceChain')}
+              height={16}
+            >
+              <WalletProviderLabel
+                walletProvider={{
+                  name: 'Binance Chain Wallet',
+                }}
+                image={
+                  <Image
+                    src={bscWalletLogo}
+                    height={10}
+                    alt="BinanceWallet logo"
+                  />
+                }
+              />
+            </Button>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
       {children}
     </WalletContext.Provider>
   );

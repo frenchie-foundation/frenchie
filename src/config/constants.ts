@@ -17,11 +17,13 @@ const constants = {
   addLiquidityLink: 'https://app.1inch.io/#/56/dao/pools?action=stake&token0=0x0000000000000000000000000000000000000000&token1=0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af',
   poocoinGroupLink: 'https://poocoin.app/tokens/0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af',
   coingeckoGroupLink: 'https://www.coingecko.com/en/coins/frenchie',
+  coinmarketcapGroupLink: 'https://coinmarketcap.com/currencies/frenchie-network/',
   colors: {
     light: '#FFEFCF',
     dark: '#1A202C',
     darkerLight: '#FBd38D',
-    red: '#D94A4A'
+    red: '#D94A4A',
+    green: '#228B22'
   }
 };
 

@@ -1,6 +1,6 @@
 {
   "name": "frenchie",
-  "version": "1.14.1",
+  "version": "1.14.2",
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "1.6.0",

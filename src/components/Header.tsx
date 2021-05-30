@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useState } from 'react';
 import { Button, IconButton } from '@chakra-ui/button';
-import { Container, Flex, Stack, Text, VStack } from '@chakra-ui/layout';
+import {
+  Container,
+  Flex,
+  HStack,
+  Stack,
+  Text,
+  VStack,
+} from '@chakra-ui/layout';
 import { FaBars } from 'react-icons/fa';
 import {
   Drawer,
@@ -12,11 +19,6 @@ import {
   DrawerOverlay,
 } from '@chakra-ui/modal';
 import { useHistory } from 'react-router';
-import {
-  Menu,
-  MenuButton,
-
-} from '@chakra-ui/react';
 import constants from '../config/constants';
 import { Logo } from './Logo';
 import WalletInfo from './WalletInfo';
@@ -108,18 +110,33 @@ export default function Header(): React.ReactElement {
             Frenchie Network
           </Text>
         </Stack>
-           <Menu>
-            <MenuButton onClick={goTo('/')} as={Button}  color={constants.colors.dark} bg={constants.colors.light}>
-              Home
-             </MenuButton>
-             <MenuButton onClick={goTo('/farming')} as={Button}  color={constants.colors.dark} bg={constants.colors.light}>
-              Farming
-             </MenuButton>
-             <MenuButton onClick={goTo('/swap')} as={Button}  color={constants.colors.dark} bg={constants.colors.light} >
-              FrenchieSwap
-             </MenuButton>
-           </Menu>
-        <WalletInfo />
+        <HStack spacing={4}>
+          <Button
+            onClick={goTo('/')}
+            as={Button}
+            variant="solid"
+            display={{ base: 'none', md: 'block' }}
+          >
+            Home
+          </Button>
+          <Button
+            onClick={goTo('/farming')}
+            as={Button}
+            variant="solid"
+            display={{ base: 'none', md: 'block' }}
+          >
+            Farm
+          </Button>
+          <Button
+            onClick={goTo('/swap')}
+            as={Button}
+            variant="solid"
+            display={{ base: 'none', md: 'block' }}
+          >
+            FrenchieSwap
+          </Button>
+          <WalletInfo />
+        </HStack>
       </Flex>
     </Container>
   );

@@ -338,7 +338,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           <Slider
             value={farmSlider}
             onChange={setFarmSlider}
-            step={25}
+            step={10}
             colorScheme="teal"
           >
             <SliderTrack bg="teal.100">
@@ -352,6 +352,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           disabled={!amountToFarm || amountToFarm === '0'}
           colorScheme="teal"
           onClick={handleFarm}
+          isFullWidth
         >
           {farmButtonText}
         </Button>
@@ -377,7 +378,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           <Slider
             value={withdrawSlider}
             onChange={setWithdrawSlider}
-            step={25}
+            step={10}
             colorScheme="red"
           >
             <SliderTrack bg="red.100">
@@ -391,6 +392,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           disabled={!withdrawAmount || withdrawAmount === '0'}
           colorScheme="red"
           onClick={handleWithdraw}
+          isFullWidth
         >
           Withdraw
         </Button>
@@ -404,7 +406,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
             <NumberInputField bg={constants.colors.dark} color="white" />
           </NumberInput>
           <FormHelperText color={constants.colors.dark}>
-            = {usdRewardsPrice} USD
+            ≈ {usdRewardsPrice} USD
           </FormHelperText>
         </FormControl>
         <Button
@@ -412,6 +414,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           disabled={Number(rewards) === 0}
           colorScheme="teal"
           onClick={handleClaimRewards}
+          isFullWidth
         >
           Claim rewards
         </Button>

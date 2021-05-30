@@ -18,6 +18,7 @@ import Web3 from 'web3';
 import Title from '../components/Title';
 
 import metamaskLogo from '../assets/images/metamask.svg';
+import trustWalletLogo from '../assets/images/trust-wallet.svg';
 import bscWalletLogo from '../assets/images/injected-binance.svg';
 
 interface IWalletContext {
@@ -48,7 +49,7 @@ const WalletProviderLabel: React.FC<IWalletProviderLabel> = ({
   image,
 }: IWalletProviderLabel) => {
   return (
-    <HStack spacing={2}>
+    <HStack spacing={4}>
       {image}
       <Text>{walletProvider.name}</Text>
     </HStack>
@@ -159,6 +160,24 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
                 walletProvider={{ name: 'MetaMask' }}
                 image={
                   <Image src={metamaskLogo} height={10} alt="MetaMask logo" />
+                }
+              />
+            </Button>
+            <Button
+              justifyContent="flex-start"
+              isFullWidth
+              mb={2}
+              onClick={() => enableWeb3('ethereum')}
+              height={16}
+            >
+              <WalletProviderLabel
+                walletProvider={{ name: 'Trust Wallet' }}
+                image={
+                  <Image
+                    src={trustWalletLogo}
+                    height={10}
+                    alt="Trust Wallet logo"
+                  />
                 }
               />
             </Button>

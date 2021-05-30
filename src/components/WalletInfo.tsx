@@ -63,9 +63,9 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
     <HStack spacing={4} {...props}>
       {isWeb3Enabled && frenBalance !== -1 && (
         <Text fontWeight="bold" display="flex" alignItems="center">
-          <Logo display="inline" height={7} /> $FREN{' '}
-          {Number(web3.utils.fromWei(String(frenBalance))).toLocaleString()}{' '}
-          (USD {frenBalanceUsd.toLocaleString()})
+          <Logo display="inline" height={7} />$
+          {Number(web3.utils.fromWei(String(frenBalance))).toLocaleString()} (≈
+          ${frenBalanceUsd.toLocaleString()})
         </Text>
       )}
       <Button

@@ -79,7 +79,8 @@ export default function HomePage(): React.ReactElement {
               FREN{' '}
             </Text>
             is a decentralized token running in the BSC network. Built using
-            BEP20 and Solidity, audited and secured by professionals. It will be migrated to Main Net by Q1-2022
+            BEP20 and Solidity, audited and secured by professionals. It will be
+            migrated to Main Net by Q1-2022
           </Text>
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
@@ -112,7 +113,8 @@ export default function HomePage(): React.ReactElement {
               {' '}
               won’t be just a meme token
             </Text>
-            . We are working on mindblowing blockchain technology for our community.
+            . We are working on mindblowing blockchain technology for our
+            community.
           </Text>
         </Box>
       </Box>
@@ -154,7 +156,7 @@ export default function HomePage(): React.ReactElement {
           spacing={10}
           flexDirection={{ base: 'column', md: 'row' }}
         >
-                    <a
+          <a
             href={constants.coinmarketcapGroupLink}
             target="_blank"
             rel="noopener noreferrer"
@@ -240,7 +242,7 @@ export default function HomePage(): React.ReactElement {
         </Link>
       </Text>
       <Text>
-        <b>Fren Farm contract:</b>{' '}
+        <b>FREN Farm contract:</b>{' '}
         <Link href={constants.bscScanLinkFarm} target="_blank">
           {constants.farmAddress}
         </Link>

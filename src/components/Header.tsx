@@ -125,7 +125,7 @@ export default function Header(): React.ReactElement {
             variant="solid"
             display={{ base: 'none', md: 'block' }}
           >
-            Farming
+            Farm
           </Button>
           <Button
             onClick={goTo('/swap')}

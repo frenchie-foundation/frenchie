@@ -1,10 +1,16 @@
 import React, { useCallback, useEffect } from 'react';
-import { Box, Container, Flex, HStack, Link, Text } from '@chakra-ui/layout';
-import { Heading } from '@chakra-ui/react';
-import { Button } from '@chakra-ui/button';
-import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug } from 'react-icons/fa';
-import { Image } from '@chakra-ui/image';
+import { Container, HStack, Link } from '@chakra-ui/layout';
+import {
+  Heading,
+  Box,
+  Image,
+  Flex,
+  Text,
+  Button,
+  useColorModeValue,
+} from '@chakra-ui/react';
 
+import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug } from 'react-icons/fa';
 import openInNewTab from '../helpers/openInNewTab';
 import constants from '../config/constants';
 import Title from '../components/Title';
@@ -57,19 +63,24 @@ export default function HomePage(): React.ReactElement {
     <Container>
       <Box mt={16} mb={16}>
         <Title lineHeight="48px" isPageTitle>
-          More Than A MEME
+          More Than A Meme
         </Title>
         <Title isPageTitle color={constants.colors.red}>
-          A Fully Fledged
-        </Title>
-        <Title isPageTitle color={constants.colors.green}>
-          Eco-Friendly Blockchain
+          <span style={{ color: constants.colors.green }}>An Eco</span> Smart
+          Chain
         </Title>
       </Box>
-      <Box display={{ base: 'block', md: 'flex' }} alignItems="start">
+      <Box
+        bg={useColorModeValue('white', 'gray.900')}
+        boxShadow={'2xl'}
+        rounded={'lg'}
+        display={{ base: 'block', md: 'flex' }}
+        alignItems="start"
+        padding={4}
+      >
         <Box p={4} w="100%">
           <Flex justifyContent="center" mb={4}>
-            <Image src={frenchie} boxSize="50px" />
+            <Image src={frenchie} boxSize="75px" />
           </Flex>
           <Title mb={4} textAlign="center">
             Frenchie Network
@@ -85,7 +96,7 @@ export default function HomePage(): React.ReactElement {
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
           <Flex justifyContent="center" mb={4}>
-            <Image src={frenchiefarm} boxSize="50px" />
+            <Image src={frenchiefarm} boxSize="75px" />
           </Flex>
           <Title mb={4} textAlign="center">
             Farming Rewards
@@ -102,7 +113,7 @@ export default function HomePage(): React.ReactElement {
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
           <Flex justifyContent="center" mb={4}>
-            <Image src={frenchieblockchain} boxSize="50px" />
+            <Image src={frenchieblockchain} boxSize="75px" />
           </Flex>
           <Title mb={4} textAlign="center">
             Blockchain Innovations
@@ -124,14 +135,14 @@ export default function HomePage(): React.ReactElement {
           leftIcon={<FaTelegram />}
           onClick={handleTelegramLinkClick}
         >
-          Telegram group
+          Telegram
         </Button>
         <Button
           colorScheme="orange"
           leftIcon={<FaNewspaper />}
           onClick={handleWhitepaperLinkClick}
         >
-          Our whitepaper
+          Whitepaper
         </Button>
       </HStack>
       <HStack justifyContent="center" spacing={2}>
@@ -140,7 +151,7 @@ export default function HomePage(): React.ReactElement {
           leftIcon={<FaBug />}
           onClick={handleAuditLinkClick}
         >
-          Audit report
+          Audit
         </Button>
         <Button
           colorScheme="green"

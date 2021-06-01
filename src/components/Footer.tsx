@@ -65,6 +65,7 @@ export default function Footer(): React.ReactElement {
             <Link target="_blank" href={constants.oneInchSwapLink}>1inch BSC Swap</Link>
             <Link target="_blank" href="/audit-report.pdf">Audit Report</Link>
             <Link target="_blank" href="https://spiry.ro/">Team</Link>
+            <Link target="_blank" href="https://www.notion.so/spirycorp/8a29496af47c4c0eb03c3e5790052f28?v=1884d45723544435b01c57874400ebb9">Live Roadmap</Link>
           </Stack>
           <Stack align={'flex-start'}>
           <Title mb={4}>Social Media</Title>

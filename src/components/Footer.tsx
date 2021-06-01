@@ -1,12 +1,5 @@
-import {
-  Box,
-  Container,
-  Link,
-  List,
-  ListItem,
-  Stack,
-  Text,
-} from '@chakra-ui/layout';
+import { Box,  Container,  Link,  SimpleGrid,  Stack,  Text,  useColorModeValue,
+} from '@chakra-ui/react';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router';
 import constants from '../config/constants';
@@ -28,95 +21,70 @@ export default function Footer(): React.ReactElement {
 
   return (
     <Container mt={20} mb={20}>
-      <Stack
-        spacing={2}
-        display="flex"
-        direction="row"
-        alignItems="center"
-        mb={5}
-      >
-        <Logo height={9} />
-        <Text fontSize={24} color={constants.colors.light} fontWeight="bold">
-          Frenchie Network
-        </Text>
-      </Stack>
+
+ 
       <Box
-        display={{ base: 'block', md: 'flex' }}
-        justifyContent="space-between"
-        alignItems="start"
-      >
-        <Box w="100%">
-          <Title mb={4}>Pages</Title>
-          <List>
-            <ListItem>
-              <Link onClick={goTo('/')} href="/">
-                Home
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link onClick={goTo('/farming')} href="/farming">
-                Farming
-              </Link>
-            </ListItem>
-          </List>
-        </Box>
-        <Box w="100%" mt={{ base: 6, md: 0 }}>
-          <Title mb={4}>Useful links</Title>
-          <List>
-            <ListItem>
-              <Link href="/whitepaper.pdf" target="_blank">
-                Whitepaper
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link href="/audit-report.pdf" target="_blank">
-                Audit report
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link href={constants.pancakeSwapLink} target="_blank">
-                PancakeSwap
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link href={constants.oneInchSwapLink} target="_blank">
-                1inch
-              </Link>
-            </ListItem>
-          </List>
-        </Box>
-        <Box w="100%" mt={{ base: 6, md: 0 }}>
-          <Title mb={4}>The team</Title>
-          <List>
-            <ListItem>
-              <Link href="https://spiry.ro" target="_blank">
-                Spiry Capital
-              </Link>
-            </ListItem>
-          </List>
-        </Box>
-        <Box w="100%" mt={{ base: 6, md: 0 }}>
-          <Title mb={4}>Partners</Title>
-          <List>
-            <ListItem>
-              <Link href={constants.oneInchSwapLink} target="_blank">
-                1inch
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link href="https://etherauthority.io" target="_blank">
-                EtherAuthority
-              </Link>
-            </ListItem>
-          </List>
-        </Box>
-      </Box>
-      <Text mt={10} textAlign="center">
+      bg={useColorModeValue('gray.50', 'gray.900')}
+      color={useColorModeValue('gray.700', 'gray.200')}>
+      <Container as={Stack} maxW={'6xl'} py={10}>
+        <SimpleGrid
+          templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 1fr 1fr' }}
+          spacing={8}>
+          <Stack spacing={6}>
+            <Box>
+              <Logo color={useColorModeValue('gray.700', 'white')} />
+            </Box>
+            <Text mt={10} textAlign="center">
         Made with ❤️ by{' '}
         <Link href="https://spiry.ro" target="_blank">
           Spiry Capital
         </Link>
       </Text>
+            <Text fontSize={'sm'}>
+              © 2021 Frenchie Network. All rights reserved 
+            </Text>
+            
+          </Stack>
+          <Stack align={'flex-start'}>
+          <Title mb={4}>Pages</Title>
+          <Link onClick={goTo('/')} href="/">
+                Home
+              </Link>
+              <Link onClick={goTo('/farming')} href="/farming">
+                Farming
+              </Link>
+              <Link onClick={goTo('/swap')} href="/swap">
+                Frenchie Swap
+              </Link>
+          </Stack>
+          <Stack align={'flex-start'}>
+          <Title mb={4}>Useful Links</Title>
+            <Link target="_blank" href={'https://hub.frenchie.info'}>Frenchie Info Hub</Link>
+            <Link target="_blank" href={'/frenchie-whitepaper.pdf'}>Whitepaper (Lite)</Link>
+            <Link target="_blank" href={constants.pancakeSwapLink}>Pancake Swap V1</Link>
+            <Link target="_blank" href={constants.oneInchSwapLink}>1inch BSC Swap</Link>
+            <Link target="_blank" href="/audit-report.pdf">Audit Report</Link>
+            <Link target="_blank" href="https://spiry.ro/">Team</Link>
+          </Stack>
+          <Stack align={'flex-start'}>
+          <Title mb={4}>Partners</Title>
+            <Link href={'#'}>Help Center</Link>
+            <Link href={'#'}>Terms of Service</Link>
+            <Link href={'#'}>Legal</Link>
+            <Link href={'#'}>Privacy Policy</Link>
+            <Link href={'#'}>Status</Link>
+          </Stack>
+          <Stack align={'flex-start'}>
+          <Title mb={4}>Social Media</Title>
+            <Link href={'#'}>Telegram Group</Link>
+            <Link href={'#'}>Discord</Link>
+            <Link href={'#'}>Twitter</Link>
+            <Link href={'#'}>Instagram</Link>
+            <Link href={'#'}>Reddit</Link>
+          </Stack>
+        </SimpleGrid>
+      </Container>
+    </Box>
     </Container>
   );
 }

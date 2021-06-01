@@ -28,7 +28,7 @@ export default function Footer(): React.ReactElement {
       color={useColorModeValue('gray.700', 'gray.200')}>
       <Container as={Stack} maxW={'6xl'} py={10}>
         <SimpleGrid
-          templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 1fr 1fr' }}
+          templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 1fr' }}
           spacing={8}>
           <Stack spacing={6}>
             <Box>
@@ -59,7 +59,7 @@ export default function Footer(): React.ReactElement {
           </Stack>
           <Stack align={'flex-start'}>
           <Title mb={4}>Useful Links</Title>
-            <Link target="_blank" href={'https://hub.frenchie.info'}>Frenchie Info Hub</Link>
+            <Link target="_blank" href={'https://hub.frenchie.tech'}>Frenchie Info Hub</Link>
             <Link target="_blank" href={'/frenchie-whitepaper.pdf'}>Whitepaper (Lite)</Link>
             <Link target="_blank" href={constants.pancakeSwapLink}>Pancake Swap V1</Link>
             <Link target="_blank" href={constants.oneInchSwapLink}>1inch BSC Swap</Link>
@@ -67,20 +67,12 @@ export default function Footer(): React.ReactElement {
             <Link target="_blank" href="https://spiry.ro/">Team</Link>
           </Stack>
           <Stack align={'flex-start'}>
-          <Title mb={4}>Partners</Title>
-            <Link href={'#'}>Help Center</Link>
-            <Link href={'#'}>Terms of Service</Link>
-            <Link href={'#'}>Legal</Link>
-            <Link href={'#'}>Privacy Policy</Link>
-            <Link href={'#'}>Status</Link>
-          </Stack>
-          <Stack align={'flex-start'}>
           <Title mb={4}>Social Media</Title>
-            <Link href={'#'}>Telegram Group</Link>
-            <Link href={'#'}>Discord</Link>
-            <Link href={'#'}>Twitter</Link>
-            <Link href={'#'}>Instagram</Link>
-            <Link href={'#'}>Reddit</Link>
+            <Link target="_blank" href={'https://t.me/FrenchieNetwork'}>Telegram Group</Link>
+            <Link target="_blank" href={'https://discord.gg/6PeBA7K2Aw'}>Discord</Link>
+            <Link target="_blank" href={'https://twitter.com/FrenchieToken'}>Twitter</Link>
+            <Link target="_blank" href={'https://www.instagram.com/frenchie.network/'}>Instagram</Link>
+            <Link target="_blank" href={'https://www.reddit.com/r/FrenchieToken/'}>Reddit</Link>
           </Stack>
         </SimpleGrid>
       </Container>

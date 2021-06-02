@@ -1,6 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
-import {  Container,  HStack, Link, } from '@chakra-ui/layout';
-import { Heading, Box, Image, Flex, Text, Button, useColorModeValue,} from '@chakra-ui/react';
+import { Container, HStack, Link } from '@chakra-ui/layout';
+import {
+  Heading,
+  Box,
+  Image,
+  Flex,
+  Text,
+  Button,
+  useColorModeValue,
+} from '@chakra-ui/react';
 
 import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug } from 'react-icons/fa';
 import openInNewTab from '../helpers/openInNewTab';
@@ -53,20 +61,23 @@ export default function HomePage(): React.ReactElement {
 
   return (
     <Container>
-
       <Box mt={16} mb={16}>
         <Title lineHeight="48px" isPageTitle>
-          More Than A MEME
+          More Than A Meme
         </Title>
         <Title isPageTitle color={constants.colors.red}>
-          A Fully Fledged
-        </Title>
-        <Title isPageTitle color={constants.colors.green}>
-          Eco-Friendly Blockchain
+          <span style={{ color: constants.colors.green }}>An Eco</span> Smart
+          Chain
         </Title>
       </Box>
-      <Box  bg={useColorModeValue('white', 'gray.900')} boxShadow={'2xl'}
-        rounded={'lg'}display={{ base: 'block', md: 'flex' }} alignItems="start" >
+      <Box
+        bg={useColorModeValue('white', 'gray.900')}
+        boxShadow={'2xl'}
+        rounded={'lg'}
+        display={{ base: 'block', md: 'flex' }}
+        alignItems="start"
+        padding={4}
+      >
         <Box p={4} w="100%">
           <Flex justifyContent="center" mb={4}>
             <Image src={frenchie} boxSize="75px" />

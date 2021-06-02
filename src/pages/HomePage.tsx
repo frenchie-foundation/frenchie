@@ -2,6 +2,11 @@ import React, { useCallback, useEffect } from 'react';
 import { Container, HStack, Link } from '@chakra-ui/layout';
 import {
   Heading,
+  SimpleGrid,
+  chakra,
+  Stat,
+  StatLabel,
+  StatNumber,
   Box,
   Image,
   Flex,
@@ -220,29 +225,111 @@ export default function HomePage(): React.ReactElement {
           </a>
         </HStack>
       </Flex>
-
-      <Title mt={20} mb={4} isSecondary>
-        Tokenmetrics
-      </Title>
-      <Text>
-        <b>Initial supply:</b> 1 trillion
-      </Text>
-      <Text>
-        <b>Current supply:</b> 750 billions
-      </Text>
-      <Text>
-        <b>Total burned:</b> 250 billions (33.33%)
-      </Text>
-      <Text>
-        <b>Tokens to burn:</b> 0 billions (0%)
-      </Text>
-      <Text>
-        <b>Locked liquidity:</b> 250 billions (33.33%)
-      </Text>
-      <Text>
-        <b>Locked Vested Funds:</b> 345 billions
-      </Text>
-
+      <chakra.h1
+        textAlign={'center'}
+        fontSize={'4xl'}
+        py={10}
+        mt={20} mb={4} 
+        fontWeight={'bold'}>
+         Tokenmetrics
+      </chakra.h1>
+      <SimpleGrid align ={'center'}columns={{ base: 1, md: 5 }} spacing={{ base: 5, lg: 8 }}>
+      <Stat
+      textAlign={'center'}
+      px={{ base: 2, md: 4 }}
+      py={'2'}
+      shadow={'xl'}
+      border={'1px solid'}
+      borderColor={useColorModeValue('gray.800', 'gray.500')}
+      rounded={'lg'}>
+      <Flex justifyContent={'space-between'}>
+      <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
+          <StatLabel fontWeight={'medium'} isTruncated>
+            {'Initial Supply'}
+          </StatLabel>
+          <StatNumber fontSize={'l'} fontWeight={'medium'}>
+            {'1,000,000,000,000'}
+          </StatNumber>
+        </Box>
+        </Flex>
+    </Stat>
+    <Stat
+      textAlign={'center'}
+      px={{ base: 2, md: 4 }}
+      py={'2'}
+      shadow={'xl'}
+      border={'1px solid'}
+      borderColor={useColorModeValue('gray.800', 'gray.500')}
+      rounded={'lg'}>
+        <Flex justifyContent={'space-between'}>
+        <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
+          <StatLabel fontWeight={'medium'} isTruncated>
+            {'Current Supply'}
+          </StatLabel>
+          <StatNumber fontSize={'l'} fontWeight={'medium'}>
+            {'750,000,000,000'}
+          </StatNumber>
+        </Box>
+        </Flex>
+    </Stat>
+        <Stat
+      textAlign={'center'}
+      px={{ base: 2, md: 4 }}
+      py={'2'}
+      shadow={'xl'}
+      border={'1px solid'}
+      borderColor={useColorModeValue('gray.800', 'gray.500')}
+      rounded={'lg'}>
+        <Flex justifyContent={'space-between'}>   
+        <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
+          <StatLabel fontWeight={'medium'} isTruncated>
+            {'Burned Supply'}
+          </StatLabel>
+          <StatNumber fontSize={'l'} fontWeight={'medium'}>
+            {'250,000,000,000'}
+          </StatNumber>
+        </Box>
+        </Flex>
+    </Stat>
+    <Stat
+      textAlign={'center'}
+      px={{ base: 2, md: 4 }}
+      py={'2'}
+      shadow={'xl'}
+      border={'1px solid'}
+      borderColor={useColorModeValue('gray.800', 'gray.500')}
+      rounded={'lg'}>
+        <Flex justifyContent={'space-between'}>
+        <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
+          <StatLabel fontWeight={'medium'} isTruncated>
+            {'Liquidity Locked PCSv1'}
+          </StatLabel>
+          <StatNumber fontSize={'l'} fontWeight={'medium'}>
+            {'250,000,000,000'}
+          </StatNumber>
+        </Box>
+        </Flex>
+    </Stat>
+    <Stat
+      textAlign={'center'}
+      px={{ base: 2, md: 4 }}
+      py={'2'}
+      shadow={'xl'}
+      border={'1px solid'}
+      borderColor={useColorModeValue('gray.800', 'gray.500')}
+      rounded={'lg'}>
+        <Flex justifyContent={'space-between'}>
+        <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
+          <StatLabel fontWeight={'medium'} isTruncated>
+            {'Marketing + DEV'}
+          </StatLabel>
+          <StatNumber fontSize={'l'} fontWeight={'medium'}>
+            {'300,000,000,000'}
+          </StatNumber>
+        </Box>
+      </Flex>
+    </Stat>
+    </SimpleGrid>
       <Title mt={6} mb={4} isSecondary>
         Contract addresses
       </Title>

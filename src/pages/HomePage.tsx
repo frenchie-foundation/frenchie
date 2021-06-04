@@ -227,169 +227,179 @@ export default function HomePage(): React.ReactElement {
           </a>
         </HStack>
       </Flex>
-      <chakra.h1
+      <Title
         textAlign={'center'}
         fontSize={'4xl'}
         py={10}
-        mt={20} mb={4} 
-        fontWeight={'bold'}>
-         Tokenmetrics
-      </chakra.h1>
-      <SimpleGrid align ={'center'}columns={{ base: 1, md: 5 }} spacing={{ base: 5, lg: 8 }}>
-      <Stat
-      textAlign={'center'}
-      px={{ base: 2, md: 4 }}
-      py={'2'}
-      shadow={'xl'}
-      border={'1px solid'}
-      borderColor={useColorModeValue('gray.800', 'gray.500')}
-      rounded={'lg'}>
-      <Flex justifyContent={'space-between'}>
-      <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
-          <StatLabel fontWeight={'medium'} isTruncated>
-            {'Initial Supply'}
-          </StatLabel>
-          <StatNumber fontSize={'l'} fontWeight={'medium'}>
-            {'1,000,000,000,000'}
-          </StatNumber>
-        </Box>
-        </Flex>
-    </Stat>
-    <Stat
-      textAlign={'center'}
-      px={{ base: 2, md: 4 }}
-      py={'2'}
-      shadow={'xl'}
-      border={'1px solid'}
-      borderColor={useColorModeValue('gray.800', 'gray.500')}
-      rounded={'lg'}>
-        <Flex justifyContent={'space-between'}>
-        <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
-          <StatLabel fontWeight={'medium'} isTruncated>
-            {'Current Supply'}
-          </StatLabel>
-          <StatNumber fontSize={'l'} fontWeight={'medium'}>
-            {'750,000,000,000'}
-          </StatNumber>
-        </Box>
-        </Flex>
-    </Stat>
+        mt={20}
+        mb={4}
+        fontWeight={'bold'}
+      >
+        Tokenmetrics
+      </Title>
+      <SimpleGrid
+        align={'center'}
+        columns={{ base: 1, md: 5 }}
+        spacing={{ base: 5, lg: 8 }}
+      >
         <Stat
-      textAlign={'center'}
-      px={{ base: 2, md: 4 }}
-      py={'2'}
-      shadow={'xl'}
-      border={'1px solid'}
-      borderColor={useColorModeValue('gray.800', 'gray.500')}
-      rounded={'lg'}>
-        <Flex justifyContent={'space-between'}>   
-        <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
-          <StatLabel fontWeight={'medium'} isTruncated>
-            {'Burned Supply'}
-          </StatLabel>
-          <StatNumber fontSize={'l'} fontWeight={'medium'}>
-            {'250,000,000,000'}
-          </StatNumber>
-        </Box>
-        </Flex>
-    </Stat>
-    <Stat
-      textAlign={'center'}
-      px={{ base: 2, md: 4 }}
-      py={'2'}
-      shadow={'xl'}
-      border={'1px solid'}
-      borderColor={useColorModeValue('gray.800', 'gray.500')}
-      rounded={'lg'}>
-        <Flex justifyContent={'space-between'}>
-        <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
-          <StatLabel fontWeight={'medium'} isTruncated>
-            {'Liquidity Locked PCSv1'}
-          </StatLabel>
-          <StatNumber fontSize={'l'} fontWeight={'medium'}>
-            {'250,000,000,000'}
-          </StatNumber>
-        </Box>
-        </Flex>
-    </Stat>
-    <Stat
-      textAlign={'center'}
-      px={{ base: 2, md: 4 }}
-      py={'2'}
-      shadow={'xl'}
-      border={'1px solid'}
-      borderColor={useColorModeValue('gray.800', 'gray.500')}
-      rounded={'lg'}>
-        <Flex justifyContent={'space-between'}>
-        <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
-          <StatLabel fontWeight={'medium'} isTruncated>
-            {'Marketing + DEV'}
-          </StatLabel>
-          <StatNumber fontSize={'l'} fontWeight={'medium'}>
-            {'300,000,000,000'}
-          </StatNumber>
-        </Box>
-      </Flex>
-    </Stat>
-    </SimpleGrid>
-    <chakra.h1
+          textAlign={'center'}
+          px={{ base: 2, md: 4 }}
+          py={'1'}
+          shadow={'xl'}
+          border={'1px solid'}
+          borderColor={useColorModeValue('gray.800', 'gray.500')}
+          rounded={'lg'}
+        >
+          <Flex justifyContent={'space-between'}>
+            <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
+              <StatLabel fontWeight={'medium'} isTruncated>
+                Initial Supply
+              </StatLabel>
+              <StatNumber fontSize={'l'} fontWeight={'medium'}>
+                1,000,000,000,000
+              </StatNumber>
+            </Box>
+          </Flex>
+        </Stat>
+        <Stat
+          textAlign={'center'}
+          px={{ base: 2, md: 4 }}
+          py={'1'}
+          shadow={'xl'}
+          border={'1px solid'}
+          borderColor={useColorModeValue('gray.800', 'gray.500')}
+          rounded={'lg'}
+        >
+          <Flex justifyContent={'space-between'}>
+            <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
+              <StatLabel fontWeight={'medium'} isTruncated>
+                Current Supply
+              </StatLabel>
+              <StatNumber fontSize={'l'} fontWeight={'medium'}>
+                750,000,000,000
+              </StatNumber>
+            </Box>
+          </Flex>
+        </Stat>
+        <Stat
+          textAlign={'center'}
+          px={{ base: 2, md: 4 }}
+          py={1}
+          pb={3}
+          shadow={'xl'}
+          border={'1px solid'}
+          borderColor={useColorModeValue('gray.800', 'gray.500')}
+          rounded={'lg'}
+        >
+          <Flex justifyContent={'space-between'}>
+            <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
+              <StatLabel fontWeight={'medium'} isTruncated>
+                Burned Supply
+              </StatLabel>
+              <StatNumber fontSize={'l'} fontWeight={'medium'}>
+                250,000,000,000
+              </StatNumber>
+            </Box>
+          </Flex>
+        </Stat>
+        <Stat
+          textAlign={'center'}
+          px={{ base: 2, md: 4 }}
+          py={1}
+          pb={3}
+          shadow={'xl'}
+          border={'1px solid'}
+          borderColor={useColorModeValue('gray.800', 'gray.500')}
+          rounded={'lg'}
+        >
+          <Flex justifyContent={'space-between'}>
+            <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
+              <StatLabel fontWeight={'medium'} isTruncated>
+                Liquidity Locked PCSv1
+              </StatLabel>
+              <StatNumber fontSize={'l'} fontWeight={'medium'}>
+                250,000,000,000
+              </StatNumber>
+            </Box>
+          </Flex>
+        </Stat>
+        <Stat
+          textAlign={'center'}
+          px={{ base: 2, md: 4 }}
+          py={1}
+          pb={3}
+          shadow={'xl'}
+          border={'1px solid'}
+          borderColor={useColorModeValue('gray.800', 'gray.500')}
+          rounded={'lg'}
+        >
+          <Flex justifyContent={'space-between'}>
+            <Box maxW="7xl" mx={'auto'} pt={2} px={{ base: 2, sm: 12, md: 17 }}>
+              <StatLabel fontWeight={'medium'} isTruncated>
+                Marketing + DEV
+              </StatLabel>
+              <StatNumber fontSize={'l'} fontWeight={'medium'}>
+                300,000,000,000
+              </StatNumber>
+            </Box>
+          </Flex>
+        </Stat>
+      </SimpleGrid>
+      <Title
         textAlign={'center'}
         fontSize={'4xl'}
         py={2}
-        mt={8} mb={4} 
-        fontWeight={'bold'}>
-         Contracts 
-      </chakra.h1>
-      <Text textAlign={'center'} >
+        mt={8}
+        mb={4}
+        fontWeight={'bold'}
+      >
+        Contracts
+      </Title>
+      <Text textAlign={'center'}>
         <b>Frenchie Contract:</b>{' '}
-        <Input maxW='xl' value={constants.tokenAddress} isReadOnly/>
+        <Input maxW="xl" value={constants.tokenAddress} isReadOnly />
         <Button onClick={onCopy} ml={2}>
           {hasCopied ? 'Copied' : 'Copy'}
         </Button>
-        <Link href={constants.bscScanLink} target='_blank'>
-        <Button mt={6} mb={6}  ml={4}>
-          <Image
-                h={16}
-                w={250}
-                bgSize='cover'
-                bgPos='center'
-                src={'https://bscscan.com/images/brandassets/BscScan-logo-light.png'}
-                objectFit='cover'
-              />
-        </Button>
+        <Link href={constants.bscScanLink} target="_blank">
+          <Button mt={6} mb={6} ml={4}>
+            <Image
+              w={120}
+              src={
+                'https://bscscan.com/images/brandassets/BscScan-logo-light.png'
+              }
+            />
+          </Button>
         </Link>
       </Text>
-      
-      <Text textAlign={'center'}  >
+
+      <Text textAlign={'center'}>
         <b>Frenchie Farm Contract:</b>{' '}
-   
-        <Input maxW='xl' value={constants.farmAddress} isReadOnly/>
+        <Input maxW="xl" value={constants.farmAddress} isReadOnly />
         <Button onClick={onCopy} ml={2}>
           {hasCopied ? 'Copied' : 'Copy'}
         </Button>
-        <Link href={constants.bscScanLinkFarm}  target='_blank'>
-        <Button mt={6} mb={6}  ml={4}>
-          <Image
-                h={16}
-                w={250}
-                bgSize='cover'
-                bgPos='center'
-                src={'https://bscscan.com/images/brandassets/BscScan-logo-light.png'}
-                objectFit='cover'
-              />
-        </Button>
+        <Link href={constants.bscScanLinkFarm} target="_blank">
+          <Button mt={6} mb={6} ml={4}>
+            <Image
+              w={120}
+              src={
+                'https://bscscan.com/images/brandassets/BscScan-logo-light.png'
+              }
+            />
+          </Button>
         </Link>
-
       </Text>
 
       <Title mt={6} mb={4} isSecondary>
         The token
       </Title>
       <Text>
-        Frenchie goes by the ticker FREN and is a simple BEP-20 smart contract with burn function, 
-        secured and audited by professionals.
-        Doing it simple, it’s also automatically secure. That is what we had in
-        mind when we deployed it.
+        Frenchie goes by the ticker FREN and is a simple BEP-20 smart contract
+        with burn function, secured and audited by professionals. Doing it
+        simple, it’s also automatically secure. That is what we had in mind when
+        we deployed it.
       </Text>
       <Text>
         In order to deliver more advanced features, we deploy other separate

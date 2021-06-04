@@ -11,6 +11,8 @@ import {
   Image,
   Flex,
   Text,
+  Input,
+  useClipboard,
   Button,
   useColorModeValue,
 } from '@chakra-ui/react';
@@ -53,7 +55,7 @@ export default function HomePage(): React.ReactElement {
     }
     openInNewTab('/audit-report.pdf');
   }, []);
-
+  const { hasCopied, onCopy } = useClipboard(constants.tokenAddress);
   const goTo = useCallback(
     (path: string) => (e?: any) => {
       if (e) {
@@ -330,20 +332,54 @@ export default function HomePage(): React.ReactElement {
       </Flex>
     </Stat>
     </SimpleGrid>
-      <Title mt={6} mb={4} isSecondary>
-        Contract addresses
-      </Title>
-      <Text>
-        <b>FREN Contract Address (BEP20):</b>{' '}
-        <Link href={constants.bscScanLink} target="_blank">
-          {constants.tokenAddress}
+    <chakra.h1
+        textAlign={'center'}
+        fontSize={'4xl'}
+        py={2}
+        mt={8} mb={4} 
+        fontWeight={'bold'}>
+         Contracts 
+      </chakra.h1>
+      <Text textAlign={'center'} >
+        <b>Frenchie Contract:</b>{' '}
+        <Input maxW='xl' value={constants.tokenAddress} isReadOnly/>
+        <Button onClick={onCopy} ml={2}>
+          {hasCopied ? 'Copied' : 'Copy'}
+        </Button>
+        <Link href={constants.bscScanLink} target='_blank'>
+        <Button mt={6} mb={6}  ml={4}>
+          <Image
+                h={16}
+                w={250}
+                bgSize='cover'
+                bgPos='center'
+                src={'https://bscscan.com/images/brandassets/BscScan-logo-light.png'}
+                objectFit='cover'
+              />
+        </Button>
         </Link>
       </Text>
-      <Text>
-        <b>FREN Farm contract:</b>{' '}
-        <Link href={constants.bscScanLinkFarm} target="_blank">
-          {constants.farmAddress}
+      
+      <Text textAlign={'center'}  >
+        <b>Frenchie Farm Contract:</b>{' '}
+   
+        <Input maxW='xl' value={constants.farmAddress} isReadOnly/>
+        <Button onClick={onCopy} ml={2}>
+          {hasCopied ? 'Copied' : 'Copy'}
+        </Button>
+        <Link href={constants.bscScanLinkFarm}  target='_blank'>
+        <Button mt={6} mb={6}  ml={4}>
+          <Image
+                h={16}
+                w={250}
+                bgSize='cover'
+                bgPos='center'
+                src={'https://bscscan.com/images/brandassets/BscScan-logo-light.png'}
+                objectFit='cover'
+              />
+        </Button>
         </Link>
+
       </Text>
 
       <Title mt={6} mb={4} isSecondary>

@@ -386,8 +386,9 @@ export default function HomePage(): React.ReactElement {
         The token
       </Title>
       <Text>
-        FREN is a simple BEP-20 token, secure and audited by professionals.
-        Doing it simple, it’s also automatically secure. That’s what we had in
+        Frenchie goes by the ticker FREN and is a simple BEP-20 smart contract with burn function, 
+        secured and audited by professionals.
+        Doing it simple, it’s also automatically secure. That is what we had in
         mind when we deployed it.
       </Text>
       <Text>

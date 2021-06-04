@@ -3,7 +3,6 @@ import { Container, HStack, Link } from '@chakra-ui/layout';
 import {
   Heading,
   SimpleGrid,
-  chakra,
   Stat,
   StatLabel,
   StatNumber,

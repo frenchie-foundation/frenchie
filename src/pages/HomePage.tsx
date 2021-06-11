@@ -135,7 +135,7 @@ export default function HomePage(): React.ReactElement {
           </Text>
         </Box>
       </Box>
-      <HStack justifyContent="center" spacing={2} mt={10} mb={4}>
+      <HStack justifyContent="center" spacing={2} mt={8} mb={4}>
         <Button
           colorScheme="telegram"
           leftIcon={<FaTelegram />}
@@ -169,8 +169,8 @@ export default function HomePage(): React.ReactElement {
       </HStack>
       <Flex justifyContent="center">
         <HStack
-          mt={20}
-          spacing={10}
+          mt={14}
+          spacing={8}
           flexDirection={{ base: 'column', md: 'row' }}
         >
           <a
@@ -208,6 +208,23 @@ export default function HomePage(): React.ReactElement {
             </HStack>
           </a>
           <a
+            href={constants.dextoolsGroupLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <HStack spacing={4}>
+              <Image
+                objectFit="cover"
+                boxSize="50px"
+                src="https://i.imgur.com/lc25mKK.png"
+                alt="DexTools"
+              />
+              <Heading as="h3" size="lg">
+                Dextools
+              </Heading>
+            </HStack>
+          </a>
+          <a
             href={constants.poocoinGroupLink}
             target="_blank"
             rel="noopener noreferrer"
@@ -217,10 +234,10 @@ export default function HomePage(): React.ReactElement {
                 objectFit="cover"
                 boxSize="50px"
                 src="https://poocoin.app/images/logo/poocoin512.png"
-                alt="Poocoin Chart"
+                alt="PooChart"
               />
               <Heading as="h3" size="lg">
-                Poocoin Chart
+                PooChart
               </Heading>
             </HStack>
           </a>

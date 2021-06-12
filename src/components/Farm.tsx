@@ -29,14 +29,15 @@ import {
 import { toEther, toWei } from '../helpers/units';
 import axios from 'axios';
 import WhiteBox from './WhiteBox';
+import { BLOCKS_PER_YEAR, FREN_PER_BLOCK, FREN_POOL_PID } from '../config';
 import BigNumber from 'bignumber.js';
-
+import FrenchieFarm from '../assets/contracts/Farm.json';
+import multicall from '../utils/multicall';
 const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const { isWeb3Enabled, address, web3 } = useWallet();
   const { farmContract, oneInch, pancakeRouter } = useContracts();
 
   const toast = useToast();
-
   const [frenPrice, setFrenPrice] = useState(0);
 
   const [claimingRewards, setClaimingRewards] = useState(false);
@@ -305,6 +306,9 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   }, [address, farmContract, fetchEverything, toast]);
 
   return (
+
+    
+
     <HStack
       spacing={{ base: 0, md: 4 }}
       display={{ base: 'block', md: 'flex' }}

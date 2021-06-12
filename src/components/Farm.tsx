@@ -31,13 +31,13 @@ import axios from 'axios';
 import WhiteBox from './WhiteBox';
 import { BLOCKS_PER_YEAR, FREN_PER_BLOCK, FREN_POOL_PID } from '../config';
 import BigNumber from 'bignumber.js';
-import useRefresh from '../hooks/useRefresh';
+
+
 import FrenchieFarm from '../assets/contracts/Farm.json';
 import multicall from '../utils/multicall';
 const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const { isWeb3Enabled, address, web3 } = useWallet();
   const { farmContract, oneInch, pancakeRouter } = useContracts();
-  const { fastRefresh } = useRefresh();
   const toast = useToast();
   const [frenPrice, setFrenPrice] = useState(0);
 

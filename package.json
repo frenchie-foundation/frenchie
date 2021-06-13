@@ -3,6 +3,7 @@
   "version": "1.16.2",
   "private": true,
   "dependencies": {
+    "@binance-chain/bsc-use-wallet": "^0.8.1",
     "@chakra-ui/react": "1.6.0",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",

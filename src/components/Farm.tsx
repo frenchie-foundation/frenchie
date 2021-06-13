@@ -304,16 +304,12 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   }, [address, farmContract, fetchEverything, toast]);
 
   return (
-
-    
-
     <HStack
       spacing={{ base: 0, md: 4 }}
       display={{ base: 'block', md: 'flex' }}
       alignItems="start"
       {...props}
     >
-
       <WhiteBox w="100%" mb={{ base: 4, md: 0 }}>
         {loading && <Progress size="xs" isIndeterminate />}
         <FormControl id="amountToFarm" mb={2}>

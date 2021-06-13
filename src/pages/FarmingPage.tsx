@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import {
   Box,
   Container,
@@ -37,13 +37,8 @@ export default function FarmingPage(): React.ReactElement {
           Earn rewards
         </Title>
       </Box>
-      <Title mt={4} mb={4} isSecondary>
-        Instructions
-      </Title>
       <Text>
-        If you are already a liquidity provider, you can stake your LP tokens
-        and earn rewards every day! Also, you can easilly become a liquidity
-        provider. It’s easy, you can access our{' '}
+        You can also access our{' '}
         <Link
           fontWeight="bold"
           color={constants.colors.red}
@@ -54,15 +49,21 @@ export default function FarmingPage(): React.ReactElement {
         >
           1inch liquidity pool
         </Link>{' '}
-        and will be able to deposit a certain amount of tokens (BNB+FREN) to
-        collaborate with our liquidity. You will receive back an amount of LP
-        tokens and will passively earn a certain quantity of FREN from the 1inch
-        swap fees.
+        and you will be able to deposit a certain amount of tokens (BNB+FREN) to
+        participate in the liquidity farming activity. You will receive back an amount of FREN-BNB 1INCH-LP
+        Tokens and will passively earn a certain quantity of FREN from the 1inch
+        swap fees. EARN EXTRA when your deposit here on our Farming page your FREN-BNB 1INCH-LP Tokens - Up to 5000 FREN / 3 seconds.
       </Text>
       <HStack mb={10} mt={10}>
       </HStack>
       
       <Flex>
+      <Alert   status="success"
+  variant="subtle"
+  height="200px"> <AlertTitle mt={4} mb={1} fontSize="lg">
+  Instructions in 3 easy-steps.
+</AlertTitle>
+
       <List spacing={3}>
           <ListItem display="flex" alignItems="center">
             <ListIcon as={FaCheckCircle} color="green.500" />
@@ -78,8 +79,9 @@ export default function FarmingPage(): React.ReactElement {
             in our Frenchie Farm contract
           </ListItem>
         </List>
+        </Alert>
   <Spacer />
-      <Alert w="550px" status="warning">
+      <Alert height="200px" w="550px" status="warning">
   <AlertIcon />
   <Box >
     <AlertTitle>DISCLAIMER</AlertTitle>
@@ -99,15 +101,15 @@ export default function FarmingPage(): React.ReactElement {
 
   </Flex>
   <Title mt={4} mb={4} isSecondary>
-        APY
+    
       </Title>
-      <APR mb={10} />
+      <APR w="550px" mb={4} />
       <Title mt={4} mb={4} isSecondary>
-        Liquidity (FREN+BNB)
+        Liquidity Control (FREN+BNB)
       </Title>
       <Liquidity mb={10} />
       <Title mt={4} mb={4} isSecondary>
-        Frenchie Farm
+        Frenchie Farming
       </Title>
       <Farm />
     </Container>

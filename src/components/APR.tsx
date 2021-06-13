@@ -20,9 +20,12 @@ const APR: React.FC<ChakraProps> = (props: ChakraProps) => {
     //API FORMULA TEST
     const frenRewardsPerYear = useMemo(() => { 
       return  new BigNumber(BLOCKS_PER_YEAR);}, []);
-    const apy = useMemo(() => { 
+    const oneyearapy = useMemo(() => { 
       return  new BigNumber(frenRewardsPerYear).multipliedBy(frenPrice);
   }, [frenRewardsPerYear, frenPrice]);
+  const apy = useMemo(() => { 
+    return  new BigNumber(oneyearapy).multipliedBy(4);
+}, [oneyearapy]);
   
     useEffect(() => {
       (async () => {
@@ -51,7 +54,7 @@ const APR: React.FC<ChakraProps> = (props: ChakraProps) => {
         <WhiteBox w="100%" mb={{ base: 4, md: 0 }}>
         <Stat>
         <StatLabel>FREN + BNB (APR %)</StatLabel>
-        <StatNumber>{apy.toPrecision(5)} %</StatNumber>
+        <StatNumber>{apy.toPrecision(4)} %</StatNumber>
         <StatHelpText>The number might differ depending on [FREN-BNB 1INCH LP] deposit size</StatHelpText>
         </Stat>
         </WhiteBox>

@@ -30,15 +30,12 @@ import { toEther, toWei } from '../helpers/units';
 import axios from 'axios';
 import WhiteBox from './WhiteBox';
 import BigNumber from 'bignumber.js';
-import { BLOCKS_PER_YEAR, FREN_PER_BLOCK} from '../config';
+import { BLOCKS_PER_YEAR} from '../config';
 const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const { isWeb3Enabled, address, web3 } = useWallet();
   const { farmContract, oneInch, pancakeRouter } = useContracts();
   const toast = useToast();
   const [frenPrice, setFrenPrice] = useState(0);
-  const frenRewardPerBlock = FREN_PER_BLOCK;
-
-        const apy = frenPrice*[frenRewardPerBlock.times(BLOCKS_PER_YEAR)];
 
   const [claimingRewards, setClaimingRewards] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
@@ -101,6 +98,15 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       setWithdrawAmount(amount.toString());
     }
   }, [withdrawSlider, web3.utils, farmingAmount]);
+  //API FORMULA TEST
+
+  const bscblocks =  new BigNumber(BLOCKS_PER_YEAR);
+  const frenRewardsPerYear = bscblocks.multipliedBy(5000);
+  
+  const apy = useMemo(() => { 
+    return  new BigNumber(frenRewardsPerYear).multipliedBy(frenPrice).toLocaleString();
+}, [frenRewardsPerYear, frenPrice]);
+
 
   const fetchEverything = useCallback(async () => {
     setFarmSlider(0);

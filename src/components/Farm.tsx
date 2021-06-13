@@ -31,13 +31,13 @@ import axios from 'axios';
 import WhiteBox from './WhiteBox';
 import BigNumber from 'bignumber.js';
 
+
 const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const { isWeb3Enabled, address, web3 } = useWallet();
   const { farmContract, oneInch, pancakeRouter } = useContracts();
-
   const toast = useToast();
-
   const [frenPrice, setFrenPrice] = useState(0);
+
 
   const [claimingRewards, setClaimingRewards] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
@@ -53,7 +53,6 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const [farmingAmount, setFarmingAmount] = useState('0');
   const [rewards, setRewards] = useState('0');
   const [balance, setBalance] = useState('0');
-
   const usdRewardsPrice = useMemo(() => {
     return (Number(rewards) * frenPrice).toLocaleString();
   }, [rewards, frenPrice]);
@@ -313,9 +312,6 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
     >
       <WhiteBox w="100%" mb={{ base: 4, md: 0 }}>
         {loading && <Progress size="xs" isIndeterminate />}
-        <Title mb={2} color={constants.colors.dark}>
-          Farming
-        </Title>
         <FormControl id="amountToFarm" mb={2}>
           <FormLabel>Amount to farm</FormLabel>
           <NumberInput

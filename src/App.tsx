@@ -7,12 +7,15 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { WalletProvider } from './store/wallet';
 import { ContractsProvider } from './store/contracts';
-
+import { Provider } from 'react-redux';
+import store from './state';
 import HomePage from './pages/HomePage';
 import FarmingPage from './pages/FarmingPage';
 import SwapPage from './pages/SwapPage';
 
 export const App: React.FC = () => (
+  
+  <Provider store={store}>
   <ChakraProvider theme={theme}>
     <WalletProvider>
       <ContractsProvider>
@@ -28,4 +31,5 @@ export const App: React.FC = () => (
       </ContractsProvider>
     </WalletProvider>
   </ChakraProvider>
+  </Provider>
 );

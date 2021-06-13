@@ -37,6 +37,14 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const toast = useToast();
   const [frenPrice, setFrenPrice] = useState(0);
 
+  //API FORMULA TEST
+
+  const frenRewardsPerYear =  new BigNumber(BLOCKS_PER_YEAR);
+  const apy = useMemo(() => { 
+    return  new BigNumber(frenRewardsPerYear).multipliedBy(frenPrice.toPrecision()).toLocaleString();
+}, [frenRewardsPerYear, frenPrice]);
+
+
   const [claimingRewards, setClaimingRewards] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
   const [farming, setFarming] = useState(false);
@@ -98,15 +106,6 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       setWithdrawAmount(amount.toString());
     }
   }, [withdrawSlider, web3.utils, farmingAmount]);
-  //API FORMULA TEST
-
-  const bscblocks =  new BigNumber(BLOCKS_PER_YEAR);
-  const frenRewardsPerYear = bscblocks.multipliedBy(5000);
-  
-  const apy = useMemo(() => { 
-    return  new BigNumber(frenRewardsPerYear).multipliedBy(frenPrice).toLocaleString();
-}, [frenRewardsPerYear, frenPrice]);
-
 
   const fetchEverything = useCallback(async () => {
     setFarmSlider(0);

@@ -18,7 +18,6 @@ import constants from '../config/constants';
 import { useContracts } from '../store/contracts';
 import { useWallet } from '../store/wallet';
 import Title from './Title';
-import { BLOCKS_PER_YEAR } from '../config';
 import { useToast } from '@chakra-ui/toast';
 import { Progress } from '@chakra-ui/progress';
 import {
@@ -31,14 +30,15 @@ import { toEther, toWei } from '../helpers/units';
 import axios from 'axios';
 import WhiteBox from './WhiteBox';
 import BigNumber from 'bignumber.js';
-import { useFarms } from '../state/hooks';
-
+import { BLOCKS_PER_YEAR, FREN_PER_BLOCK} from '../config';
 const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const { isWeb3Enabled, address, web3 } = useWallet();
   const { farmContract, oneInch, pancakeRouter } = useContracts();
   const toast = useToast();
   const [frenPrice, setFrenPrice] = useState(0);
-  const farmsLP = useFarms();
+  const frenRewardPerBlock = FREN_PER_BLOCK;
+
+        const apy = frenPrice*[frenRewardPerBlock.times(BLOCKS_PER_YEAR)];
 
   const [claimingRewards, setClaimingRewards] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
@@ -317,7 +317,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       <WhiteBox w="100%" mb={{ base: 4, md: 0 }}>
         {loading && <Progress size="xs" isIndeterminate />}
         <Title mb={2} color={constants.colors.dark}>
-          Farming 
+          Farming APY {apy} %
         </Title>
         <FormControl id="amountToFarm" mb={2}>
           <FormLabel>Amount to farm</FormLabel>

@@ -6,12 +6,12 @@ import { getFrenFarm } from '../../utils/addressHelpers';
 import farmsConfig from '../../config/farms';
 import { QuoteToken } from '../../config/types';
 
-const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
+const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
 
 const fetchFarms = async () => {
   const data = await Promise.all(
     farmsConfig.map(async (farmConfig) => {
-      const lpAdress = farmConfig.lpAddresses[CHAIN_ID]
+      const lpAdress = farmConfig.lpAddresses[CHAIN_ID];
       const calls = [
         // Balance of token in the LP contract
         {
@@ -46,7 +46,7 @@ const fetchFarms = async () => {
           address: farmConfig.quoteTokenAdresses[CHAIN_ID],
           name: 'decimals',
         },
-      ]
+      ];
       const [
         tokenBalanceLP,
         quoteTokenBlanceLP,
@@ -54,43 +54,43 @@ const fetchFarms = async () => {
         lpTotalSupply,
         tokenDecimals,
         quoteTokenDecimals,
-      ] = await multicall(erc20, calls)
-      let tokenAmount
-      let lpTotalInQuoteToken
-      let tokenPriceVsQuote
+      ] = await multicall(erc20, calls);
+      let tokenAmount;
+      let lpTotalInQuoteToken;
+      let tokenPriceVsQuote;
       if (farmConfig.isTokenOnly) {
-        tokenAmount = new BigNumber(lpTokenBalanceMC).div(new BigNumber(10).pow(tokenDecimals))
+        tokenAmount = new BigNumber(lpTokenBalanceMC).div(new BigNumber(10).pow(tokenDecimals));
         if (farmConfig.tokenSymbol === QuoteToken.BUSD && farmConfig.quoteTokenSymbol === QuoteToken.BUSD) {
-          tokenPriceVsQuote = new BigNumber(1)
+          tokenPriceVsQuote = new BigNumber(1);
           // console.log(`${farmConfig.lpSymbol} is busd`)
         } else {
           // console.log(`${farmConfig.lpSymbol} is not busd ${lpAdress} quoteTokenBlancelP is ${quoteTokenBlanceLP} and tokenBalanceLP=${tokenBalanceLP}`)
-          tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP))
+          tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP));
         }
-        lpTotalInQuoteToken = tokenAmount.times(tokenPriceVsQuote)
+        lpTotalInQuoteToken = tokenAmount.times(tokenPriceVsQuote);
 
         // console.log(`${farmConfig.lpSymbol} is lpTotalInQuoteToken is ${lpTotalInQuoteToken} with tokenAmount ${tokenAmount} and tokenPriceVsQuote=${tokenPriceVsQuote} `)
       } else {
         // Ratio in % a LP tokens that are in staking, vs the total number in circulation
-        const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
+        const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply));
 
         // Total value in staking in quote token value
         lpTotalInQuoteToken = new BigNumber(quoteTokenBlanceLP)
           .div(new BigNumber(10).pow(18))
           .times(new BigNumber(2))
-          .times(lpTokenRatio)
+          .times(lpTokenRatio);
 
         // Amount of token in the LP that are considered staking (i.e amount of token * lp ratio)
-        tokenAmount = new BigNumber(tokenBalanceLP).div(new BigNumber(10).pow(tokenDecimals)).times(lpTokenRatio)
+        tokenAmount = new BigNumber(tokenBalanceLP).div(new BigNumber(10).pow(tokenDecimals)).times(lpTokenRatio);
 
         const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
           .div(new BigNumber(10).pow(quoteTokenDecimals))
-          .times(lpTokenRatio)
+          .times(lpTokenRatio);
 
         if (tokenAmount.comparedTo(0) > 0) {
-          tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount)
+          tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount);
         } else {
-          tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP))
+          tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP));
         }
       }
 
@@ -116,10 +116,10 @@ const fetchFarms = async () => {
           address: getFrenFarm(),
           name: 'rewardsPerBlock',
         },
-      ])
+      ]);
 
-      const allocPoint = new BigNumber(info.allocPoint._hex)
-      const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
+      const allocPoint = new BigNumber(info.allocPoint._hex);
+      const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint));
       return {
         ...farmConfig,
         tokenAmount: tokenAmount.toJSON(),
@@ -130,10 +130,10 @@ const fetchFarms = async () => {
         multiplier: `${allocPoint.div(100).toString()}X`,
         depositFeeBP: poolInfo.depositFeeBP,
         dinoPerBlock: new BigNumber(dinoPerBlock).toNumber(),
-      }
+      };
     }),
-  )
-  return data
-}
+  );
+  return data;
+};
 
-export default fetchFarms
+export default fetchFarms;

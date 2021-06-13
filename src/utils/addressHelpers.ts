@@ -1,22 +1,22 @@
-import addresses from '../config/contracts'
+import addresses from '../config/contracts';
 
-const chainId = process.env.REACT_APP_CHAIN_ID
+const chainId = process.env.REACT_APP_CHAIN_ID;
 
 export const getFrenAddress = () => {
-  return addresses.fren[chainId]
-}
+  return addresses.fren[chainId];
+};
 export const getFrenFarm = () => {
-  return addresses.FrenFarm[chainId]
-}
+  return addresses.FrenFarm[chainId];
+};
 export const getMulticallAddress = () => {
-  return addresses.mulltiCall[chainId]
-}
+  return addresses.mulltiCall[chainId];
+};
 export const getWbnbAddress = () => {
-  return addresses.wbnb[chainId]
-}
+  return addresses.wbnb[chainId];
+};
 export const getLotteryAddress = () => {
-  return addresses.lottery[chainId]
-}
+  return addresses.lottery[chainId];
+};
 export const getLotteryTicketAddress = () => {
-  return addresses.lotteryNFT[chainId]
-}
+  return addresses.lotteryNFT[chainId];
+};

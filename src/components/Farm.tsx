@@ -30,15 +30,24 @@ import { toEther, toWei } from '../helpers/units';
 import axios from 'axios';
 import WhiteBox from './WhiteBox';
 import BigNumber from 'bignumber.js';
-import { fetchFarmUserDataAsync } from '../state/actions';
-import { QuoteToken } from '../config/types';
+import { useFarms, usePriceBnbBusd, usePriceSaltBusd, usePriceEthBusd } from '../state/hooks';
 
 const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const { isWeb3Enabled, address, web3 } = useWallet();
   const { farmContract, oneInch, pancakeRouter } = useContracts();
   const toast = useToast();
   const [frenPrice, setFrenPrice] = useState(0);
+  const farmsLP = useFarms();
+  const saltPrice = usePriceSaltBusd();
+  const bnbPrice = usePriceBnbBusd();
+  const { tokenMode } = farmsProps;
+  const activeFarms = farmsLP.filter((farm) => !!farm.isTokenOnly === !!tokenMode && farm.pid !== 14 && farm.pid !== 11 && farm.pid !== 24  && farm.pid !== 25);
+  const cakeRewardPerBlock = new BigNumber(farm.dinoPerBlock || 1)
+  .times(new BigNumber(Farm.poolWeight))
+  .div(new BigNumber(10).pow(18));
+const cakeRewardPerYear = cakeRewardPerBlock.times(BLOCKS_PER_YEAR);
 
+  const apy = saltPrice.times(cakeRewardPerYear);
   const [claimingRewards, setClaimingRewards] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
   const [farming, setFarming] = useState(false);
@@ -53,7 +62,6 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const [farmingAmount, setFarmingAmount] = useState('0');
   const [rewards, setRewards] = useState('0');
   const [balance, setBalance] = useState('0');
-
   const usdRewardsPrice = useMemo(() => {
     return (Number(rewards) * frenPrice).toLocaleString();
   }, [rewards, frenPrice]);

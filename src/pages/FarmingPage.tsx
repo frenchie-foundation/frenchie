@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   Box,
   Container,
@@ -13,13 +13,19 @@ import Title from '../components/Title';
 import constants from '../config/constants';
 import Farm from '../components/Farm';
 import { FaCheckCircle } from 'react-icons/fa';
-
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react';
+import { Flex, Spacer } from '@chakra-ui/react';
 import Liquidity from '../components/Liquidity';
+import APR from '../components/APR';
+
 
 export default function FarmingPage(): React.ReactElement {
-  useEffect(() => {
-    document.title = 'Farm - Frenchie Network';
-  }, []);
+
 
   return (
     <Container>
@@ -54,7 +60,10 @@ export default function FarmingPage(): React.ReactElement {
         swap fees.
       </Text>
       <HStack mb={10} mt={10}>
-        <List spacing={3}>
+      </HStack>
+      
+      <Flex>
+      <List spacing={3}>
           <ListItem display="flex" alignItems="center">
             <ListIcon as={FaCheckCircle} color="green.500" />
             Create liquidity tokens on 1inch or use our liquidity features below
@@ -69,7 +78,30 @@ export default function FarmingPage(): React.ReactElement {
             in our Frenchie Farm contract
           </ListItem>
         </List>
-      </HStack>
+  <Spacer />
+      <Alert w="550px" status="warning">
+  <AlertIcon />
+  <Box >
+    <AlertTitle>DISCLAIMER</AlertTitle>
+    <AlertDescription display="block">
+    <Text fontSize="12px">
+    Providing liquidity to pools comes with certain risks like the impermanent loss risk. 
+      </Text>
+      <Text fontSize="12px">Please make sure you do your own research and due dilligence before proceeding.</Text>
+      <Text fontSize="12px">Providing liquidity is an advanced subject and you should have some experience.</Text>
+
+    <Text fontSize="12px">
+    We are not responsible for any losses that might occur. Also note that nothing of what is described here constitutes financial advice.
+</Text>
+    </AlertDescription>
+  </Box>
+</Alert>
+
+  </Flex>
+  <Title mt={4} mb={4} isSecondary>
+        APY
+      </Title>
+      <APR mb={10} />
       <Title mt={4} mb={4} isSecondary>
         Liquidity (FREN+BNB)
       </Title>

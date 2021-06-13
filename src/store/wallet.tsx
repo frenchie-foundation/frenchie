@@ -16,7 +16,6 @@ import { FaTimes } from 'react-icons/fa';
 import Web3 from 'web3';
 
 import Title from '../components/Title';
-
 import metamaskLogo from '../assets/images/metamask.svg';
 import trustWalletLogo from '../assets/images/trust-wallet.svg';
 import bscWalletLogo from '../assets/images/injected-binance.svg';

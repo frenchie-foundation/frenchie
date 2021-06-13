@@ -10,7 +10,6 @@ import {
 } from './fetchFarmUser';
 import { FarmsState, Farm } from '../types';
 
-
 const initialState: FarmsState = { data: [...farmsConfig] };
 
 export const farmsSlice = createSlice({

@@ -30,7 +30,6 @@ import { toEther, toWei } from '../helpers/units';
 import axios from 'axios';
 import WhiteBox from './WhiteBox';
 import BigNumber from 'bignumber.js';
-import { BLOCKS_PER_YEAR} from '../config';
 
 
 const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
@@ -38,13 +37,6 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const { farmContract, oneInch, pancakeRouter } = useContracts();
   const toast = useToast();
   const [frenPrice, setFrenPrice] = useState(0);
-
-  //API FORMULA TEST
-  const frenRewardsPerYear = useMemo(() => { 
-    return  new BigNumber(BLOCKS_PER_YEAR);}, []);
-  const apy = useMemo(() => { 
-    return  new BigNumber(frenRewardsPerYear).multipliedBy(frenPrice);
-}, [frenRewardsPerYear, frenPrice]);
 
 
   const [claimingRewards, setClaimingRewards] = useState(false);
@@ -321,11 +313,9 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       alignItems="start"
       {...props}
     >
+
       <WhiteBox w="100%" mb={{ base: 4, md: 0 }}>
         {loading && <Progress size="xs" isIndeterminate />}
-        <Title mb={2} color={constants.colors.dark}>
-          Farming APY {apy.toPrecision(5)} %
-        </Title>
         <FormControl id="amountToFarm" mb={2}>
           <FormLabel>Amount to farm</FormLabel>
           <NumberInput

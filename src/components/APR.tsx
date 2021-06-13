@@ -55,7 +55,7 @@ const APR: React.FC<ChakraProps> = (props: ChakraProps) => {
         <Stat>
         <StatLabel>FREN + BNB (APR %)</StatLabel>
         <StatNumber>{apy.toPrecision(4)} %</StatNumber>
-        <StatHelpText>The number might differ depending on [FREN-BNB 1INCH LP] deposit size</StatHelpText>
+        <StatHelpText>Approximation based on (12 Months APR x 4 = 3 Months APR %)  </StatHelpText>
         </Stat>
         </WhiteBox>
       </HStack>

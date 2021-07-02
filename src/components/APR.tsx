@@ -63,4 +63,3 @@ const APR: React.FC<ChakraProps> = (props: ChakraProps) => {
   };
 
   export default APR;
-  

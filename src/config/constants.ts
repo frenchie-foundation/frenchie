@@ -18,6 +18,7 @@ const constants = {
   poocoinGroupLink: 'https://poocoin.app/tokens/0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af',
   coingeckoGroupLink: 'https://www.coingecko.com/en/coins/frenchie',
   dextoolsGroupLink: 'https://www.dextools.io/app/pancakeswap/pair-explorer/0x7df35e8bb2ab78065c43918d6b35e628083319dd',
+  latokenGroupLink: 'https://latoken.com/invite?r=v67nsg63',
   coinmarketcapGroupLink: 'https://coinmarketcap.com/currencies/frenchie-network/',
   colors: {
     light: '#FFEFCF',

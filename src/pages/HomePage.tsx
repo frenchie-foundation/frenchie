@@ -20,7 +20,7 @@ import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug } from 'react-icons/fa';
 import openInNewTab from '../helpers/openInNewTab';
 import constants from '../config/constants';
 import Title from '../components/Title';
-
+import latokenlogo from '../assets/images/latoken.png';
 import frenchiefarm from '../assets/images/frenchie-farm.png';
 import frenchie from '../assets/images/logo.svg';
 import frenchieblockchain from '../assets/images/frenchie-blockchain.png';
@@ -207,6 +207,24 @@ export default function HomePage(): React.ReactElement {
               </Heading>
             </HStack>
           </a>
+          <a
+            href={constants.latokenGroupLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <HStack spacing={4}>
+              <Image
+                objectFit="cover"
+                boxSize="50px"
+                src={latokenlogo}
+                alt="LaToken"
+              />
+              <Heading as="h3" size="lg">
+                LAToken
+              </Heading>
+            </HStack>
+          </a>
+          
           <a
             href={constants.dextoolsGroupLink}
             target="_blank"

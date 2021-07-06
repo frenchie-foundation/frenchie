@@ -16,7 +16,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug } from 'react-icons/fa';
+import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug, FaBirthdayCake } from 'react-icons/fa';
 import openInNewTab from '../helpers/openInNewTab';
 import constants from '../config/constants';
 import Title from '../components/Title';
@@ -144,7 +144,7 @@ export default function HomePage(): React.ReactElement {
           Telegram
         </Button>
         <Button
-          colorScheme="orange"
+          colorScheme="gray"
           leftIcon={<FaNewspaper />}
           onClick={handleWhitepaperLinkClick}
         >
@@ -158,6 +158,13 @@ export default function HomePage(): React.ReactElement {
           onClick={handleAuditLinkClick}
         >
           Audit
+        </Button>
+        <Button
+          colorScheme="orange"
+          leftIcon={<FaBirthdayCake />}
+          onClick={pancakeSwapLink}
+        >
+          Buy on PancakeSwap V1
         </Button>
         <Button
           colorScheme="green"

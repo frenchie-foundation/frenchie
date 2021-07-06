@@ -40,6 +40,9 @@ export default function HomePage(): React.ReactElement {
   const handle1inchLinkClick = useCallback(() => {
     openInNewTab(constants.oneInchSwapLink);
   }, []);
+  const handlepcsv1LinkClick = useCallback(() => {
+    openInNewTab(constants.pancakeSwapLink);
+  }, []);
 
   const handleWhitepaperLinkClick = useCallback((e?: any) => {
     if (e) {
@@ -162,7 +165,7 @@ export default function HomePage(): React.ReactElement {
         <Button
           colorScheme="orange"
           leftIcon={<FaBirthdayCake />}
-          onClick={pancakeSwapLink}
+          onClick={handlepcsv1LinkClick}
         >
           Buy on PancakeSwap V1
         </Button>

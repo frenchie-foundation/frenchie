@@ -96,11 +96,17 @@ export default function HomePage(): React.ReactElement {
           </Title>
           <Text>
             <Text display="inline" color={constants.colors.red}>
-              FREN{' '}
+            Frenchie Network {' '}
             </Text>
-            is a decentralized token running in the BSC network. Built using
-            BEP20 and Solidity, audited and secured by professionals. It will be
-            migrated to Main Net by Q1-2022
+            will be a high-performance, scalable, and secure smart-contract platform.
+            <br />
+It is designed to overcome the limitations of previous generation blockchain platforms.
+<br />
+Frenchie Network will be permission-less, decentralized, and open-source.
+<br /><br />
+ Frenchie Network will use a superior consensus mechanism called Asynchronous Byzantine Fault Tolerance (aBFT). 
+<br /><br />
+Network Testnet Estimated by Q4 2021.
           </Text>
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
@@ -111,13 +117,15 @@ export default function HomePage(): React.ReactElement {
             Farming Rewards
           </Title>
           <Text>
-            We have a farming mechanism
+            We have deployed Frenchie Farm contracts on BSC Network
             <Text display="inline" color={constants.colors.red}>
               {' '}
               to reward users{' '}
             </Text>
-            that provide liquidity, improving our ecosystem and helping the
-            community.
+            that provide liquidity on 1inch Aggregated D.E.X on FREN/BNB pair. We redistribute currently over 25 billion FREN from our Marketing Funds into our farming pool.
+            <br /><br />
+            We consider it a smart way to reward our investors that wait for our Blockchain technology launch and progress. Once that happen they will be able to swap their BEP-20 FREN tokens to FREN native coin.
+
           </Text>
         </Box>
         <Box p={4} w="100%" mt={{ base: 10, md: 0 }}>
@@ -135,6 +143,17 @@ export default function HomePage(): React.ReactElement {
             </Text>
             . We are working on mindblowing blockchain technology for our
             community.
+            <br /><br />
+            Our  consensus mechanism Asynchronous Byzantine Fault Tolerance will be the highest standard among all consensus algorithms.
+            <br /><br />
+             It solves the blockchain Scalability Trilemma
+             <br />
+            Decentralization
+            <br />
+            Security
+            <br />
+            Scalability
+
           </Text>
         </Box>
       </Box>

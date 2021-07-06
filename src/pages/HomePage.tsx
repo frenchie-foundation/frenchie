@@ -16,7 +16,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug, FaBirthdayCake } from 'react-icons/fa';
+import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug, FaBirthdayCake, FaMedium, FaTwitter } from 'react-icons/fa';
 import openInNewTab from '../helpers/openInNewTab';
 import constants from '../config/constants';
 import Title from '../components/Title';
@@ -43,7 +43,12 @@ export default function HomePage(): React.ReactElement {
   const handlepcsv1LinkClick = useCallback(() => {
     openInNewTab(constants.pancakeSwapLink);
   }, []);
-
+  const handleTwitterClick = useCallback(() => {
+    openInNewTab(constants.twitterGroupLink);
+  }, []);
+  const handleMediumClick = useCallback(() => {
+    openInNewTab(constants.mediumGroupLink);
+  }, []);
   const handleWhitepaperLinkClick = useCallback((e?: any) => {
     if (e) {
       e.preventDefault();
@@ -158,28 +163,12 @@ Network Testnet Estimated by Q4 2021.
         </Box>
       </Box>
       <HStack justifyContent="center" spacing={2} mt={8} mb={4}>
-        <Button
-          colorScheme="telegram"
-          leftIcon={<FaTelegram />}
-          onClick={handleTelegramLinkClick}
+      <Button
+          colorScheme="green"
+          leftIcon={<FaExchangeAlt />}
+          onClick={handle1inchLinkClick}
         >
-          Telegram
-        </Button>
-        <Button
-          colorScheme="gray"
-          leftIcon={<FaNewspaper />}
-          onClick={handleWhitepaperLinkClick}
-        >
-          Whitepaper
-        </Button>
-      </HStack>
-      <HStack justifyContent="center" spacing={2}>
-        <Button
-          colorScheme="red"
-          leftIcon={<FaBug />}
-          onClick={handleAuditLinkClick}
-        >
-          Audit
+          Buy on 1Inch
         </Button>
         <Button
           colorScheme="orange"
@@ -189,11 +178,41 @@ Network Testnet Estimated by Q4 2021.
           Buy on PancakeSwap V1
         </Button>
         <Button
-          colorScheme="green"
-          leftIcon={<FaExchangeAlt />}
-          onClick={handle1inchLinkClick}
+          colorScheme="red"
+          leftIcon={<FaBug />}
+          onClick={handleAuditLinkClick}
         >
-          Buy on 1Inch
+          Audit
+        </Button>
+      </HStack>
+      <HStack justifyContent="center" spacing={2}>
+        <Button
+          colorScheme="telegram"
+          leftIcon={<FaTelegram />}
+          onClick={handleTelegramLinkClick}
+        >
+          Telegram
+        </Button>
+        <Button
+          colorScheme="twitter"
+          leftIcon={<FaTwitter />}
+          onClick={handleTwitterClick}
+        >
+          Twitter
+        </Button>
+        <Button
+          colorScheme="facebook"
+          leftIcon={<FaMedium />}
+          onClick={handleMediumClick}
+        >
+          Medium
+        </Button>
+        <Button
+          colorScheme="gray"
+          leftIcon={<FaNewspaper />}
+          onClick={handleWhitepaperLinkClick}
+        >
+          Whitepaper
         </Button>
       </HStack>
       <Flex justifyContent="center">

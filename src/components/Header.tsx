@@ -62,6 +62,7 @@ export default function Header(): React.ReactElement {
                 onClick={goTo('/')}
                 bg={constants.colors.light}
                 color={constants.colors.dark}
+                leftIcon={<FaHome />}
               >
                 Home
               </Button>
@@ -79,6 +80,7 @@ export default function Header(): React.ReactElement {
                 onClick={goTo('/swap')}
                 bg={constants.colors.light}
                 color={constants.colors.dark}
+                leftIcon={<FaSync />}
               >
                 Swap
               </Button>

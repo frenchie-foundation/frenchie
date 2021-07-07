@@ -21,6 +21,7 @@ const constants = {
   latokenGroupLink: 'https://latoken.com/exchange/FREN_USDT',
   twitterGroupLink: 'https://twitter.com/FrenchieToken',
   mediumGroupLink:  'https://frenchietoken.medium.com/',
+  gitbookGroupLink: 'https://hub.frenchie.tech/',
   coinmarketcapGroupLink: 'https://coinmarketcap.com/currencies/frenchie-network/',
   colors: {
     transparent: 'transparent',

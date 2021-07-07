@@ -16,7 +16,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug, FaBirthdayCake, FaMedium, FaTwitter } from 'react-icons/fa';
+import { FaNewspaper, FaTelegram, FaExchangeAlt, FaBug, FaBirthdayCake, FaMedium, FaTwitter, FaBook } from 'react-icons/fa';
 import openInNewTab from '../helpers/openInNewTab';
 import constants from '../config/constants';
 import Title from '../components/Title';
@@ -48,6 +48,9 @@ export default function HomePage(): React.ReactElement {
   }, []);
   const handleMediumClick = useCallback(() => {
     openInNewTab(constants.mediumGroupLink);
+  }, []);
+  const handleDocumentationClick = useCallback(() => {
+    openInNewTab(constants.gitbookGroupLink);
   }, []);
   const handleWhitepaperLinkClick = useCallback((e?: any) => {
     if (e) {
@@ -206,6 +209,13 @@ Network Testnet Estimated by Q4 2021.
           onClick={handleMediumClick}
         >
           Medium
+        </Button>
+        <Button
+          colorScheme="purple"
+          leftIcon={<FaBook />}
+          onClick={handleDocumentationClick}
+        >
+          Documentation
         </Button>
         <Button
           colorScheme="gray"

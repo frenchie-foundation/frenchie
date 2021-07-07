@@ -485,21 +485,23 @@ Network Testnet Estimated by Q4 2021.
       </Text>
 
       <Title mt={6} mb={4} isSecondary>
-        The token
+        The BEP-20 Token
       </Title>
       <Text>
-        Frenchie goes by the ticker FREN and is a simple BEP-20 smart contract
-        with burn function, secured and audited by professionals. Doing it
-        simple, it’s also automatically secure. That is what we had in mind when
-        we deployed it.
+        Frenchie goes by the ticker FREN 
+        <br />
+        Is a simple BEP-20 smart contract with burn function, secured and audited by professionals.
+        <br />
+         Doing it simple, it’s also automatically secure. That is what we had in mind when we deployed it as we plan for our future blockchain. A simple contract is what is needed to not over-complicate at mainnet launch.
       </Text>
       <Text>
         In order to deliver more advanced features, we deploy other separate
-        contracts to deliver farming, governance, etc. This give us more
-        decentralization, security and confidence about our ecosystem.
+        contracts to deliver farming, governance, etc.
+        <br />
+        This give us more decentralization, security and confidence about our ecosystem.
       </Text>
       <Text>
-        By the way, every contract is 100% open source and public. To find the
+        Every contract is 100% open source and public. To find the
         source code,{' '}
         <Link
           href="https://github.com/FrenchieNetwork/contract"

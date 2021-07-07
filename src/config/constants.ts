@@ -19,6 +19,9 @@ const constants = {
   coingeckoGroupLink: 'https://www.coingecko.com/en/coins/frenchie',
   dextoolsGroupLink: 'https://www.dextools.io/app/pancakeswap/pair-explorer/0x7df35e8bb2ab78065c43918d6b35e628083319dd',
   latokenGroupLink: 'https://latoken.com/exchange/FREN_USDT',
+  twitterGroupLink: 'https://twitter.com/FrenchieToken',
+  mediumGroupLink:  'https://frenchietoken.medium.com/',
+  gitbookGroupLink: 'https://hub.frenchie.tech/',
   coinmarketcapGroupLink: 'https://coinmarketcap.com/currencies/frenchie-network/',
   colors: {
     transparent: 'transparent',

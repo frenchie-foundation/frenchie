@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/layout';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaTractor, FaSync, FaHome } from 'react-icons/fa';
 import {
   Drawer,
   DrawerBody,
@@ -70,6 +70,7 @@ export default function Header(): React.ReactElement {
                 onClick={goTo('/farming')}
                 bg={constants.colors.light}
                 color={constants.colors.dark}
+                leftIcon={<FaTractor />}
               >
                 Farm
               </Button>
@@ -116,6 +117,7 @@ export default function Header(): React.ReactElement {
             as={Button}
             variant="solid"
             display={{ base: 'none', md: 'block' }}
+            leftIcon={<FaHome />}
           >
             Home
           </Button>
@@ -124,6 +126,7 @@ export default function Header(): React.ReactElement {
             as={Button}
             variant="solid"
             display={{ base: 'none', md: 'block' }}
+            leftIcon={<FaTractor />}
           >
             Farm
           </Button>
@@ -132,6 +135,7 @@ export default function Header(): React.ReactElement {
             as={Button}
             variant="solid"
             display={{ base: 'none', md: 'block' }}
+            leftIcon={<FaSync />}
           >
             FrenchieSwap
           </Button>

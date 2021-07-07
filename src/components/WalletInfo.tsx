@@ -77,7 +77,7 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
       >
         {isWeb3Enabled
           ? `${address?.substr(0, 4)}...${address?.substr(-4, 4)}`
-          : 'Connect'}
+          : 'Connect Your Wallet'}
       </Button>
     </HStack>
   );

@@ -14,10 +14,12 @@ import React, {
 } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import Web3 from 'web3';
+import WalletConnectProvider from '@walletconnect/web3-provider';
 
 import Title from '../components/Title';
 import metamaskLogo from '../assets/images/metamask.svg';
 import trustWalletLogo from '../assets/images/trust-wallet.svg';
+import walletConnectLogo from '../assets/images/wallet-connect.svg';
 import bscWalletLogo from '../assets/images/injected-binance.svg';
 
 interface IWalletContext {
@@ -89,6 +91,17 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
               method: 'eth_requestAccounts',
             });
             setWeb3(new Web3(window[providerAPI]));
+            localStorage.setItem(WALLET_CONNECTED_ITEM, providerAPI);
+            onModalClose();
+          } else if (providerAPI === 'WalletConnect') {
+            const provider = new WalletConnectProvider({
+              rpc: {
+                56: 'https://bsc-dataseed.binance.org',
+              },
+              chainId: 56,
+            });
+            await provider.enable();
+            setWeb3(new Web3(provider as any));
             localStorage.setItem(WALLET_CONNECTED_ITEM, providerAPI);
             onModalClose();
           } else {
@@ -185,6 +198,7 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
               isFullWidth
               onClick={() => enableWeb3('BinanceChain')}
               height={16}
+              mb={2}
             >
               <WalletProviderLabel
                 walletProvider={{
@@ -195,6 +209,23 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
                     src={bscWalletLogo}
                     height={10}
                     alt="BinanceWallet logo"
+                  />
+                }
+              />
+            </Button>
+            <Button
+              justifyContent="flex-start"
+              isFullWidth
+              onClick={() => enableWeb3('WalletConnect')}
+              height={16}
+            >
+              <WalletProviderLabel
+                walletProvider={{ name: 'WalletConnect' }}
+                image={
+                  <Image
+                    src={walletConnectLogo}
+                    height={10}
+                    alt="WalletConnect logo"
                   />
                 }
               />

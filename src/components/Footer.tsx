@@ -88,6 +88,9 @@ export default function Footer(): React.ReactElement {
               >
                 Live Roadmap
               </Link>
+              <Link target="_blank" href={constants.gitbookGroupLink}>
+                Documentation
+              </Link>
             </Stack>
             <Stack align={'flex-start'}>
               <Title mb={4}>Social Media</Title>

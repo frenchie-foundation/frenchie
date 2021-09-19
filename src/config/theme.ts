@@ -24,7 +24,7 @@ const theme = extendTheme({
     }
   },
   colors: {
-    white: '#FFEFCF',
+    white: '#FFEFCF', 
   },
   fonts: {
     body: '\'Inter\', sans-serif'

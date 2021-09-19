@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from '@chakra-ui/button';
-import { HStack, Text } from '@chakra-ui/layout';
+import { Flex, HStack, Text } from '@chakra-ui/layout';
 import { ChakraProps } from '@chakra-ui/system';
 import { FaWallet } from 'react-icons/fa';
 import constants from '../config/constants';
@@ -60,7 +60,14 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
   }, [frenToken, address]);
 
   return (
-    <HStack spacing={4} {...props}>
+    <Flex
+      gridGap={4}
+      {...props}
+      p={3}
+      bgColor="gray.900"
+      borderRadius={8}
+      boxShadow="md"
+    >
       {isWeb3Enabled && frenBalance !== -1 && (
         <Text fontWeight="bold" display="flex" alignItems="center">
           <Logo display="inline" height={7} />$
@@ -79,7 +86,7 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
           ? `${address?.substr(0, 4)}...${address?.substr(-4, 4)}`
           : 'Connect Your Wallet'}
       </Button>
-    </HStack>
+    </Flex>
   );
 };
 

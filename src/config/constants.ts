@@ -27,6 +27,7 @@ const constants = {
     transparent: 'transparent',
     light: '#FFEFCF',
     dark: '#1A202C',
+    background: '#1f1e29',
     darkerLight: '#FBd38D',
     red: '#D94A4A',
     white: '#FFFFFF',

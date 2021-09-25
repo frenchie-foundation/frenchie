@@ -25,6 +25,7 @@ import { Image } from '@chakra-ui/image';
 import { useToast } from '@chakra-ui/toast';
 import { Input } from '@chakra-ui/input';
 import BN from 'bn.js';
+import BalanceInfo from './BalanceInfo';
 
 interface IToken {
   symbol: string;
@@ -486,7 +487,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
     <>
       <Modal isCentered isOpen={isSettingsOpen} onClose={onSettingsClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg="gray.800">
           <Flex p={4} justifyContent="space-between" alignItems="center">
             <Title>Settings</Title>
             <IconButton
@@ -563,24 +564,43 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
           </ModalBody>
         </ModalContent>
       </Modal>
+
       <VStack maxWidth="100%" spacing={4}>
-        <WhiteBox maxWidth="100%" width="600px" {...props}>
+        <BalanceInfo />
+
+        <WhiteBox
+          maxWidth="100%"
+          width="600px"
+          {...props}
+          bg="gray.900"
+          boxShadow="xl"
+        >
           <Flex alignItems="center" justifyContent="space-between">
-            <Title mb={0} color={constants.colors.dark}>
-              Swap
-            </Title>
-            <Box>
+            <Title mb={0}>Frenchie Swap</Title>
+            <Flex gridGap={2}>
               <IconButton
                 aria-label="refresh"
+                bg="gray.700"
+                color="white"
                 icon={<FaSyncAlt />}
                 onClick={updateRates}
+                _hover={{
+                  backgroundColor: 'gray.600',
+                  boxShadow: 'xl',
+                }}
               />
               <IconButton
                 aria-label="settings"
+                bg="gray.700"
+                color="white"
                 icon={<FaCog />}
                 onClick={onSettingsOpen}
+                _hover={{
+                  backgroundColor: 'gray.600',
+                  boxShadow: 'xl',
+                }}
               />
-            </Box>
+            </Flex>
           </Flex>
           <Box
             mt={4}
@@ -589,141 +609,201 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
             borderColor="gray.400"
             p={4}
             borderRadius="lg"
+            bg="gray.700"
+            border={0}
           >
             <FormControl position="relative" id="amountFrom" mb={2}>
-              <FormLabel fontWeight="bold">From</FormLabel>
-              <Text
-                cursor="pointer"
-                onClick={handleSetMaxSrc}
-                position="absolute"
-                right={0}
-                top={0}
-                color="black"
-              >
-                Balance: {displaySrcBalance}
-              </Text>
-              <Box position="relative">
-                <Input
-                  background={constants.colors.dark}
-                  color={constants.colors.light}
-                  placeholder="0.0"
-                  type="text"
-                  size="lg"
-                  value={fromAmount}
-                  onChange={(e) => {
-                    if (!/^\d*\.?\d*$/.test(e.target.value)) {
-                      return;
-                    }
-                    if (e.target.value.replace(/[^.]/g, '').length > 1) {
-                      return;
-                    }
-                    setFromAmount(e.target.value);
-                  }}
-                  step={0.0001}
-                  min={0}
-                />
-                <Box position="absolute" right="1" top="1" zIndex={999}>
-                  <Button
-                    mr={1}
-                    variant="ghost"
-                    colorScheme="gray"
-                    color="white"
+              <Flex justifyContent="space-between" alignItems="center" mb={0}>
+                <FormLabel fontWeight="bold" m={0} fontSize="20px">
+                  <Text>From</Text>
+                </FormLabel>
+                <Flex
+                  alignItems="center"
+                  gridGap={2}
+                  p={2}
+                  pr={0}
+                  borderRadius={8}
+                >
+                  <Text
+                    fontSize="16px"
                     onClick={handleSetMaxSrc}
+                    cursor="pointer"
                   >
-                    MAX
-                  </Button>
+                    Balance: {displaySrcBalance}
+                  </Text>
+                </Flex>
+              </Flex>
+
+              <Flex
+                bg="gray.900"
+                p={4}
+                borderRadius={8}
+                mb={4}
+                alignItems="center"
+                gridGap={2}
+              >
+                <Button
+                  color="white"
+                  onClick={handleTokenButton('src')}
+                  bg="gray.900"
+                >
+                  <CoinLabel token={srcToken} />
+                </Button>
+                <Box alignItems="center" position="relative" w="100%">
                   <Button
-                    colorScheme="gray"
-                    color="white"
-                    onClick={handleTokenButton('src')}
+                    variant="ghost"
+                    bg="gray.900"
+                    position="absolute"
+                    left="1"
+                    top="1"
+                    p={2}
+                    zIndex="999"
+                    onClick={handleSetMaxSrc}
+                    _hover={{
+                      backgroundColor: 'gray.700',
+                      boxShadow: 'xl',
+                    }}
                   >
-                    <CoinLabel token={srcToken} />
+                    Max
                   </Button>
+                  <Input
+                    background={constants.colors.dark}
+                    color={constants.colors.light}
+                    placeholder="0.0"
+                    type="text"
+                    size="lg"
+                    w="100%"
+                    textAlign="right"
+                    value={fromAmount}
+                    onChange={(e) => {
+                      if (!/^\d*\.?\d*$/.test(e.target.value)) {
+                        return;
+                      }
+                      if (e.target.value.replace(/[^.]/g, '').length > 1) {
+                        return;
+                      }
+                      setFromAmount(e.target.value);
+                    }}
+                    step={0.0001}
+                    min={0}
+                  />
                 </Box>
-              </Box>
+              </Flex>
             </FormControl>
-            ≈ {displaySrcUsdtPrice}
+            <Flex w="100%" justifyContent="flex-end">
+              <Text>≈ {displaySrcUsdtPrice}</Text>
+            </Flex>
           </Box>
           <Flex justifyContent="center">
-            <IconButton
-              aria-label="switch"
-              onClick={handleTokensSwitch}
-              icon={<FaExchangeAlt style={{ transform: 'rotate(90deg)' }} />}
-            />
+            <Text>
+              <IconButton
+                aria-label="switch"
+                bg="gray.700"
+                boxShadow="inner"
+                borderRadius={10}
+                onClick={handleTokensSwitch}
+                icon={<FaExchangeAlt style={{ transform: 'rotate(90deg)' }} />}
+                _hover={{
+                  boxShadow: 'xl',
+                  backgroundColor: 'gray.600',
+                }}
+              />
+            </Text>
           </Flex>
           <Box
             mt={4}
+            mb={4}
             borderWidth="1px"
             borderColor="gray.400"
             p={4}
             borderRadius="lg"
+            bg="gray.700"
+            border={0}
           >
-            <FormControl position="relative" id="amountTo" mb={2}>
-              <FormLabel fontWeight="bold">To</FormLabel>
-              <Text position="absolute" right={0} top={0} color="black">
-                Balance: {displayDstBalance}
-              </Text>
-              <NumberInput
-                size="lg"
-                position="relative"
-                value={toAmount
-                  .multipliedBy(new BigNumber(1e-18))
-                  .toNumber()
-                  .toFixed(4)}
-                onChange={() => null}
+            <FormControl position="relative" id="amountFrom" mb={2}>
+              <Flex justifyContent="space-between" alignItems="center" mb={2}>
+                <FormLabel fontWeight="bold" m={0} fontSize="20px">
+                  <Text>To</Text>
+                </FormLabel>
+                <Flex
+                  alignItems="center"
+                  gridGap={2}
+                  p={2}
+                  pr={0}
+                  borderRadius={8}
+                >
+                  <Text
+                    fontSize="16px"
+                    onClick={handleSetMaxSrc}
+                    cursor="pointer"
+                  >
+                    Balance: {displayDstBalance}
+                  </Text>
+                </Flex>
+              </Flex>
+
+              <Flex
+                bg="gray.900"
+                p={4}
+                borderRadius={8}
+                mb={4}
+                alignItems="center"
+                gridGap={2}
               >
-                <NumberInputField
-                  placeholder="0.0"
-                  bg={constants.colors.dark}
-                  color="white"
-                />
                 <Button
-                  position="absolute"
-                  right="1"
-                  top="1"
-                  colorScheme="gray"
                   color="white"
-                  zIndex={999}
-                  onClick={handleTokenButton('dst')}
+                  onClick={handleTokenButton('src')}
+                  bg="gray.900"
                 >
                   <CoinLabel token={dstToken} />
                 </Button>
-              </NumberInput>
+                <NumberInput
+                  size="lg"
+                  w="100%"
+                  value={toAmount
+                    .multipliedBy(new BigNumber(1e-18))
+                    .toNumber()
+                    .toFixed(4)}
+                  onChange={() => null}
+                >
+                  <NumberInputField
+                    placeholder="0.0"
+                    bg={constants.colors.dark}
+                    p={4}
+                    color="white"
+                    textAlign="right"
+                  />
+                </NumberInput>
+              </Flex>
             </FormControl>
-            ≈ {displayDstUsdtPrice}
+            <Flex w="100%" justifyContent="flex-end">
+              <Text>≈ {displayDstUsdtPrice}</Text>
+            </Flex>
           </Box>
           {!disabled && (
             <>
-              <Flex mt={4} justifyContent="space-between" alignItems="center">
-                <Text fontWeight="bold" color={constants.colors.dark}>
-                  Price:
-                </Text>
-                <Text
-                  display="flex"
-                  alignItems="center"
-                  fontWeight="bold"
-                  color={constants.colors.dark}
-                >
+              <Flex
+                mt={4}
+                justifyContent="space-between"
+                alignItems="center"
+                mb={2}
+              >
+                <Text fontWeight="bold">Price:</Text>
+                <Text display="flex" alignItems="center" fontWeight="bold">
                   {priceDisplay}
                   <IconButton
                     aria-label="Invert rate"
                     size="sm"
                     ml={2}
-                    icon={<FaExchangeAlt color={constants.colors.dark} />}
+                    bg="gray.700"
+                    icon={<FaExchangeAlt />}
                     onClick={handleChangeRateOrder}
                   />
                 </Text>
               </Flex>
               <Flex justifyContent="space-between" alignItems="center">
-                <Text fontWeight="bold" color={constants.colors.dark}>
-                  Slippage tolerance:
-                </Text>
-                <Text
-                  display="flex"
-                  alignItems="center"
-                  fontWeight="bold"
-                  color={constants.colors.dark}
-                >
+                <Text fontWeight="bold">Slippage tolerance:</Text>
+                <Text display="flex" alignItems="center" fontWeight="bold">
                   {slippage}%
                 </Text>
               </Flex>
@@ -734,38 +814,28 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
             isFullWidth
             size="lg"
             mt={4}
-            colorScheme="teal"
+            bg="white"
             isLoading={swapping}
             isDisabled={disabled}
+            _hover={{
+              bg: 'gray.400',
+              boxShadow: 'inner',
+            }}
           >
             {swapButtonText}
           </Button>
         </WhiteBox>
         {!disabled && (
-          <WhiteBox maxWidth="100%" width="600px">
-            <Flex justifyContent="space-between" alignItems="center">
-              <Text fontWeight="bold" color={constants.colors.dark}>
-                Minimum received:
-              </Text>
-              <Text
-                display="flex"
-                alignItems="center"
-                fontWeight="bold"
-                color={constants.colors.dark}
-              >
+          <WhiteBox maxWidth="100%" width="600px" bg="gray.900">
+            <Flex justifyContent="space-between" alignItems="center" mb={2}>
+              <Text fontWeight="bold">Minimum received:</Text>
+              <Text display="flex" alignItems="center" fontWeight="bold">
                 {minAmountDisplay} {dstToken.symbol}
               </Text>
             </Flex>
             <Flex justifyContent="space-between" alignItems="center">
-              <Text fontWeight="bold" color={constants.colors.dark}>
-                Price impact:
-              </Text>
-              <Text
-                display="flex"
-                alignItems="center"
-                fontWeight="bold"
-                color={constants.colors.dark}
-              >
+              <Text fontWeight="bold">Price impact:</Text>
+              <Text display="flex" alignItems="center" fontWeight="bold">
                 {priceImpactDisplay}
               </Text>
             </Flex>

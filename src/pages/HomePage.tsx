@@ -42,10 +42,6 @@ export default function HomePage(): React.ReactElement {
   const handleTelegramLinkClick = useCallback(() => {
     openInNewTab(constants.telegramGroupLink);
   }, []);
-
-  const handle1inchLinkClick = useCallback(() => {
-    openInNewTab(constants.oneInchSwapLink);
-  }, []);
   const handleTwitterClick = useCallback(() => {
     openInNewTab(constants.twitterGroupLink);
   }, []);
@@ -64,6 +60,10 @@ export default function HomePage(): React.ReactElement {
       e.preventDefault();
     }
     openInNewTab('/farming');
+  }, []);
+
+  const handleBuyLinkClick = useCallback(() => {
+    openInNewTab('/swap');
   }, []);
 
   const goTo = useCallback(
@@ -92,7 +92,7 @@ export default function HomePage(): React.ReactElement {
           variant="outline"
           px={7}
           py={6}
-          onClick={handle1inchLinkClick}
+          onClick={handleBuyLinkClick}
           fontSize="20px"
           bgColor={constants.colors.darkerLight}
           color={constants.colors.dark}

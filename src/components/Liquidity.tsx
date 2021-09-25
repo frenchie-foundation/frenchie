@@ -4,6 +4,7 @@ import {
   FormHelperText,
   FormLabel,
 } from '@chakra-ui/form-control';
+import { Image } from '@chakra-ui/react';
 import { Flex, HStack, Text } from '@chakra-ui/layout';
 import { NumberInput, NumberInputField } from '@chakra-ui/number-input';
 import { Progress } from '@chakra-ui/progress';
@@ -16,6 +17,8 @@ import { useContracts } from '../store/contracts';
 import { useWallet } from '../store/wallet';
 import Title from './Title';
 import WhiteBox from './WhiteBox';
+import bnbLogo from '../assets/images/binance-coin-bnb-logo.svg';
+import frenLogo from '../assets/images/logo.svg';
 
 const Liquidity: React.FC<ChakraProps> = (props: ChakraProps) => {
   const toast = useToast();
@@ -368,10 +371,21 @@ const Liquidity: React.FC<ChakraProps> = (props: ChakraProps) => {
           Provide liquidity
         </Title>
 
-        <FormControl id="bnbAmount" mb={2}>
-          <Flex justifyContent="space-between" alignItems="center">
-            <FormLabel>BNB</FormLabel>
-            <Text color={constants.colors.dark}>≈ {addBnbValueUsd} USD</Text>
+        <FormControl
+          id="bnbAmount"
+          mb={2}
+          background="gray.900"
+          borderRadius={8}
+          p={4}
+        >
+          <Flex justifyContent="space-between" alignItems="center" mb={2}>
+            <Text d="flex" gridGap={2} alignItems="center">
+              <Flex p={1} borderRadius={10} backgroundColor="gray.700">
+                <Image src={bnbLogo} boxSize="20px" />
+              </Flex>
+              <FormLabel m={0}>BNB</FormLabel>
+            </Text>
+            <Text>≈ {addBnbValueUsd} USD</Text>
           </Flex>
           <NumberInput
             onChange={() => null}
@@ -383,10 +397,21 @@ const Liquidity: React.FC<ChakraProps> = (props: ChakraProps) => {
           </NumberInput>
         </FormControl>
 
-        <FormControl id="frenAmount" mb={2}>
-          <Flex justifyContent="space-between" alignItems="center">
-            <FormLabel>FREN</FormLabel>
-            <Text color={constants.colors.dark}>≈ {addFrenValueUsd} USD</Text>
+        <FormControl
+          id="frenAmount"
+          mb={4}
+          background="gray.900"
+          borderRadius={8}
+          p={4}
+        >
+          <Flex justifyContent="space-between" alignItems="center" mb={2}>
+            <Text d="flex" gridGap={2} alignItems="center">
+              <Flex p={1} borderRadius={10} backgroundColor="gray.700">
+                <Image src={frenLogo} boxSize="20px" />
+              </Flex>
+              <FormLabel m={0}>FREN</FormLabel>
+            </Text>
+            <Text>≈ {addFrenValueUsd} USD</Text>
           </Flex>
           <NumberInput
             onChange={() => null}
@@ -443,10 +468,21 @@ const Liquidity: React.FC<ChakraProps> = (props: ChakraProps) => {
           Remove liquidity
         </Title>
 
-        <FormControl id="bnbRemoveAmount" mb={2}>
+        <FormControl
+          id="bnbRemoveAmount"
+          mb={2}
+          bg="gray.900"
+          borderRadius={8}
+          p={4}
+        >
           <Flex justifyContent="space-between" alignItems="center">
-            <FormLabel>BNB</FormLabel>
-            <Text color={constants.colors.dark}>≈ {removeBnbValueUsd} USD</Text>
+            <Text display="flex" gridGap={2} mb={2} alignItems="center">
+              <Flex p={1} borderRadius={10} backgroundColor="gray.700">
+                <Image src={bnbLogo} boxSize="20px" />
+              </Flex>
+              <FormLabel m={0}>BNB</FormLabel>
+            </Text>
+            <Text>≈ {removeBnbValueUsd} USD</Text>
           </Flex>
           <NumberInput
             onChange={() => null}
@@ -456,12 +492,21 @@ const Liquidity: React.FC<ChakraProps> = (props: ChakraProps) => {
           </NumberInput>
         </FormControl>
 
-        <FormControl id="frenRemoveAmount" mb={2}>
+        <FormControl
+          id="frenRemoveAmount"
+          mb={4}
+          bg="gray.900"
+          borderRadius={8}
+          p={4}
+        >
           <Flex justifyContent="space-between" alignItems="center">
-            <FormLabel>FREN</FormLabel>
-            <Text color={constants.colors.dark}>
-              ≈ {removeFrenValueUsd} USD
+            <Text display="flex" gridGap={2} mb={2} alignItems="center">
+              <Flex p={1} borderRadius={10} backgroundColor="gray.700">
+                <Image src={frenLogo} boxSize="20px" />
+              </Flex>
+              <FormLabel m={0}>FREN</FormLabel>
             </Text>
+            <Text>≈ {removeFrenValueUsd} USD</Text>
           </Flex>
           <NumberInput
             onChange={() => null}

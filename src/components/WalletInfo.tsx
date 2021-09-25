@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from '@chakra-ui/button';
-import { Flex, HStack, Text } from '@chakra-ui/layout';
+import { Box, Flex, Text } from '@chakra-ui/layout';
 import { ChakraProps } from '@chakra-ui/system';
 import { FaWallet } from 'react-icons/fa';
 import constants from '../config/constants';
@@ -8,6 +8,18 @@ import { useContracts } from '../store/contracts';
 import { useWallet } from '../store/wallet';
 import { Logo } from './Logo';
 import BigNumber from 'bignumber.js';
+import {
+  Icon,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { FaRegCopy, FaBook, FaSignOutAlt } from 'react-icons/fa';
+import millify from '../utils/millify';
 
 type IWalletInfo = ChakraProps;
 
@@ -15,6 +27,7 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
   const { web3, isWeb3Enabled, handleOpenWalletConnection, address } =
     useWallet();
   const { frenToken, pancakeRouter } = useContracts();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [frenBalance, setFrenBalance] = useState(-1);
   const [usdPrice, setUsdPrice] = useState(-1);
@@ -60,33 +73,109 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
   }, [frenToken, address]);
 
   return (
-    <Flex
-      gridGap={4}
-      {...props}
-      p={3}
-      bgColor="gray.900"
-      borderRadius={8}
-      boxShadow="md"
-    >
-      {isWeb3Enabled && frenBalance !== -1 && (
-        <Text fontWeight="bold" display="flex" alignItems="center">
-          <Logo display="inline" height={7} />$
-          {Number(web3.utils.fromWei(String(frenBalance))).toLocaleString()} (≈
-          ${frenBalanceUsd.toLocaleString()})
-        </Text>
-      )}
-      <Button
-        bg="white"
-        color={constants.colors.dark}
-        leftIcon={<FaWallet color={constants.colors.dark} />}
-        onClick={handleConnect}
-        display={{ base: isWeb3Enabled ? 'none' : 'flex', md: 'flex' }}
+    <>
+      <Flex
+        gridGap={4}
+        {...props}
+        p={3}
+        bgColor="gray.900"
+        borderRadius={8}
+        boxShadow="md"
+        cursor="pointer"
+        onClick={() => {
+          if (isWeb3Enabled && frenBalance) onOpen();
+        }}
       >
-        {isWeb3Enabled
-          ? `${address?.substr(0, 4)}...${address?.substr(-4, 4)}`
-          : 'Connect Your Wallet'}
-      </Button>
-    </Flex>
+        {isWeb3Enabled && frenBalance !== -1 && (
+          <Text fontWeight="bold" display="flex" alignItems="center">
+            <Logo display="inline" height={7} />$
+            {Number(web3.utils.fromWei(String(frenBalance))).toLocaleString()}{' '}
+            (≈ ${frenBalanceUsd.toLocaleString()})
+          </Text>
+        )}
+        <Button
+          bg="white"
+          color={constants.colors.dark}
+          leftIcon={<FaWallet color={constants.colors.dark} />}
+          onClick={handleConnect}
+          display={{ base: isWeb3Enabled ? 'none' : 'flex', md: 'flex' }}
+        >
+          {isWeb3Enabled
+            ? `${address?.substr(0, 4)}...${address?.substr(-4, 4)}`
+            : 'Connect Your Wallet'}
+        </Button>
+      </Flex>
+      <Modal
+        motionPreset="slideInBottom"
+        onClose={onClose}
+        isOpen={isOpen}
+        isCentered
+        size="xl"
+      >
+        <ModalOverlay />
+        <ModalContent pb={5}>
+          <ModalHeader>Account</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Flex
+              justifyContent="space-between"
+              bgColor="gray.900"
+              p={4}
+              borderRadius={8}
+              gridGap={4}
+            >
+              <Box gridGap={2}>
+                <Text fontSize="sm">Balance</Text>
+                {isWeb3Enabled && frenBalance !== -1 && (
+                  <Text fontSize="lg">
+                    {millify(new BigNumber(frenBalance).multipliedBy(1e-18))}{' '}
+                    FREN
+                  </Text>
+                )}
+              </Box>
+              <Box>
+                <Text fontSize="sm">Network</Text>
+                <Text fontSize="lg">Binance Smart Chain</Text>
+              </Box>
+              <Box>
+                <Text fontSize="sm">Wallet</Text>
+                <Text fontSize="lg">Metamask</Text>
+              </Box>
+            </Flex>
+            <Flex
+              mt={4}
+              p={4}
+              borderRadius={8}
+              backgroundColor={constants.colors.white}
+              color={constants.colors.dark}
+              flexDir="column"
+            >
+              <Text fontSize="sm" color={constants.colors.dark}>
+                Address
+              </Text>
+              <Text fontSize="lg" color={constants.colors.dark}>
+                {address && address}
+              </Text>
+            </Flex>
+            <Flex mt={4} justifyContent="space-between" gridGap={4}>
+              <Button d="flex" leftIcon={<Icon as={FaRegCopy} w={4} h={4} />}>
+                Copy Address
+              </Button>
+              <Button d="flex" leftIcon={<Icon as={FaBook} w={4} h={4} />}>
+                Transaction History
+              </Button>
+
+              <Button
+                d="flex"
+                leftIcon={<Icon as={FaSignOutAlt} w={4} h={4} />}
+              >
+                Disconnect
+              </Button>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

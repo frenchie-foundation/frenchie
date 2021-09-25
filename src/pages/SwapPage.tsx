@@ -1,12 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Box, Container, Flex } from '@chakra-ui/layout';
 import Title from '../components/Title';
 import constants from '../config/constants';
 import Swap from '../components/Swap';
+import openInNewTab from '../helpers/openInNewTab';
+import { Button } from '@chakra-ui/react';
+import { FaHome, FaTractor } from 'react-icons/fa';
 
 export default function SwapPage(): React.ReactElement {
   useEffect(() => {
     document.title = 'Swap - Frenchie Network';
+  }, []);
+
+  const handleFarmClick = useCallback((e?: any) => {
+    if (e) {
+      e.preventDefault();
+    }
+    openInNewTab('/farming');
+  }, []);
+
+  const handleHomeClick = useCallback((e?: any) => {
+    if (e) {
+      e.preventDefault();
+    }
+    openInNewTab('/');
+  }, []);
+
+  const handle1inchLinkClick = useCallback(() => {
+    openInNewTab(constants.oneInchSwapLink);
+  }, []);
+
+  const handlePancakeLinkClick = useCallback(() => {
+    openInNewTab(constants.pancakeSwapLink);
   }, []);
 
   return (
@@ -15,9 +40,73 @@ export default function SwapPage(): React.ReactElement {
         <Title lineHeight="48px" isPageTitle>
           Swap
         </Title>
-        <Title isPageTitle color={constants.colors.red}>
+        <Title isPageTitle color={constants.colors.red} mb={4}>
           Buy {'&'} Sell FREN
         </Title>
+        <Flex gridGap={4}>
+          <Button
+            variant="outline"
+            color={constants.colors.white}
+            borderColor={constants.colors.white}
+            px={7}
+            py={6}
+            fontSize="20px"
+            leftIcon={<FaHome />}
+            onClick={handleHomeClick}
+            transition="0.2s"
+            _hover={{
+              boxShadow: 'xl',
+            }}
+          >
+            Home
+          </Button>
+          <Button
+            variant="outline"
+            color={constants.colors.white}
+            borderColor={constants.colors.white}
+            px={7}
+            py={6}
+            fontSize="20px"
+            leftIcon={<FaTractor />}
+            onClick={handleFarmClick}
+            transition="0.2s"
+            _hover={{
+              boxShadow: 'xl',
+            }}
+          >
+            Farm
+          </Button>
+        </Flex>
+        <Flex gridGap={4} mt={4}>
+          <Button
+            color={constants.colors.white}
+            borderColor={constants.colors.white}
+            px={7}
+            py={6}
+            onClick={handle1inchLinkClick}
+            fontSize="20px"
+            transition="0.2s"
+            _hover={{
+              boxShadow: 'xl',
+            }}
+          >
+            Buy on 1inch
+          </Button>
+          <Button
+            color={constants.colors.white}
+            borderColor={constants.colors.white}
+            px={7}
+            py={6}
+            onClick={handlePancakeLinkClick}
+            fontSize="20px"
+            transition="0.2s"
+            _hover={{
+              boxShadow: 'xl',
+            }}
+          >
+            Buy in PancakeSwap V1
+          </Button>
+        </Flex>
       </Box>
       <Flex justifyContent="center">
         <Swap />

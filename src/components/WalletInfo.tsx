@@ -79,6 +79,7 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
         {...props}
         p={3}
         bgColor="gray.900"
+        mr={{ base: 4, md: 0 }}
         borderRadius={8}
         boxShadow="md"
         cursor="pointer"
@@ -87,11 +88,22 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
         }}
       >
         {isWeb3Enabled && frenBalance !== -1 && (
-          <Text fontWeight="bold" display="flex" alignItems="center">
-            <Logo display="inline" height={7} />$
-            {Number(web3.utils.fromWei(String(frenBalance))).toLocaleString()}{' '}
-            (≈ ${frenBalanceUsd.toLocaleString()})
-          </Text>
+          <Flex alignItems="center" justifyContent="space-between" gridGap={4}>
+            <Logo display="inline" height={7} />
+            <Flex
+              flexDir={{ base: 'column', md: 'row' }}
+              gridGap={{ base: 0, md: 2 }}
+            >
+              <Text fontWeight="bold">
+                {Number(
+                  web3.utils.fromWei(String(frenBalance))
+                ).toLocaleString()}{' '}
+              </Text>
+              <Text fontWeight="bold" w="100%" textAlign="right">
+                (≈ ${frenBalanceUsd.toLocaleString()})
+              </Text>
+            </Flex>
+          </Flex>
         )}
         <Button
           bg="white"
@@ -153,11 +165,28 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
               <Text fontSize="sm" color={constants.colors.dark}>
                 Address
               </Text>
-              <Text fontSize="lg" color={constants.colors.dark}>
+              <Text
+                fontSize="lg"
+                color={constants.colors.dark}
+                display={{ base: 'flex', md: 'none' }}
+              >
+                {address &&
+                  `${address?.substr(0, 12)}...${address?.substr(-12, 12)}`}
+              </Text>
+              <Text
+                fontSize="lg"
+                color={constants.colors.dark}
+                display={{ base: 'none', md: 'flex' }}
+              >
                 {address && address}
               </Text>
             </Flex>
-            <Flex mt={4} justifyContent="space-between" gridGap={4}>
+            <Flex
+              mt={4}
+              justifyContent="space-between"
+              gridGap={{ base: 2, sm: 4 }}
+              flexDir={{ base: 'column', sm: 'row' }}
+            >
               <Button d="flex" leftIcon={<Icon as={FaRegCopy} w={4} h={4} />}>
                 Copy Address
               </Button>

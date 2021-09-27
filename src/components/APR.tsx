@@ -52,6 +52,7 @@ const APR: React.FC<ChakraProps> = (props: ChakraProps) => {
       display={{ base: 'block', md: 'flex' }}
       alignItems="start"
       mt={10}
+      maxW="100%"
       {...props}
     >
       <WhiteBox

@@ -38,7 +38,7 @@ export default function SwapPage(): React.ReactElement {
     <Container>
       <Box mt={16} mb={10}>
         <Title lineHeight="48px" isPageTitle>
-          Swap
+          Frenchie Swap
         </Title>
         <Title isPageTitle color={constants.colors.red} mb={4}>
           Buy {'&'} Sell FREN
@@ -75,36 +75,6 @@ export default function SwapPage(): React.ReactElement {
             }}
           >
             Farm
-          </Button>
-        </Flex>
-        <Flex gridGap={4} mt={4}>
-          <Button
-            color={constants.colors.white}
-            borderColor={constants.colors.white}
-            px={7}
-            py={6}
-            onClick={handle1inchLinkClick}
-            fontSize="20px"
-            transition="0.2s"
-            _hover={{
-              boxShadow: 'xl',
-            }}
-          >
-            Buy on 1inch
-          </Button>
-          <Button
-            color={constants.colors.white}
-            borderColor={constants.colors.white}
-            px={7}
-            py={6}
-            onClick={handlePancakeLinkClick}
-            fontSize="20px"
-            transition="0.2s"
-            _hover={{
-              boxShadow: 'xl',
-            }}
-          >
-            Buy in PancakeSwap V1
           </Button>
         </Flex>
       </Box>

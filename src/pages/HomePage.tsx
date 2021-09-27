@@ -79,15 +79,20 @@ export default function HomePage(): React.ReactElement {
   return (
     <Container>
       <Box mt={16} mb={4}>
-        <Title lineHeight="48px" isPageTitle>
+        <Title lineHeight="48px" isPageTitle mb={{ base: 4, md: 8 }}>
           More Than A Meme
         </Title>
-        <Title isPageTitle color={constants.colors.red}>
+        <Title
+          lineHeight="48px"
+          isPageTitle
+          color={constants.colors.red}
+          mb={{ base: 8, md: 10 }}
+        >
           <span style={{ color: constants.colors.green }}>An Eco</span> Smart
           Chain
         </Title>
       </Box>
-      <Flex mb={16} gridGap={4}>
+      <Flex mb={16} gridGap={4} flexDir={{ base: 'column', sm: 'row' }}>
         <Button
           variant="outline"
           px={7}
@@ -101,7 +106,7 @@ export default function HomePage(): React.ReactElement {
             boxShadow: 'xl',
           }}
         >
-          How to Buy
+          Frenchie Swap
         </Button>
         <Button
           variant="outline"
@@ -136,11 +141,12 @@ export default function HomePage(): React.ReactElement {
           Whitepaper
         </Button>
       </Flex>
-      <Box
-        rounded={'lg'}
-        display={{ base: 'block', md: 'flex' }}
+      <Flex
+        borderRadius={8}
         gridGap={4}
         mb={8}
+        flexDir={{ base: 'column', lg: 'row' }}
+        maxW="100%"
       >
         <Box
           p={4}
@@ -246,7 +252,7 @@ export default function HomePage(): React.ReactElement {
             Scalability
           </Text>
         </Box>
-      </Box>
+      </Flex>
 
       <Title
         textAlign={'center'}
@@ -589,84 +595,81 @@ export default function HomePage(): React.ReactElement {
       >
         Tokenmetrics
       </Title>
-      <Flex justifyContent="space-between" mb={3}>
-        <Box>texto aqui</Box>
-        <Flex flexDir="column" gridGap={4}>
-          <Flex
-            flexDir="column"
-            alignItems="center"
-            p={3}
-            minW="200px"
-            backgroundColor={useColorModeValue('gray.800', 'gray.900')}
-            borderRadius={4}
-            transition="0.2s"
-            _hover={{
-              boxShadow: 'md',
-            }}
-          >
-            <Text>Initial Supply</Text>
-            <Text>1,000,000,000,000</Text>
-          </Flex>
-          <Flex
-            flexDir="column"
-            alignItems="center"
-            p={3}
-            minW="200px"
-            backgroundColor={useColorModeValue('gray.800', 'gray.900')}
-            borderRadius={4}
-            transition="0.2s"
-            _hover={{
-              boxShadow: 'md',
-            }}
-          >
-            <Text>Current Supply</Text>
-            <Text>750,000,000,000</Text>
-          </Flex>
-          <Flex
-            flexDir="column"
-            alignItems="center"
-            p={3}
-            minW="200px"
-            backgroundColor={useColorModeValue('gray.800', 'gray.900')}
-            borderRadius={4}
-            transition="0.2s"
-            _hover={{
-              boxShadow: 'md',
-            }}
-          >
-            <Text>Burned Supply</Text>
-            <Text>250,000,000,000</Text>
-          </Flex>
-          <Flex
-            flexDir="column"
-            alignItems="center"
-            p={3}
-            minW="200px"
-            backgroundColor={useColorModeValue('gray.800', 'gray.900')}
-            borderRadius={4}
-            transition="0.2s"
-            _hover={{
-              boxShadow: 'md',
-            }}
-          >
-            <Text>Liquidity Locked PCSv1</Text>
-            <Text>250,000,000,000</Text>
-          </Flex>
-          <Flex
-            flexDir="column"
-            alignItems="center"
-            p={3}
-            minW="200px"
-            backgroundColor={useColorModeValue('gray.800', 'gray.900')}
-            borderRadius={4}
-            transition="0.2s"
-            _hover={{
-              boxShadow: 'md',
-            }}
-          >
-            <Text>Marketing + DEV</Text>
-            <Text>300,000,000,000</Text>
-          </Flex>
+      <Flex mb={3} gridGap={4} justifyContent="center" wrap="wrap">
+        <Flex
+          flexDir="column"
+          alignItems="center"
+          p={3}
+          minW="200px"
+          backgroundColor={useColorModeValue('gray.800', 'gray.900')}
+          borderRadius={4}
+          transition="0.2s"
+          _hover={{
+            boxShadow: 'md',
+          }}
+        >
+          <Text>Initial Supply</Text>
+          <Text>1,000,000,000,000</Text>
+        </Flex>
+        <Flex
+          flexDir="column"
+          alignItems="center"
+          p={3}
+          minW="200px"
+          backgroundColor={useColorModeValue('gray.800', 'gray.900')}
+          borderRadius={4}
+          transition="0.2s"
+          _hover={{
+            boxShadow: 'md',
+          }}
+        >
+          <Text>Current Supply</Text>
+          <Text>750,000,000,000</Text>
+        </Flex>
+        <Flex
+          flexDir="column"
+          alignItems="center"
+          p={3}
+          minW="200px"
+          backgroundColor={useColorModeValue('gray.800', 'gray.900')}
+          borderRadius={4}
+          transition="0.2s"
+          _hover={{
+            boxShadow: 'md',
+          }}
+        >
+          <Text>Burned Supply</Text>
+          <Text>250,000,000,000</Text>
+        </Flex>
+        <Flex
+          flexDir="column"
+          alignItems="center"
+          p={3}
+          minW="200px"
+          backgroundColor={useColorModeValue('gray.800', 'gray.900')}
+          borderRadius={4}
+          transition="0.2s"
+          _hover={{
+            boxShadow: 'md',
+          }}
+        >
+          <Text>Liquidity Locked PCSv1</Text>
+          <Text>250,000,000,000</Text>
+        </Flex>
+        <Flex
+          flexDir="column"
+          alignItems="center"
+          p={3}
+          minW="200px"
+          backgroundColor={useColorModeValue('gray.800', 'gray.900')}
+          borderRadius={4}
+          transition="0.2s"
+          _hover={{
+            boxShadow: 'md',
+          }}
+        >
+          <Text>Marketing + DEV</Text>
+          <Text>300,000,000,000</Text>
         </Flex>
       </Flex>
       <Title fontSize={'4xl'} py={2} mt={8} mb={4} fontWeight={'bold'}>
@@ -684,9 +687,9 @@ export default function HomePage(): React.ReactElement {
           p={4}
           borderRadius={4}
           boxShadow="md"
-          w="fit-content"
+          w={{ base: '100%', md: 'fit-content' }}
         >
-          <Box>{constants.tokenAddress}</Box>
+          <Text isTruncated>{constants.tokenAddress}</Text>
           <Link href={constants.bscScanLink} target="_blank">
             <Button d="flex" gridGap={3} alignItems="center">
               <Image w={6} src={bscscanLogo} />
@@ -701,14 +704,15 @@ export default function HomePage(): React.ReactElement {
         </Text>
         <Flex
           gridGap={4}
-          alignItems="center"
           bg="gray.900"
           p={4}
           borderRadius={4}
           boxShadow="md"
-          w="fit-content"
+          w={{ base: '100%', md: 'fit-content' }}
+          maxW="100%"
+          alignItems="center"
         >
-          <Box>{constants.farmAddress}</Box>
+          <Text isTruncated>{constants.farmAddress}</Text>
           <Link href={constants.bscScanLinkFarm} target="_blank">
             <Button d="flex" gridGap={3} alignItems="center">
               <Image w={6} src={bscscanLogo} />

@@ -26,6 +26,7 @@ import { useToast } from '@chakra-ui/toast';
 import { Input } from '@chakra-ui/input';
 import BN from 'bn.js';
 import BalanceInfo from './BalanceInfo';
+import openInNewTab from '../helpers/openInNewTab';
 
 interface IToken {
   symbol: string;
@@ -299,6 +300,14 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fromAmount, dstToken.address, srcToken.address]);
 
+  const handle1inchLinkClick = useCallback(() => {
+    openInNewTab(constants.oneInchSwapLink);
+  }, []);
+
+  const handlePancakeLinkClick = useCallback(() => {
+    openInNewTab(constants.pancakeSwapLink);
+  }, []);
+
   useEffect(() => {
     if (!address || !isWeb3Enabled) {
       return;
@@ -568,6 +577,43 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
       <VStack maxWidth="100%" spacing={4}>
         <BalanceInfo />
 
+        <Flex
+          gridGap={4}
+          mt={4}
+          w="100%"
+          flexDir="column"
+          justifyContent="flex-start"
+        >
+          <Button
+            color={constants.colors.white}
+            borderColor={constants.colors.white}
+            px={7}
+            py={6}
+            onClick={handle1inchLinkClick}
+            fontSize="20px"
+            transition="0.2s"
+            _hover={{
+              boxShadow: 'xl',
+            }}
+          >
+            Buy in 1inch
+          </Button>
+          <Button
+            color={constants.colors.white}
+            borderColor={constants.colors.white}
+            px={7}
+            py={6}
+            onClick={handlePancakeLinkClick}
+            fontSize="20px"
+            transition="0.2s"
+            _hover={{
+              boxShadow: 'xl',
+            }}
+          >
+            Buy in PancakeSwap V1
+          </Button>
+        </Flex>
+
         <WhiteBox
           maxWidth="100%"
           width="600px"
@@ -785,11 +831,18 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
               <Flex
                 mt={4}
                 justifyContent="space-between"
-                alignItems="center"
-                mb={2}
+                alignItems={{ base: 'start', sm: 'center' }}
+                mb={{ base: 4, sm: 2 }}
+                flexDir={{ base: 'column', sm: 'row' }}
               >
                 <Text fontWeight="bold">Price:</Text>
-                <Text display="flex" alignItems="center" fontWeight="bold">
+                <Text
+                  display="flex"
+                  w="100%"
+                  alignItems="center"
+                  justifyContent={{ base: 'space-between', sm: 'end' }}
+                  fontWeight="bold"
+                >
                   {priceDisplay}
                   <IconButton
                     aria-label="Invert rate"

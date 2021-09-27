@@ -51,7 +51,12 @@ const BalanceInfo: React.FC<IBalanceInfo> = (props?: IBalanceInfo) => {
   }, [frenToken, address]);
 
   return (
-    <Flex justifyContent="space-between" w="100%" gridGap={4}>
+    <Flex
+      justifyContent="space-between"
+      w="100%"
+      gridGap={4}
+      flexDir={{ base: 'column', md: 'row' }}
+    >
       <Box
         gridGap={4}
         {...props}

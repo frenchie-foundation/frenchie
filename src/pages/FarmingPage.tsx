@@ -72,7 +72,7 @@ export default function FarmingPage(): React.ReactElement {
             boxShadow: 'xl',
           }}
         >
-          Buy FREN
+          Frenchie Swap
         </Button>
       </Flex>
 
@@ -116,7 +116,7 @@ export default function FarmingPage(): React.ReactElement {
         flexDir="column"
         bg="gray.900"
       >
-        <Flex gridGap={4}>
+        <Flex gridGap={4} flexDir={{ base: 'column', sm: 'row' }}>
           <Flex alignItems="center" gridGap={4} flex="1">
             <Box
               borderRadius="50%"
@@ -139,7 +139,7 @@ export default function FarmingPage(): React.ReactElement {
             </Text>
           </Box>
         </Flex>
-        <Flex gridGap={4}>
+        <Flex gridGap={4} flexDir={{ base: 'column', sm: 'row' }}>
           <Flex alignItems="center" gridGap={4} flex="1">
             <Box
               borderRadius="50%"
@@ -159,7 +159,7 @@ export default function FarmingPage(): React.ReactElement {
             <Text>Deposit FREN-BNB LP on Frenchie Farm</Text>
           </Box>
         </Flex>
-        <Flex gridGap={4}>
+        <Flex gridGap={4} flexDir={{ base: 'column', sm: 'row' }}>
           <Flex alignItems="center" gridGap={4} flex="1">
             <Box
               borderRadius="50%"

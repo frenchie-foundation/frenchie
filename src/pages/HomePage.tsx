@@ -42,6 +42,7 @@ export default function HomePage(): React.ReactElement {
   const handleTelegramLinkClick = useCallback(() => {
     openInNewTab(constants.telegramGroupLink);
   }, []);
+
   const handleTwitterClick = useCallback(() => {
     openInNewTab(constants.twitterGroupLink);
   }, []);
@@ -53,6 +54,22 @@ export default function HomePage(): React.ReactElement {
       e.preventDefault();
     }
     openInNewTab('/frenchie-whitepaper.pdf');
+  }, []);
+
+  const handleCoinmarketcapGroupLinkClick = useCallback(() => {
+    openInNewTab(constants.coinmarketcapGroupLink);
+  }, []);
+  const handleCoinGeckoLinkClick = useCallback(() => {
+    openInNewTab(constants.coingeckoGroupLink);
+  }, []);
+  const handleLATokenLinkClick = useCallback(() => {
+    openInNewTab(constants.latokenGroupLink);
+  }, []);
+  const handleDextoolsLinkClick = useCallback(() => {
+    openInNewTab(constants.dextoolsGroupLink);
+  }, []);
+  const handlePooChartLinkClick = useCallback(() => {
+    openInNewTab(constants.poocoinGroupLink);
   }, []);
 
   const handleFarmClick = useCallback((e?: any) => {
@@ -418,171 +435,142 @@ export default function HomePage(): React.ReactElement {
       </Title>
       <Flex justifyContent="center">
         <HStack gridGap={4} overflowX="scroll" pb={5}>
-          <Link
-            href={constants.coinmarketcapGroupLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            textDecoration="none"
-            isExternal
+          <HStack
+            d="flex"
             minW="250px"
+            flexDir="column"
+            gridGap={3}
+            bg={useColorModeValue('white', 'gray.900')}
+            onClick={handleCoinmarketcapGroupLinkClick}
+            cursor="pointer"
+            boxShadow={'md'}
+            borderRadius={8}
+            p={4}
+            transition="0.2s"
+            _hover={{
+              background: useColorModeValue('white', 'gray.800'),
+              boxShadow: 'xl',
+            }}
           >
-            <HStack
-              d="flex"
-              flexDir="column"
-              gridGap={3}
-              bg={useColorModeValue('white', 'gray.900')}
-              boxShadow={'md'}
-              borderRadius={8}
-              p={4}
-              transition="0.2s"
-              _hover={{
-                background: useColorModeValue('white', 'gray.800'),
-                boxShadow: 'xl',
-              }}
-            >
-              <Image
-                objectFit="cover"
-                boxSize="50px"
-                src="https://i2.wp.com/blog.coinmarketcap.com/wp-content/uploads/2019/06/wp-favicon.png"
-                alt="CMC"
-              />
-              <Heading as="h3" size="lg">
-                CoinMarketCap
-              </Heading>
-            </HStack>
-          </Link>
-          <Link
-            href={constants.coingeckoGroupLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            textDecoration="none"
-            isExternal
+            <Image
+              objectFit="cover"
+              boxSize="50px"
+              src="https://i2.wp.com/blog.coinmarketcap.com/wp-content/uploads/2019/06/wp-favicon.png"
+              alt="CMC"
+            />
+            <Heading as="h3" size="lg">
+              CoinMarketCap
+            </Heading>
+          </HStack>
+
+          <HStack
             minW="250px"
+            d="flex"
+            flexDir="column"
+            gridGap={3}
+            onClick={handleCoinGeckoLinkClick}
+            cursor="pointer"
+            bg={useColorModeValue('white', 'gray.900')}
+            boxShadow={'md'}
+            borderRadius={8}
+            p={4}
+            transition="0.2s"
+            _hover={{
+              background: useColorModeValue('white', 'gray.800'),
+              boxShadow: 'xl',
+            }}
           >
-            <HStack
-              d="flex"
-              flexDir="column"
-              gridGap={3}
-              bg={useColorModeValue('white', 'gray.900')}
-              boxShadow={'md'}
-              borderRadius={8}
-              p={4}
-              transition="0.2s"
-              _hover={{
-                background: useColorModeValue('white', 'gray.800'),
-                boxShadow: 'xl',
-              }}
-            >
-              <Image
-                objectFit="cover"
-                boxSize="50px"
-                src="https://i.imgur.com/bjJF07B.png"
-                alt="CoinGecko"
-              />
-              <Heading as="h3" size="lg">
-                CoinGecko
-              </Heading>
-            </HStack>
-          </Link>
-          <Link
-            href={constants.latokenGroupLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            textDecoration="none"
-            isExternal
+            <Image
+              objectFit="cover"
+              boxSize="50px"
+              src="https://i.imgur.com/bjJF07B.png"
+              alt="CoinGecko"
+            />
+            <Heading as="h3" size="lg">
+              CoinGecko
+            </Heading>
+          </HStack>
+          <HStack
             minW="250px"
+            d="flex"
+            flexDir="column"
+            gridGap={3}
+            onClick={handleLATokenLinkClick}
+            cursor="pointer"
+            bg={useColorModeValue('white', 'gray.900')}
+            boxShadow={'md'}
+            borderRadius={8}
+            p={4}
+            transition="0.2s"
+            _hover={{
+              background: useColorModeValue('white', 'gray.800'),
+              boxShadow: 'xl',
+            }}
           >
-            <HStack
-              d="flex"
-              flexDir="column"
-              gridGap={3}
-              bg={useColorModeValue('white', 'gray.900')}
-              boxShadow={'md'}
-              borderRadius={8}
-              p={4}
-              transition="0.2s"
-              _hover={{
-                background: useColorModeValue('white', 'gray.800'),
-                boxShadow: 'xl',
-              }}
-            >
-              <Image
-                objectFit="cover"
-                boxSize="50px"
-                src={latokenlogo}
-                alt="LaToken"
-              />
-              <Heading as="h3" size="lg">
-                LAToken
-              </Heading>
-            </HStack>
-          </Link>
-          <Link
-            href={constants.dextoolsGroupLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            textDecoration="none"
-            isExternal
+            <Image
+              objectFit="cover"
+              boxSize="50px"
+              src={latokenlogo}
+              alt="LaToken"
+            />
+            <Heading as="h3" size="lg">
+              LAToken
+            </Heading>
+          </HStack>
+          <HStack
             minW="250px"
+            d="flex"
+            flexDir="column"
+            gridGap={3}
+            onClick={handleDextoolsLinkClick}
+            cursor="pointer"
+            bg={useColorModeValue('white', 'gray.900')}
+            boxShadow={'md'}
+            borderRadius={8}
+            p={4}
+            transition="0.2s"
+            _hover={{
+              background: useColorModeValue('white', 'gray.800'),
+              boxShadow: 'xl',
+            }}
           >
-            <HStack
-              d="flex"
-              flexDir="column"
-              gridGap={3}
-              bg={useColorModeValue('white', 'gray.900')}
-              boxShadow={'md'}
-              borderRadius={8}
-              p={4}
-              transition="0.2s"
-              _hover={{
-                background: useColorModeValue('white', 'gray.800'),
-                boxShadow: 'xl',
-              }}
-            >
-              <Image
-                objectFit="cover"
-                boxSize="50px"
-                src="https://i.imgur.com/lc25mKK.png"
-                alt="DexTools"
-              />
-              <Heading as="h3" size="lg">
-                Dextools
-              </Heading>
-            </HStack>
-          </Link>
-          <Link
-            href={constants.poocoinGroupLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            textDecoration="none"
-            isExternal
+            <Image
+              objectFit="cover"
+              boxSize="50px"
+              src="https://i.imgur.com/lc25mKK.png"
+              alt="DexTools"
+            />
+            <Heading as="h3" size="lg">
+              Dextools
+            </Heading>
+          </HStack>
+          <HStack
             minW="250px"
+            d="flex"
+            flexDir="column"
+            gridGap={3}
+            onClick={handlePooChartLinkClick}
+            cursor="pointer"
+            bg={useColorModeValue('white', 'gray.900')}
+            boxShadow={'md'}
+            borderRadius={8}
+            p={4}
+            transition="0.2s"
+            _hover={{
+              background: useColorModeValue('white', 'gray.800'),
+              boxShadow: 'xl',
+            }}
           >
-            <HStack
-              d="flex"
-              flexDir="column"
-              gridGap={3}
-              bg={useColorModeValue('white', 'gray.900')}
-              boxShadow={'md'}
-              borderRadius={8}
-              p={4}
-              transition="0.2s"
-              _hover={{
-                background: useColorModeValue('white', 'gray.800'),
-                boxShadow: 'xl',
-              }}
-            >
-              <Image
-                objectFit="cover"
-                boxSize="50px"
-                src="https://poocoin.app/images/logo/poocoin512.png"
-                alt="PooChart"
-              />
-              <Heading as="h3" size="lg">
-                PooChart
-              </Heading>
-            </HStack>
-          </Link>
+            <Image
+              objectFit="cover"
+              boxSize="50px"
+              src="https://poocoin.app/images/logo/poocoin512.png"
+              alt="PooChart"
+            />
+            <Heading as="h3" size="lg">
+              PooChart
+            </Heading>
+          </HStack>
         </HStack>
       </Flex>
       <Title
@@ -672,7 +660,7 @@ export default function HomePage(): React.ReactElement {
           <Text>300,000,000,000</Text>
         </Flex>
       </Flex>
-      <Title fontSize={'4xl'} py={2} mt={8} mb={4} fontWeight={'bold'}>
+      <Title fontSize={'4xl'} py={2} mt={16} mb={4} fontWeight={'bold'}>
         Contracts
       </Title>
 

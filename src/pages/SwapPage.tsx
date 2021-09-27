@@ -26,14 +26,6 @@ export default function SwapPage(): React.ReactElement {
     openInNewTab('/');
   }, []);
 
-  const handle1inchLinkClick = useCallback(() => {
-    openInNewTab(constants.oneInchSwapLink);
-  }, []);
-
-  const handlePancakeLinkClick = useCallback(() => {
-    openInNewTab(constants.pancakeSwapLink);
-  }, []);
-
   return (
     <Container>
       <Box mt={16} mb={10}>

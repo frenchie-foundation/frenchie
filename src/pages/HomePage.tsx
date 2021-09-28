@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { Container, HStack, Link } from '@chakra-ui/layout';
 import {
-  Heading,
   Box,
   Image,
   Flex,
@@ -22,7 +21,7 @@ import {
   FaGithub,
   FaTractor,
 } from 'react-icons/fa';
-import openInNewTab from '../helpers/openInNewTab';
+import { openInNewTab, openLink } from '../helpers/openInNewTab';
 import constants from '../config/constants';
 import Title from '../components/Title';
 import latokenlogo from '../assets/images/latoken.png';
@@ -42,13 +41,16 @@ export default function HomePage(): React.ReactElement {
   const handleTelegramLinkClick = useCallback(() => {
     openInNewTab(constants.telegramGroupLink);
   }, []);
-
+  const handleInstagramLinkClick = useCallback(() => {
+    openInNewTab(constants.instagramLink);
+  }, []);
   const handleTwitterClick = useCallback(() => {
     openInNewTab(constants.twitterGroupLink);
   }, []);
   const handleMediumClick = useCallback(() => {
     openInNewTab(constants.mediumGroupLink);
   }, []);
+
   const handleWhitepaperLinkClick = useCallback((e?: any) => {
     if (e) {
       e.preventDefault();
@@ -76,11 +78,11 @@ export default function HomePage(): React.ReactElement {
     if (e) {
       e.preventDefault();
     }
-    openInNewTab('/farming');
+    openLink('/farming');
   }, []);
 
   const handleBuyLinkClick = useCallback(() => {
-    openInNewTab('/swap');
+    openLink('/swap');
   }, []);
 
   const goTo = useCallback(
@@ -343,7 +345,7 @@ export default function HomePage(): React.ReactElement {
           <Text>Discord</Text>
         </Flex>
         <Flex
-          onClick={handleTwitterClick}
+          onClick={handleInstagramLinkClick}
           gridGap={3}
           alignItems="center"
           flexDir="column"
@@ -431,13 +433,13 @@ export default function HomePage(): React.ReactElement {
         mb={4}
         fontWeight={'bold'}
       >
-        Parceiros?
+        Partnerships
       </Title>
       <Flex justifyContent="center">
-        <HStack gridGap={4} overflowX="scroll" pb={5}>
+        <HStack gridGap={4} wrap="wrap" justifyContent="center" pb={5}>
           <HStack
             d="flex"
-            minW="250px"
+            minW="150px"
             flexDir="column"
             gridGap={3}
             bg={useColorModeValue('white', 'gray.900')}
@@ -458,13 +460,11 @@ export default function HomePage(): React.ReactElement {
               src="https://i2.wp.com/blog.coinmarketcap.com/wp-content/uploads/2019/06/wp-favicon.png"
               alt="CMC"
             />
-            <Heading as="h3" size="lg">
-              CoinMarketCap
-            </Heading>
+            <Text>CoinMarketCap</Text>
           </HStack>
 
           <HStack
-            minW="250px"
+            minW="150px"
             d="flex"
             flexDir="column"
             gridGap={3}
@@ -486,12 +486,10 @@ export default function HomePage(): React.ReactElement {
               src="https://i.imgur.com/bjJF07B.png"
               alt="CoinGecko"
             />
-            <Heading as="h3" size="lg">
-              CoinGecko
-            </Heading>
+            <Text>CoinGecko</Text>
           </HStack>
           <HStack
-            minW="250px"
+            minW="150px"
             d="flex"
             flexDir="column"
             gridGap={3}
@@ -513,12 +511,10 @@ export default function HomePage(): React.ReactElement {
               src={latokenlogo}
               alt="LaToken"
             />
-            <Heading as="h3" size="lg">
-              LAToken
-            </Heading>
+            <Text>LAToken</Text>
           </HStack>
           <HStack
-            minW="250px"
+            minW="150px"
             d="flex"
             flexDir="column"
             gridGap={3}
@@ -540,12 +536,12 @@ export default function HomePage(): React.ReactElement {
               src="https://i.imgur.com/lc25mKK.png"
               alt="DexTools"
             />
-            <Heading as="h3" size="lg">
+            <Text as="h3" size="lg">
               Dextools
-            </Heading>
+            </Text>
           </HStack>
           <HStack
-            minW="250px"
+            minW="150px"
             d="flex"
             flexDir="column"
             gridGap={3}
@@ -567,9 +563,9 @@ export default function HomePage(): React.ReactElement {
               src="https://poocoin.app/images/logo/poocoin512.png"
               alt="PooChart"
             />
-            <Heading as="h3" size="lg">
+            <Text as="h3" size="lg">
               PooChart
-            </Heading>
+            </Text>
           </HStack>
         </HStack>
       </Flex>

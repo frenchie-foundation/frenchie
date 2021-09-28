@@ -3,7 +3,7 @@ import { Box, Container, Flex } from '@chakra-ui/layout';
 import Title from '../components/Title';
 import constants from '../config/constants';
 import Swap from '../components/Swap';
-import openInNewTab from '../helpers/openInNewTab';
+import { openLink } from '../helpers/openInNewTab';
 import { Button } from '@chakra-ui/react';
 import { FaHome, FaTractor } from 'react-icons/fa';
 
@@ -16,14 +16,14 @@ export default function SwapPage(): React.ReactElement {
     if (e) {
       e.preventDefault();
     }
-    openInNewTab('/farming');
+    openLink('/farming');
   }, []);
 
   const handleHomeClick = useCallback((e?: any) => {
     if (e) {
       e.preventDefault();
     }
-    openInNewTab('/');
+    openLink('/');
   }, []);
 
   return (

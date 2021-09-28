@@ -14,21 +14,21 @@ import { Flex } from '@chakra-ui/react';
 import Liquidity from '../components/Liquidity';
 import APR from '../components/APR';
 import { FaHome } from 'react-icons/fa';
-import openInNewTab from '../helpers/openInNewTab';
+import { openLink } from '../helpers/openInNewTab';
 
 export default function FarmingPage(): React.ReactElement {
   const handleSwapClick = useCallback((e?: any) => {
     if (e) {
       e.preventDefault();
     }
-    openInNewTab('/swap');
+    openLink('/swap');
   }, []);
 
   const handleHomeClick = useCallback((e?: any) => {
     if (e) {
       e.preventDefault();
     }
-    openInNewTab('/');
+    openLink('/');
   }, []);
 
   return (

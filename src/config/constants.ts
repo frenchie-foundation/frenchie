@@ -12,8 +12,9 @@ const constants = {
   bscScanLink:
     'https://bscscan.com/token/0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af',
   bscScanLinkFarm:
-    'https://bscscan.com/token/0xc284b2d8a9bb2daec5ca8505df72cd862cd702d6',
+    'https://bscscan.com/address/0xc284b2d8a9bb2daec5ca8505df72cd862cd702d6',
   telegramGroupLink: 'https://t.me/FrenchieNetwork',
+  instagramLink: 'https://www.instagram.com/frenchie.network/',
   pancakeSwapLink:
     'https://v1exchange.pancakeswap.finance/#/swap?outputCurrency=0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af',
   oneInchSwapLink: 'https://app.1inch.io/#/56/swap/BNB/FREN',

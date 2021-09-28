@@ -111,6 +111,10 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
           leftIcon={<FaWallet color={constants.colors.dark} />}
           onClick={handleConnect}
           display={{ base: isWeb3Enabled ? 'none' : 'flex', md: 'flex' }}
+          _hover={{
+            bg: 'white',
+            opacity: '0.7',
+          }}
         >
           {isWeb3Enabled
             ? `${address?.substr(0, 4)}...${address?.substr(-4, 4)}`

@@ -26,7 +26,7 @@ import { useToast } from '@chakra-ui/toast';
 import { Input } from '@chakra-ui/input';
 import BN from 'bn.js';
 import BalanceInfo from './BalanceInfo';
-import openInNewTab from '../helpers/openInNewTab';
+import { openInNewTab } from '../helpers/openInNewTab';
 
 interface IToken {
   symbol: string;

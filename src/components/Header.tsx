@@ -121,7 +121,7 @@ export default function Header(): React.ReactElement {
           }
           onClick={handleDrawerOpen}
         />
-        <Logo height={16} />
+        <Logo height={12} />
         <Text
           fontSize={{ xl: 28, md: 24 }}
           display={{ base: 'none', md: 'block' }}

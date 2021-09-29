@@ -63,8 +63,15 @@ export default function Header(): React.ReactElement {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton mt={2} />
-          <DrawerHeader borderBottomWidth="1px" mb={4}>
-            Menu
+          <DrawerHeader
+            borderBottomWidth="1px"
+            mb={4}
+            display="flex"
+            alignItems="center"
+            gridGap={2}
+          >
+            <Logo w={8} />
+            FRENCHIE
           </DrawerHeader>
           <DrawerBody>
             <VStack spacing={4}>

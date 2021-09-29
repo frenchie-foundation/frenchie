@@ -385,7 +385,7 @@ const Liquidity: React.FC<ChakraProps> = (props: ChakraProps) => {
               </Flex>
               <FormLabel m={0}>BNB</FormLabel>
             </Text>
-            <Text>≈ {addBnbValueUsd} USD</Text>
+            <Text>≈ {Number(addBnbValueUsd) ? addBnbValueUsd : '0'} USD</Text>
           </Flex>
           <NumberInput
             onChange={() => null}
@@ -411,7 +411,7 @@ const Liquidity: React.FC<ChakraProps> = (props: ChakraProps) => {
               </Flex>
               <FormLabel m={0}>FREN</FormLabel>
             </Text>
-            <Text>≈ {addFrenValueUsd} USD</Text>
+            <Text>≈ {Number(addFrenValueUsd) ? addFrenValueUsd : '0'} USD</Text>
           </Flex>
           <NumberInput
             onChange={() => null}

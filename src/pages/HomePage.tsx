@@ -51,6 +51,14 @@ export default function HomePage(): React.ReactElement {
     openInNewTab(constants.mediumGroupLink);
   }, []);
 
+  const handleBscClick = useCallback(() => {
+    openInNewTab(constants.bscScanLink);
+  }, []);
+
+  const handleBscFarmClick = useCallback(() => {
+    openInNewTab(constants.bscScanLinkFarm);
+  }, []);
+
   const handleWhitepaperLinkClick = useCallback((e?: any) => {
     if (e) {
       e.preventDefault();
@@ -674,12 +682,15 @@ export default function HomePage(): React.ReactElement {
           w={{ base: '100%', md: 'fit-content' }}
         >
           <Text isTruncated>{constants.tokenAddress}</Text>
-          <Link href={constants.bscScanLink} target="_blank">
-            <Button d="flex" gridGap={3} alignItems="center">
-              <Image w={6} src={bscscanLogo} />
-              <Text>BscScan</Text>
-            </Button>
-          </Link>
+          <Button
+            d="flex"
+            gridGap={3}
+            alignItems="center"
+            onClick={handleBscClick}
+          >
+            <Image w={6} src={bscscanLogo} />
+            <Text>BscScan</Text>
+          </Button>
         </Flex>
       </Flex>
       <Flex flexDir="column">
@@ -697,12 +708,15 @@ export default function HomePage(): React.ReactElement {
           alignItems="center"
         >
           <Text isTruncated>{constants.farmAddress}</Text>
-          <Link href={constants.bscScanLinkFarm} target="_blank">
-            <Button d="flex" gridGap={3} alignItems="center">
-              <Image w={6} src={bscscanLogo} />
-              <Text>BscScan</Text>
-            </Button>
-          </Link>
+          <Button
+            d="flex"
+            gridGap={3}
+            alignItems="center"
+            onClick={handleBscFarmClick}
+          >
+            <Image w={6} src={bscscanLogo} />
+            <Text>BscScan</Text>
+          </Button>
         </Flex>
       </Flex>
 

@@ -68,11 +68,9 @@ const BalanceInfo: React.FC<IBalanceInfo> = (props?: IBalanceInfo) => {
       >
         <Title mb={0}>Balance in FREN</Title>
         <Text>
-          {isWeb3Enabled &&
-            frenBalance !== -1 &&
-            Number(
-              web3.utils.fromWei(String(frenBalance))
-            ).toLocaleString()}{' '}
+          {isWeb3Enabled && frenBalance !== -1
+            ? Number(web3.utils.fromWei(String(frenBalance))).toLocaleString()
+            : '≈ $0'}
         </Text>
       </Box>
       <Box

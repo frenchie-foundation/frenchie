@@ -20,6 +20,7 @@ import {
 } from '@chakra-ui/react';
 import { FaRegCopy, FaBook, FaSignOutAlt } from 'react-icons/fa';
 import millify from '../utils/millify';
+import { openInNewTab } from '../helpers/openInNewTab';
 
 type IWalletInfo = ChakraProps;
 
@@ -62,6 +63,10 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
       handleOpenWalletConnection();
     }
   }, [handleOpenWalletConnection, isWeb3Enabled]);
+
+  const handleTransactionHistoryClick = useCallback(async () => {
+    openInNewTab(`https://bscscan.com/address/${address}`);
+  }, [address]);
 
   useEffect(() => {
     (async () => {
@@ -194,7 +199,11 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
               <Button d="flex" leftIcon={<Icon as={FaRegCopy} w={4} h={4} />}>
                 Copy Address
               </Button>
-              <Button d="flex" leftIcon={<Icon as={FaBook} w={4} h={4} />}>
+              <Button
+                d="flex"
+                leftIcon={<Icon as={FaBook} w={4} h={4} />}
+                onClick={handleTransactionHistoryClick}
+              >
                 Transaction History
               </Button>
 

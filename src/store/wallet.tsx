@@ -28,6 +28,7 @@ interface IWalletContext {
   enableWeb3: (providerAPI: string) => Promise<void>;
   address?: string;
   handleOpenWalletConnection: () => void;
+  disconnect: () => void;
 }
 
 interface IWalletProvider {
@@ -108,7 +109,7 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
             throw new Error('Could not find the selected provider.');
           }
         }
-      } catch (error) {
+      } catch (error: any) {
         toast({
           status: 'error',
           description: error.message,
@@ -120,6 +121,46 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
     },
     [isWeb3Enabled, onModalClose, toast]
   );
+
+  const disableWeb3 = useCallback(
+    async (providerAPI: string) => {
+      try {
+        if (window[providerAPI]) {
+          localStorage.removeItem(WALLET_CONNECTED_ITEM);
+          setWeb3({} as Web3);
+          onModalClose();
+        } else if (providerAPI === 'WalletConnect') {
+          const provider = new WalletConnectProvider({
+            rpc: {
+              56: 'https://bsc-dataseed.binance.org',
+            },
+            chainId: 56,
+          });
+          await provider.disconnect();
+          localStorage.removeItem(WALLET_CONNECTED_ITEM);
+          onModalClose();
+        } else {
+          throw new Error('Could not find the selected provider.');
+        }
+      } catch (error: any) {
+        toast({
+          status: 'error',
+          description: error.message,
+          title: 'Error',
+          position: 'top',
+          duration: 5000,
+        });
+      }
+    },
+    [onModalClose, toast]
+  );
+
+  const disconnect = useCallback(() => {
+    const walletProvider = localStorage.getItem(WALLET_CONNECTED_ITEM);
+    if (walletProvider) {
+      disableWeb3(walletProvider);
+    }
+  }, [disableWeb3]);
 
   useEffect(() => {
     (async () => {
@@ -147,6 +188,7 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
         enableWeb3,
         address,
         handleOpenWalletConnection,
+        disconnect,
       }}
     >
       <Modal isCentered isOpen={isModalOpen} onClose={onModalClose}>

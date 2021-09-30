@@ -26,8 +26,13 @@ import { openInNewTab } from '../helpers/openInNewTab';
 type IWalletInfo = ChakraProps;
 
 const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
-  const { web3, isWeb3Enabled, handleOpenWalletConnection, address } =
-    useWallet();
+  const {
+    web3,
+    isWeb3Enabled,
+    handleOpenWalletConnection,
+    address,
+    disconnect,
+  } = useWallet();
   const { frenToken, pancakeRouter } = useContracts();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { onCopy } = useClipboard(address ? address : '');
@@ -216,6 +221,10 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
               <Button
                 d="flex"
                 leftIcon={<Icon as={FaSignOutAlt} w={4} h={4} />}
+                onClick={() => {
+                  disconnect();
+                  onClose();
+                }}
               >
                 Disconnect
               </Button>

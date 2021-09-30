@@ -16,6 +16,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  useClipboard,
   useDisclosure,
 } from '@chakra-ui/react';
 import { FaRegCopy, FaBook, FaSignOutAlt } from 'react-icons/fa';
@@ -29,6 +30,7 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
     useWallet();
   const { frenToken, pancakeRouter } = useContracts();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { onCopy } = useClipboard(address ? address : '');
 
   const [frenBalance, setFrenBalance] = useState(-1);
   const [usdPrice, setUsdPrice] = useState(-1);
@@ -196,7 +198,11 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
               gridGap={{ base: 2, sm: 4 }}
               flexDir={{ base: 'column', sm: 'row' }}
             >
-              <Button d="flex" leftIcon={<Icon as={FaRegCopy} w={4} h={4} />}>
+              <Button
+                d="flex"
+                leftIcon={<Icon as={FaRegCopy} w={4} h={4} />}
+                onClick={onCopy}
+              >
                 Copy Address
               </Button>
               <Button

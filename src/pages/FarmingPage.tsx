@@ -135,7 +135,7 @@ export default function FarmingPage(): React.ReactElement {
           <Box display="flex" alignItems="center" flex="3">
             <Text>
               Create liquidity tokens on 1inch or use our liquidity features
-              below
+              above
             </Text>
           </Box>
         </Flex>

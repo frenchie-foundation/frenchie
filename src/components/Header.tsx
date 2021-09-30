@@ -51,13 +51,15 @@ export default function Header(): React.ReactElement {
 
   return (
     <Flex
-      px={{ xl: 16, md: '16px' }}
       py={2}
       justifyContent="space-between"
       position="sticky"
       top="0"
       bg="gray.800"
       zIndex="999"
+      maxW="175ch"
+      margin="0 auto"
+      px={{ base: 4, xl: 0 }}
     >
       <Drawer placement="left" onClose={handleDrawerClose} isOpen={drawerOpen}>
         <DrawerOverlay />
@@ -71,7 +73,7 @@ export default function Header(): React.ReactElement {
             gridGap={2}
           >
             <Logo w={8} />
-            FRENCHIE
+            Frenchie Network
           </DrawerHeader>
           <DrawerBody>
             <VStack spacing={4}>
@@ -81,6 +83,7 @@ export default function Header(): React.ReactElement {
                 bg={constants.colors.light}
                 color={constants.colors.dark}
                 leftIcon={<FaHome />}
+                justifyContent="flex-start"
               >
                 Home
               </Button>
@@ -90,6 +93,7 @@ export default function Header(): React.ReactElement {
                 bg={constants.colors.light}
                 color={constants.colors.dark}
                 leftIcon={<FaTractor />}
+                justifyContent="flex-start"
               >
                 Farm
               </Button>
@@ -99,6 +103,7 @@ export default function Header(): React.ReactElement {
                 bg={constants.colors.light}
                 color={constants.colors.dark}
                 leftIcon={<FaSync />}
+                justifyContent="flex-start"
               >
                 Frenchie Swap
               </Button>
@@ -121,15 +126,22 @@ export default function Header(): React.ReactElement {
           }
           onClick={handleDrawerOpen}
         />
-        <Logo height={12} />
-        <Text
-          fontSize={{ xl: 28, md: 24 }}
-          display={{ base: 'none', md: 'block' }}
-          color={constants.colors.light}
-          fontWeight="bold"
+        <Flex
+          direction="row"
+          alignItems="center"
+          onClick={goTo('/')}
+          cursor="pointer"
         >
-          Frenchie Network
-        </Text>
+          <Logo height={12} />
+          <Text
+            fontSize={{ xl: 28, md: 24 }}
+            display={{ base: 'none', md: 'block' }}
+            color={constants.colors.light}
+            fontWeight="bold"
+          >
+            Frenchie Network
+          </Text>
+        </Flex>
       </Stack>
       <HStack spacing={5}>
         <Flex

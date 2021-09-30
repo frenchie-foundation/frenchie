@@ -27,7 +27,7 @@ export default function Footer(): React.ReactElement {
   );
 
   return (
-    <Container mt={20} mb={20}>
+    <Container mt={20} mb={5}>
       <Box
         bg={useColorModeValue('gray.50', 'gray.900')}
         color={useColorModeValue('gray.700', 'gray.200')}

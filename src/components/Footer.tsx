@@ -31,7 +31,7 @@ export default function Footer(): React.ReactElement {
       mt={20}
       mb={5}
       maxW="175ch"
-      marginX={{ base: 4, xl: 20 }}
+      marginX={{ base: 4, xl: 20, '2xl': 'auto' }}
       borderRadius={8}
     >
       <Box

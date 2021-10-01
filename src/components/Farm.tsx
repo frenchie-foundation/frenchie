@@ -4,7 +4,7 @@ import {
   FormHelperText,
   FormLabel,
 } from '@chakra-ui/form-control';
-import { Box, HStack } from '@chakra-ui/layout';
+import { Box, HStack, Text } from '@chakra-ui/layout';
 import {
   NumberDecrementStepper,
   NumberIncrementStepper,
@@ -31,13 +31,11 @@ import axios from 'axios';
 import WhiteBox from './WhiteBox';
 import BigNumber from 'bignumber.js';
 
-
 const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const { isWeb3Enabled, address, web3 } = useWallet();
   const { farmContract, oneInch, pancakeRouter } = useContracts();
   const toast = useToast();
   const [frenPrice, setFrenPrice] = useState(0);
-
 
   const [claimingRewards, setClaimingRewards] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
@@ -304,118 +302,141 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   }, [address, farmContract, fetchEverything, toast]);
 
   return (
-    <HStack
-      spacing={{ base: 0, md: 4 }}
-      display={{ base: 'block', md: 'flex' }}
-      alignItems="start"
-      {...props}
-    >
-      <WhiteBox w="100%" mb={{ base: 4, md: 0 }}>
-        {loading && <Progress size="xs" isIndeterminate />}
-        <FormControl id="amountToFarm" mb={2}>
-          <FormLabel>Amount to farm</FormLabel>
-          <NumberInput
-            value={toEther(amountToFarm)}
-            onChange={(_, v) => setAmountToFarm(toWei(v))}
-            min={0}
-            max={Number(balance)}
-          >
-            <NumberInputField bg={constants.colors.dark} color="white" />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          <FormHelperText color={constants.colors.dark}>
-            You have {displayBalance} FREN-LP
-          </FormHelperText>
-        </FormControl>
-        <Box p={3}>
-          <Slider
-            value={farmSlider}
-            onChange={setFarmSlider}
-            step={10}
+    <>
+      <HStack
+        spacing={{ base: 0, md: 4 }}
+        display={{ base: 'block', md: 'flex' }}
+        alignItems="start"
+        {...props}
+      >
+        <WhiteBox w="100%" mb={{ base: 4, md: 0 }}>
+          {loading && <Progress size="xs" isIndeterminate />}
+          <FormControl id="amountToFarm" mb={2}>
+            <Title color={constants.colors.dark} mb={2}>
+              Amount to farm
+            </Title>
+            <Box bg="gray.900" p={4} borderRadius={8}>
+              <NumberInput
+                value={toEther(amountToFarm)}
+                onChange={(_, v) => setAmountToFarm(toWei(v))}
+                min={0}
+                max={Number(balance)}
+              >
+                <NumberInputField bg={constants.colors.dark} color="white" />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+              <FormHelperText mt={4}>
+                <Text>You have {displayBalance} FREN-LP</Text>
+              </FormHelperText>
+            </Box>
+          </FormControl>
+          <Box p={3}>
+            <Slider
+              value={farmSlider}
+              onChange={setFarmSlider}
+              step={10}
+              colorScheme="teal"
+            >
+              <SliderTrack bg="teal.100">
+                <SliderFilledTrack bg="cyan" />
+              </SliderTrack>
+              <SliderThumb boxSize={6} color="teal" bg="teal" />
+            </Slider>
+          </Box>
+          <Button
+            isLoading={farming}
+            disabled={!amountToFarm || amountToFarm === '0'}
             colorScheme="teal"
+            onClick={handleFarm}
+            isFullWidth
           >
-            <SliderTrack bg="teal.100">
-              <SliderFilledTrack bg="cyan" />
-            </SliderTrack>
-            <SliderThumb boxSize={6} color="teal" bg="teal" />
-          </Slider>
-        </Box>
-        <Button
-          isLoading={farming}
-          disabled={!amountToFarm || amountToFarm === '0'}
-          colorScheme="teal"
-          onClick={handleFarm}
-          isFullWidth
-        >
-          {farmButtonText}
-        </Button>
-        <FormControl id="farmingAmount" mb={2} mt={4}>
-          <FormLabel>Amount to withdraw</FormLabel>
-          <NumberInput
-            value={toEther(withdrawAmount)}
-            onChange={(_, v) => setWithdrawAmount(toWei(v))}
-            min={0}
-            max={toEther(withdrawAmount)}
-          >
-            <NumberInputField bg={constants.colors.dark} color="white" />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          <FormHelperText color={constants.colors.dark}>
-            You are using {displayFarming} FREN-LP to farm FREN
-          </FormHelperText>
-        </FormControl>
-        <Box p={3}>
-          <Slider
-            value={withdrawSlider}
-            onChange={setWithdrawSlider}
-            step={10}
+            {farmButtonText}
+          </Button>
+        </WhiteBox>
+        <WhiteBox w="100%">
+          <FormControl id="farmingAmount" mb={2}>
+            <Title color={constants.colors.dark} mb={2}>
+              Amount to withdraw
+            </Title>
+            <Box borderRadius={8} bg="gray.900" p={4}>
+              <NumberInput
+                value={toEther(withdrawAmount)}
+                onChange={(_, v) => setWithdrawAmount(toWei(v))}
+                min={0}
+                max={toEther(withdrawAmount)}
+              >
+                <NumberInputField bg={constants.colors.dark} color="white" />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+              <FormHelperText mt={4}>
+                <Text>You are using {displayFarming} FREN-LP to farm FREN</Text>
+              </FormHelperText>
+            </Box>
+          </FormControl>
+          <Box p={3}>
+            <Slider
+              value={withdrawSlider}
+              onChange={setWithdrawSlider}
+              step={10}
+              colorScheme="red"
+            >
+              <SliderTrack bg="red.100">
+                <SliderFilledTrack bg="tomato" />
+              </SliderTrack>
+              <SliderThumb boxSize={6} color="red" bg="red" />
+            </Slider>
+          </Box>
+          <Button
+            isLoading={withdrawing}
+            disabled={!withdrawAmount || withdrawAmount === '0'}
             colorScheme="red"
+            onClick={handleWithdraw}
+            isFullWidth
           >
-            <SliderTrack bg="red.100">
-              <SliderFilledTrack bg="tomato" />
-            </SliderTrack>
-            <SliderThumb boxSize={6} color="red" bg="red" />
-          </Slider>
-        </Box>
-        <Button
-          isLoading={withdrawing}
-          disabled={!withdrawAmount || withdrawAmount === '0'}
-          colorScheme="red"
-          onClick={handleWithdraw}
-          isFullWidth
-        >
-          Withdraw
-        </Button>
-      </WhiteBox>
-      <WhiteBox w="100%">
-        {loading && <Progress size="xs" isIndeterminate />}
-        <Title color={constants.colors.dark}>Rewards</Title>
-        <FormControl id="rewardsAmount" mb={2} mt={2}>
-          <FormLabel>FREN rewards</FormLabel>
-          <NumberInput value={rewards} onChange={() => null}>
-            <NumberInputField bg={constants.colors.dark} color="white" />
-          </NumberInput>
-          <FormHelperText color={constants.colors.dark}>
-            ≈ {usdRewardsPrice} USD
-          </FormHelperText>
-        </FormControl>
-        <Button
-          isLoading={claimingRewards}
-          disabled={Number(rewards) === 0}
-          colorScheme="teal"
-          onClick={handleClaimRewards}
-          isFullWidth
-        >
-          Claim rewards
-        </Button>
-      </WhiteBox>
-    </HStack>
+            Withdraw
+          </Button>
+        </WhiteBox>
+      </HStack>
+      <HStack>
+        <WhiteBox w="100%" mt={4}>
+          {loading && <Progress size="xs" isIndeterminate />}
+          <Title color={constants.colors.dark}>Rewards</Title>
+          <FormControl
+            id="rewardsAmount"
+            mb={2}
+            mt={2}
+            bg="gray.900"
+            p={4}
+            borderRadius={8}
+          >
+            <FormLabel>
+              <Text>FREN rewards</Text>
+            </FormLabel>
+            <NumberInput value={rewards} onChange={() => null}>
+              <NumberInputField bg={constants.colors.dark} color="white" />
+            </NumberInput>
+            <FormHelperText mt={4}>
+              <Text>≈ {usdRewardsPrice} USD</Text>
+            </FormHelperText>
+          </FormControl>
+          <Button
+            isLoading={claimingRewards}
+            disabled={Number(rewards) === 0}
+            colorScheme="teal"
+            onClick={handleClaimRewards}
+            isFullWidth
+          >
+            Claim rewards
+          </Button>
+        </WhiteBox>
+      </HStack>
+    </>
   );
 };
 

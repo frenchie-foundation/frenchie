@@ -778,13 +778,7 @@ const Swap: React.FC<ChakraProps> = ({ ...props }: ChakraProps) => {
                   pr={0}
                   borderRadius={8}
                 >
-                  <Text
-                    fontSize="16px"
-                    onClick={handleSetMaxSrc}
-                    cursor="pointer"
-                  >
-                    Balance: {displayDstBalance}
-                  </Text>
+                  <Text fontSize="16px">Balance: {displayDstBalance}</Text>
                 </Flex>
               </Flex>
 

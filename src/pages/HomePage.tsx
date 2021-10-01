@@ -47,6 +47,15 @@ export default function HomePage(): React.ReactElement {
   const handleTwitterClick = useCallback(() => {
     openInNewTab(constants.twitterGroupLink);
   }, []);
+  const handleGithubClick = useCallback(() => {
+    openInNewTab('https://github.com/FrenchieNetwork/contract');
+  }, []);
+  const handleDiscordClick = useCallback(() => {
+    openInNewTab('https://discord.com/invite/6PeBA7K2Aw');
+  }, []);
+  const handleRedditClick = useCallback(() => {
+    openInNewTab('https://www.reddit.com/r/FrenchieToken/');
+  }, []);
   const handleMediumClick = useCallback(() => {
     openInNewTab(constants.mediumGroupLink);
   }, []);
@@ -333,7 +342,7 @@ export default function HomePage(): React.ReactElement {
           <Text>Twitter</Text>
         </Flex>
         <Flex
-          onClick={handleTwitterClick}
+          onClick={handleDiscordClick}
           gridGap={3}
           alignItems="center"
           flexDir="column"
@@ -373,7 +382,7 @@ export default function HomePage(): React.ReactElement {
           <Text>Instagram</Text>
         </Flex>
         <Flex
-          onClick={handleTwitterClick}
+          onClick={handleGithubClick}
           gridGap={3}
           alignItems="center"
           flexDir="column"
@@ -393,7 +402,7 @@ export default function HomePage(): React.ReactElement {
           <Text>Github</Text>
         </Flex>
         <Flex
-          onClick={handleTwitterClick}
+          onClick={handleRedditClick}
           gridGap={3}
           alignItems="center"
           flexDir="column"

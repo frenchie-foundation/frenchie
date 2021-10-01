@@ -27,11 +27,18 @@ export default function Footer(): React.ReactElement {
   );
 
   return (
-    <Container mt={20} mb={20}>
+    <Box
+      mt={20}
+      mb={5}
+      maxW="175ch"
+      marginX={{ base: 4, xl: 20 }}
+      borderRadius={8}
+    >
       <Box
         bg={useColorModeValue('gray.50', 'gray.900')}
         color={useColorModeValue('gray.700', 'gray.200')}
         padding={4}
+        borderRadius={8}
       >
         <Container as={Stack} maxW={'6xl'} py={10}>
           <SimpleGrid
@@ -88,6 +95,9 @@ export default function Footer(): React.ReactElement {
               >
                 Live Roadmap
               </Link>
+              <Link target="_blank" href={constants.gitbookGroupLink}>
+                Documentation
+              </Link>
             </Stack>
             <Stack align={'flex-start'}>
               <Title mb={4}>Social Media</Title>
@@ -116,6 +126,6 @@ export default function Footer(): React.ReactElement {
           </SimpleGrid>
         </Container>
       </Box>
-    </Container>
+    </Box>
   );
 }

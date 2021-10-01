@@ -1,15 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useState } from 'react';
+import { Flex, HStack, Stack, Text, VStack } from '@chakra-ui/layout';
+import constants from '../config/constants';
+import { Logo } from './Logo';
+import WalletInfo from './WalletInfo';
 import { Button, IconButton } from '@chakra-ui/button';
-import {
-  Container,
-  Flex,
-  HStack,
-  Stack,
-  Text,
-  VStack,
-} from '@chakra-ui/layout';
-import { FaBars, FaTractor, FaSync, FaHome } from 'react-icons/fa';
+import { openLink } from '../helpers/openInNewTab';
+import { FaBars, FaHome, FaSync, FaTractor } from 'react-icons/fa';
 import {
   Drawer,
   DrawerBody,
@@ -18,14 +15,20 @@ import {
   DrawerHeader,
   DrawerOverlay,
 } from '@chakra-ui/modal';
-import { useHistory } from 'react-router';
-import constants from '../config/constants';
-import { Logo } from './Logo';
-import WalletInfo from './WalletInfo';
 
 export default function Header(): React.ReactElement {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const history = useHistory();
+
+  const handleFarmClick = useCallback((e?: any) => {
+    if (e) {
+      e.preventDefault();
+    }
+    openLink('/farming');
+  }, []);
+
+  const handleBuyLinkClick = useCallback(() => {
+    openLink('/swap');
+  }, []);
 
   const goTo = useCallback(
     (path: string) => (e?: any) => {
@@ -33,9 +36,9 @@ export default function Header(): React.ReactElement {
       if (e) {
         e.preventDefault();
       }
-      history.push(path);
+      openLink(path);
     },
-    [history]
+    []
   );
 
   const handleDrawerOpen = useCallback(() => {
@@ -47,13 +50,30 @@ export default function Header(): React.ReactElement {
   }, []);
 
   return (
-    <Container>
+    <Flex
+      py={2}
+      justifyContent="space-between"
+      position="sticky"
+      top="0"
+      bg="gray.800"
+      zIndex="999"
+      maxW="175ch"
+      margin="0 auto"
+      px={{ base: 4, xl: 0 }}
+    >
       <Drawer placement="left" onClose={handleDrawerClose} isOpen={drawerOpen}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton mt={2} />
-          <DrawerHeader borderBottomWidth="1px" mb={4}>
-            Menu
+          <DrawerHeader
+            borderBottomWidth="1px"
+            mb={4}
+            display="flex"
+            alignItems="center"
+            gridGap={2}
+          >
+            <Logo w={8} />
+            Frenchie Network
           </DrawerHeader>
           <DrawerBody>
             <VStack spacing={4}>
@@ -63,6 +83,7 @@ export default function Header(): React.ReactElement {
                 bg={constants.colors.light}
                 color={constants.colors.dark}
                 leftIcon={<FaHome />}
+                justifyContent="flex-start"
               >
                 Home
               </Button>
@@ -72,6 +93,7 @@ export default function Header(): React.ReactElement {
                 bg={constants.colors.light}
                 color={constants.colors.dark}
                 leftIcon={<FaTractor />}
+                justifyContent="flex-start"
               >
                 Farm
               </Button>
@@ -81,69 +103,84 @@ export default function Header(): React.ReactElement {
                 bg={constants.colors.light}
                 color={constants.colors.dark}
                 leftIcon={<FaSync />}
+                justifyContent="flex-start"
               >
-                Swap
+                Frenchie Swap
               </Button>
             </VStack>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-      <Flex pt={8} pb={8} justifyContent="space-between">
-        <Stack spacing={2} display="flex" direction="row" alignItems="center">
-          <IconButton
-            variant="outline"
-            aria-label="Menu"
-            icon={
-              <FaBars
-                color={constants.colors.light}
-                width={24}
-                height={24}
-                size={24}
-              />
-            }
-            onClick={handleDrawerOpen}
-          />
-          <Logo height={9} />
+      <Stack spacing={2} display="flex" direction="row" alignItems="center">
+        <IconButton
+          display={{ base: 'flex', xl: 'none' }}
+          variant="outline"
+          aria-label="Menu"
+          icon={
+            <FaBars
+              color={constants.colors.light}
+              width={24}
+              height={24}
+              size={24}
+            />
+          }
+          onClick={handleDrawerOpen}
+        />
+        <Flex
+          direction="row"
+          alignItems="center"
+          onClick={goTo('/')}
+          cursor="pointer"
+        >
+          <Logo height={12} />
           <Text
-            fontSize={24}
+            fontSize={{ xl: 28, md: 24 }}
             display={{ base: 'none', md: 'block' }}
             color={constants.colors.light}
             fontWeight="bold"
           >
             Frenchie Network
           </Text>
-        </Stack>
-        <HStack spacing={4}>
+        </Flex>
+      </Stack>
+      <HStack spacing={5}>
+        <Flex
+          gridGap={4}
+          alignItems="center"
+          display={{ base: 'none', xl: 'flex' }}
+        >
           <Button
-            onClick={goTo('/')}
-            as={Button}
-            variant="solid"
-            display={{ base: 'none', md: 'block' }}
-            leftIcon={<FaHome />}
+            variant="outline"
+            px={5}
+            py={5}
+            onClick={handleBuyLinkClick}
+            bgColor={constants.colors.darkerLight}
+            color={constants.colors.dark}
+            transition="0.2s"
+            _hover={{
+              boxShadow: 'xl',
+            }}
           >
-            Home
+            Frenchie Swap
           </Button>
           <Button
-            onClick={goTo('/farming')}
-            as={Button}
-            variant="solid"
-            display={{ base: 'none', md: 'block' }}
+            variant="outline"
+            color={constants.colors.white}
+            borderColor={constants.colors.white}
+            px={5}
+            py={5}
             leftIcon={<FaTractor />}
+            onClick={handleFarmClick}
+            transition="0.2s"
+            _hover={{
+              boxShadow: 'xl',
+            }}
           >
             Farm
           </Button>
-          <Button
-            onClick={goTo('/swap')}
-            as={Button}
-            variant="solid"
-            display={{ base: 'none', md: 'block' }}
-            leftIcon={<FaSync />}
-          >
-            FrenchieSwap
-          </Button>
-          <WalletInfo />
-        </HStack>
-      </Flex>
-    </Container>
+        </Flex>
+        <WalletInfo />
+      </HStack>
+    </Flex>
   );
 }

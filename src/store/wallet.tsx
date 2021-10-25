@@ -137,7 +137,7 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
               address: constants.tokenAddress,
               symbol: 'FREN',
               decimals: 18,
-              image: 'http://localhost:3000/static/media/logo.6671d5da.svg',
+              image: 'https://frenchie.tech/static/media/logo.6671d5da.svg',
             },
           },
           id: Math.round(Math.random() * 100000),

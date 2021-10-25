@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Image } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/button';
 import { Box, Flex, Text } from '@chakra-ui/layout';
 import { ChakraProps } from '@chakra-ui/system';
@@ -22,6 +23,8 @@ import {
 import { FaRegCopy, FaBook, FaSignOutAlt } from 'react-icons/fa';
 import millify from '../utils/millify';
 import { openInNewTab } from '../helpers/openInNewTab';
+import frenLogo from '../assets/images/logo.svg';
+
 
 type IWalletInfo = ChakraProps;
 
@@ -32,7 +35,9 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
     handleOpenWalletConnection,
     address,
     disconnect,
+    addFren
   } = useWallet();
+
   const { frenToken, pancakeRouter } = useContracts();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { onCopy } = useClipboard(address ? address : '');
@@ -227,6 +232,19 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
                 }}
               >
                 Disconnect
+              </Button>
+            </Flex>
+            <Flex mt={4}>
+              <Button
+                d="flex"
+                w="100%"
+                onClick={() => {
+                  addFren(),
+                    onClose();
+                }}
+              >
+                <Image src={frenLogo} w={6} h={6} mr={2} alt="FREN Logo" />
+                Add FREN
               </Button>
             </Flex>
           </ModalBody>

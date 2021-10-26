@@ -244,7 +244,7 @@ const WalletInfo: React.FC<IWalletInfo> = (props?: IWalletInfo) => {
                 }}
               >
                 <Image src={frenLogo} w={6} h={6} mr={2} alt="FREN Logo" />
-                Add FREN
+                Add FREN to MetaMask
               </Button>
             </Flex>
           </ModalBody>

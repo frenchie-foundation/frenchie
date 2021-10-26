@@ -21,6 +21,7 @@ import metamaskLogo from '../assets/images/metamask.svg';
 import trustWalletLogo from '../assets/images/trust-wallet.svg';
 import walletConnectLogo from '../assets/images/wallet-connect.svg';
 import bscWalletLogo from '../assets/images/injected-binance.svg';
+import constants from '../config/constants';
 
 interface IWalletContext {
   isWeb3Enabled: boolean;
@@ -29,6 +30,7 @@ interface IWalletContext {
   address?: string;
   handleOpenWalletConnection: () => void;
   disconnect: () => void;
+  addFren: () => void;
 }
 
 interface IWalletProvider {
@@ -122,6 +124,35 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
     [isWeb3Enabled, onModalClose, toast]
   );
 
+  const addFren = useCallback(() => {
+    const provider: any = web3.currentProvider?.valueOf();
+
+    provider &&
+      provider.sendAsync(
+        {
+          method: 'metamask_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: {
+              address: constants.tokenAddress,
+              symbol: 'FREN',
+              decimals: 18,
+              image: 'https://frenchie.tech/static/media/logo.6671d5da.svg',
+            },
+          },
+          id: Math.round(Math.random() * 100000),
+        },
+        (err, added) => {
+          console.log('provider returned', err, added);
+          if (err || 'error' in added) {
+            console.log('There was a problem adding the token.');
+            return;
+          }
+          console.log('Token added!');
+        }
+      );
+  }, [web3.currentProvider]);
+
   const disableWeb3 = useCallback(
     async (providerAPI: string) => {
       try {
@@ -189,6 +220,7 @@ export const WalletProvider: React.FC<IWalletProvider> = ({
         address,
         handleOpenWalletConnection,
         disconnect,
+        addFren,
       }}
     >
       <Modal isCentered isOpen={isModalOpen} onClose={onModalClose}>

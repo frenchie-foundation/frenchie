@@ -30,6 +30,7 @@ import frenchie from '../assets/images/logo.svg';
 import frenchieblockchain from '../assets/images/frenchie-blockchain.png';
 import bscscanLogo from '../assets/images/bscscan-logo-circle.svg';
 import { useHistory } from 'react-router';
+import { useWallet } from '../store/wallet';
 
 export default function HomePage(): React.ReactElement {
   useEffect(() => {
@@ -37,6 +38,7 @@ export default function HomePage(): React.ReactElement {
   }, []);
 
   const history = useHistory();
+  const { addFren } = useWallet();
 
   const handleTelegramLinkClick = useCallback(() => {
     openInNewTab(constants.telegramGroupLink);
@@ -187,7 +189,6 @@ export default function HomePage(): React.ReactElement {
         <Box
           p={4}
           w="100%"
-          h="100%"
           bg={useColorModeValue('white', 'gray.900')}
           boxShadow={'md'}
           borderRadius={8}
@@ -198,6 +199,7 @@ export default function HomePage(): React.ReactElement {
           <Title mb={4} textAlign="center">
             Frenchie Network
           </Title>
+
           <Text>
             <Text display="inline" color={constants.colors.red}>
               Frenchie Network{' '}
@@ -218,11 +220,19 @@ export default function HomePage(): React.ReactElement {
             <br />
             Network Testnet Estimated by Q4 2021.
           </Text>
+          <Box mb={3} />
+          <Text
+            display="inline"
+            color={constants.colors.red}
+            onClick={addFren}
+            cursor="pointer"
+          >
+            Add FREN to MetaMask
+          </Text>
         </Box>
         <Box
           p={4}
           w="100%"
-          h="100%"
           d="flex"
           flexDir="column"
           bg={useColorModeValue('white', 'gray.900')}
@@ -254,7 +264,6 @@ export default function HomePage(): React.ReactElement {
         <Box
           p={4}
           w="100%"
-          h="100%"
           bg={useColorModeValue('white', 'gray.900')}
           boxShadow={'md'}
           borderRadius={8}

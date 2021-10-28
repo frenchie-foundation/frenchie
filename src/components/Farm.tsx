@@ -30,6 +30,13 @@ import { toEther, toWei } from '../helpers/units';
 import axios from 'axios';
 import WhiteBox from './WhiteBox';
 import BigNumber from 'bignumber.js';
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+} from '@chakra-ui/alert';
+import { Stack } from '@chakra-ui/react';
 
 const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
   const { isWeb3Enabled, address, web3 } = useWallet();
@@ -106,12 +113,11 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
     try {
       setLoading(true);
       if (web3.utils && isWeb3Enabled && oneInch && address && farmContract) {
-        const [_allowance, _balance, _farmingAmount, _rewards, { data }] =
+        const [_allowance, _balance, _farmingAmount, { data }] =
           await Promise.all([
             oneInch.methods.allowance(address, constants.farmAddress).call(),
             oneInch.methods.balanceOf(address).call(),
             farmContract.methods.deposited(0, address).call(),
-            farmContract.methods.pending(0, address).call(),
             axios.get(
               'https://api.1inch.exchange/v3.0/56/quote?toTokenAddress=0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d&fromTokenAddress=0x13958e1eb63dfb8540eaf6ed7dcbbc1a60fd52af&amount=10000000000000000'
             ),
@@ -120,8 +126,8 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
         setAllowance(_allowance);
         setBalance(_balance);
         setFarmingAmount(_farmingAmount);
-        setRewards(web3.utils.fromWei(_rewards));
         setFrenPrice(data.toTokenAmount / data.fromTokenAmount);
+        setRewards('0');
       }
     } finally {
       setLoading(false);
@@ -202,7 +208,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           });
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
         status: 'error',
         description: error.message,
@@ -233,7 +239,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
         withdrawAmount > farmingAmount ? farmingAmount : withdrawAmount;
 
       if (farmContract) {
-        const success = await farmContract.methods.withdraw(0, amount).send({
+        const success = await farmContract.methods.emergencyWithdraw(0).send({
           from: address,
         });
 
@@ -247,7 +253,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           });
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
         status: 'error',
         description: error.message,
@@ -287,7 +293,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           });
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
         status: 'error',
         description: error.message,
@@ -303,6 +309,17 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
 
   return (
     <>
+      <Alert status="error" mb={5}>
+        <Stack direction={{ base: 'column', lg: 'row' }}>
+          <Stack direction="row">
+            <AlertIcon />
+            <AlertTitle mr={2}>Farm period has ended!</AlertTitle>
+          </Stack>
+          <AlertDescription>
+            You can now only withdraw your LP. Stay tuned for farm updates!
+          </AlertDescription>
+        </Stack>
+      </Alert>
       <HStack
         spacing={{ base: 0, md: 4 }}
         display={{ base: 'block', md: 'flex' }}
@@ -348,7 +365,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
           </Box>
           <Button
             isLoading={farming}
-            disabled={!amountToFarm || amountToFarm === '0'}
+            disabled={!amountToFarm || amountToFarm === '0' || true}
             colorScheme="teal"
             onClick={handleFarm}
             isFullWidth

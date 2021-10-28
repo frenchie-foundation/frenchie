@@ -57,7 +57,7 @@ export default function Header(): React.ReactElement {
       top="0"
       bg="gray.800"
       zIndex="999"
-      maxW="175ch"
+      maxW="120ch"
       margin="0 auto"
       px={{ base: 4, xl: 0 }}
     >

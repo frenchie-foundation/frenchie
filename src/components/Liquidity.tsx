@@ -259,7 +259,7 @@ const Liquidity: React.FC<ChakraProps> = (props: ChakraProps) => {
           duration: 5000,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
         status: 'error',
         description: error.message,
@@ -310,7 +310,7 @@ const Liquidity: React.FC<ChakraProps> = (props: ChakraProps) => {
           duration: 5000,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
         status: 'error',
         description: error.message,

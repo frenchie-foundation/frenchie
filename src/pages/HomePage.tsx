@@ -218,7 +218,7 @@ export default function HomePage(): React.ReactElement {
             Asynchronous Byzantine Fault Tolerance (aBFT).
             <br />
             <br />
-            Network Testnet Estimated by Q4 2021.
+            Network Testnet Estimated by Q1 2022.
           </Text>
           <Box mb={3} />
           <Text

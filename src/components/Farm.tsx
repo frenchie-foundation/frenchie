@@ -235,8 +235,8 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
     try {
       setWithdrawing(true);
 
-      const amount =
-        withdrawAmount > farmingAmount ? farmingAmount : withdrawAmount;
+      // const amount =
+      //   withdrawAmount > farmingAmount ? farmingAmount : withdrawAmount;
 
       if (farmContract) {
         const success = await farmContract.methods.emergencyWithdraw(0).send({

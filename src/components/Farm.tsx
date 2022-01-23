@@ -265,14 +265,7 @@ const Farm: React.FC<ChakraProps> = (props: ChakraProps) => {
       fetchEverything();
       setWithdrawing(false);
     }
-  }, [
-    address,
-    farmContract,
-    farmingAmount,
-    fetchEverything,
-    toast,
-    withdrawAmount,
-  ]);
+  }, [address, farmContract, fetchEverything, toast]);
 
   const handleClaimRewards = useCallback(async () => {
     try {
